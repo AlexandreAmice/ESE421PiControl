@@ -55,10 +55,10 @@ def distPointToLine(endPt1, endPt2, pointOff, distOnly = True):
     :return: distance from pointOff to line (x,y) tuple constrained to points lying inside the end points
     '''
     #calculated using equations from https://en.wikipedia.org/wiki/Distance_from_a_point_to_a_line#Cartesian_coordinates
-    minX = min(endPt1[0], endPt2[0])
-    minY = min(endPt1[1], endPt2[1])
-    maxX = max(endPt1[0], endPt2[0])
-    maxY = max(endPt1[1], endPt2[1])
+    (minX, ptX) = min((endPt1[0], endPt2[0])), (endPt1[0], endPt2[0]).index(min(endPt1[0], endPt2[0]))
+    minY. pt = min(endPt1[1], endPt2[1]), (endPt1[1], endPt2[1]).index(min(endPt1[1], endPt2[1]))
+    maxX = max(endPt1[0], endPt2[0]), (endPt1[0], endPt2[0]).index(max(endPt1[0], endPt2[0]))
+    maxY = max(endPt1[1], endPt2[1]), (endPt1[1], endPt2[1]).index(min(endPt1[1], endPt2[1]))
     m = float(endPt1[1] - endPt2[1])/float(endPt1[0] - endPt2[0])
     a = -m
     b = 1
