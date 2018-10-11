@@ -52,7 +52,13 @@ class Path:
         :param mapData:
         :return: a list where each entry is a list of direct path objects from a start node to an end node.
         """
-        return [_DirectPath(startNode, endNode, mapSpeeds[self.getStartName()][self.getEndName()])]
+        for nextNode in mapSpeeds[startNode[0]].keys():
+            if nextNode == endNode:
+                return [_DirectPath(startNode, endNode, mapSpeeds[startNode][endNode])]
+
+            else:
+                return [_DirectPath(startNode, nextNode, mapSpeeds[startNode][nextNode])].append([_DirectPath(nextNode, endNode, mapSpeeds[nextNode][endNode])])
+
 
     def isDirectPath(self):
         """

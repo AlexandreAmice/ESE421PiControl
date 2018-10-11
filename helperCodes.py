@@ -94,3 +94,15 @@ def distPointToLine(endPt1, endPt2, pointOff, distOnly = True):
         return dist
     else:
         return (dist, nearestX, nearestY)
+
+def wrapAngle(angle):
+    '''
+    wrap the angle to be between [0, 360)
+    :param angle:
+    :return: angle between 0 and 360
+    '''
+    while angle < 0:
+        angle += 360
+    while angle >= 360:
+        angle -= 360
+    return angle

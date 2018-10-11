@@ -1,6 +1,7 @@
 import struct
 import smbus
 import time
+from helperCodes import wrapAngle
 
 class ArduinoCom:
 
@@ -31,6 +32,36 @@ class ArduinoCom:
         # https://raspberrypi.stackexchange.com/questions/8469/meaning-of-cmd-param-in-write-i2c-block-data
         #
 
+        #dictionary mapping data to their values
+        self.data = {'desiredHeading': 0, 'speed': 50}
+
+
+    # region Setters and Getters
+    def getDesiredHeading(self):
+        return self.data['desiredHeading']
+
+    def getSpeed(self):
+        return self.data['speed']
+
+    def setDesiredHeading(self, heading):
+        heading = wrapAngle(heading)
+        self.data['desiredHeading'] = heading
+
+    def setSpeed(self, speed):
+        if speed >= 0:
+            self.data['speed'] = speed
+    # endregion
+
+
+    def getTransmitData(self):
+        '''
+        Format the data array for transmitting to the Arduino. The current setting is a float array
+        where the first idx is the desired heading and the second idx is the speed
+        :return: array [desiredHeadingVal, speedVal]
+        '''
+        return [self.data['desiredHeading'], self.data['speed']]
+
+
 
     #
     # 1 = command byte to request first data block from Arduino
@@ -43,7 +74,7 @@ class ArduinoCom:
             newFloats.append(self.bytes_2_float(data_received, 1))
         except:
             print("error reading float data")
-            newFloats = oldFloats;
+            newFloats = oldFloats
 
         return newFloats
 
