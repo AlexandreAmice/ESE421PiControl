@@ -26,7 +26,8 @@ img = cv2.cvtColor(imgColor, cv2.COLOR_BGR2GRAY)
 # length of the edge--noisy pixels on the edge can be excluded otherwise
 # we may also want this to eliminate the texture of the road
 #
-img = cv2.GaussianBlur(img,(3,3),0)
+img = cv2.GaussianBlur(img,(5,5),0)
+cv2.imwrite('Blur.jpg',img)
 #
 # "Canny" is the guy who invented the edge detection algorithm
 # that is very widely used.
@@ -65,4 +66,4 @@ cv2.imwrite('hough.jpg',imgColor)
 # the graphics windows opened by CV2 seem to freak out
 # if you don't have this command at the end
 #
-cv2.waitKey(0)
+#cv2.waitKey(0)
