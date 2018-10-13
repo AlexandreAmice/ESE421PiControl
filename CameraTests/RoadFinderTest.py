@@ -63,6 +63,7 @@ class Lines():
         self.enlarge = 2.5
         # warning from numpy polyfit
         self.poly_warning = False
+        
 
     # set camera calibration parameters
     def set_cam_calib_param(self, mtx, dst):
@@ -132,14 +133,35 @@ class Lines():
     def binary_extraction(self,image, ksize=3):
         # undistort first
         #image = self.undistort(image)
+        img = cv2.cvtColor(image, cv2.COLOR_RGB2HSV)
+        low_black = np.array([50,50,50])
+        high_black = np.array([100,255,255])
+        mask = cv2.inRange(img, low_black, high_black)
+        final = cv2.bitwise_and(img, img, mask)
+        cv2.imwrite('final.jpg', final)
+        return final
 
+        '''
+        Deprecated
         color_bin = self.color_thresh(image,thresh=(90, 150))              # initial values 110, 255
-
+        g = image.copy()
+        g[:,:,0] = 0
+        g[:,:,2] = 0
+        r = image.copy()
+        r[:,:,1] = r[:,:,1]/2
+        r[:,:,2] = r[:,:,2]/2
+        b = image.copy()
+        b[:,:0] = 0
+        b[:,:,1] = 0
         gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
+        cv2.imwrite('green.jpg', g)
+        cv2.imwrite('blue.jpg', r)
+        cv2.imwrite('red.jpg', b)
+        
+        sobelx = cv2.Sobel(g, cv2.CV_64F, 1, 0, ksize)
+        sobely = cv2.Sobel(g, cv2.CV_64F, 0, 1, ksize)
 
-        sobelx = cv2.Sobel(gray, cv2.CV_64F, 1, 0, ksize)
-        sobely = cv2.Sobel(gray, cv2.CV_64F, 0, 1, ksize)
-
+        
         gradx = self.abs_sobel_thresh(sobelx, thresh=(50, 160))            #past val 100, 190 # initial values 40, 160
         grady = self.abs_sobel_thresh(sobely, thresh=(50, 160))             # initial values 40, 160
         mag_binary = self.mag_thresh(sobelx, sobely, mag_thresh=(40, 160))  # initial values 40, 160
@@ -151,11 +173,13 @@ class Lines():
         #combined[(((gradx == 1) & (grady == 1)) | (mag_binary == 1)) ] = 1
 
         return combined
+        '''
 
     # transform perspective
     def trans_per(self, image):
-
+       
         image = self.binary_extraction(image)
+        #cv2.imshow('binaryExtraction', image)
 
         self.binary_image = image
 
@@ -163,10 +187,14 @@ class Lines():
         xsize = image.shape[1]
 
         # define region of interest
-        left_bottom = (xsize/10, ysize)
-        apex_l = (xsize/2 - 2600/(self.look_ahead**2),  ysize - self.look_ahead*275/30)
-        apex_r = (xsize/2 + 2600/(self.look_ahead**2),  ysize - self.look_ahead*275/30)
-        right_bottom = (xsize - xsize/10, ysize)
+        xscale = 10
+        left_bottom = (xsize/xscale, ysize)
+        right_bottom = (xsize - xsize/xscale, ysize)
+        scaleLookAhead = 275.0/30.0
+        centerIm = 5000
+        apex_l = (xsize/2 - centerIm/(self.look_ahead**2),  ysize - self.look_ahead*scaleLookAhead)
+        apex_r = (xsize/2 + centerIm/(self.look_ahead**2),  ysize - self.look_ahead*scaleLookAhead)
+       
 
         # define vertices for perspective transformation
         src = np.array([[left_bottom], [apex_l], [apex_r], [right_bottom]], dtype=np.float32)
@@ -481,6 +509,7 @@ class Lines():
 
     # project results on the source image
     def project_on_road(self, image_input):
+        
         image = image_input[self.remove_pixels:, :]
         image = self.trans_per(image)
         self.im_shape = image.shape
@@ -541,7 +570,7 @@ class Lines():
 
 lines = Lines()
 lines.look_ahead = 10
-lines.remove_pixels = 100
+lines.remove_pixels = 0
 lines.enlarge = 2.25
 # capture frames from the camera
 for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
