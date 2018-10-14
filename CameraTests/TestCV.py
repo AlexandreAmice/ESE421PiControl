@@ -1,4 +1,4 @@
-import picamera
+#import picamera
 import cv2
 import numpy as np
 #
@@ -6,14 +6,14 @@ import numpy as np
 # default photo seems to be 1920 x 1080
 # half of that keeps things more manageable for on-screen debugging
 #
-camera = picamera.PiCamera()
-photoHeight = 540
-camera.resolution = (16*photoHeight/9, photoHeight)
+#camera = picamera.PiCamera()
+#photoHeight = 540
+#camera.resolution = (16*photoHeight/9, photoHeight)
 #
 # captue an image and read it back in
 # (Do this because picamera does not play nice with openCV?)
 #
-camera.capture('blackRoad.jpg')
+#camera.capture('blackRoad.jpg')
 imgColor = cv2.imread('blackRoad.jpg') 
 #
 # convert to grayscale -- this seems to be standard for edge detection
@@ -26,14 +26,14 @@ img = cv2.cvtColor(imgColor, cv2.COLOR_BGR2GRAY)
 # length of the edge--noisy pixels on the edge can be excluded otherwise
 # we may also want this to eliminate the texture of the road
 #
-img = cv2.GaussianBlur(img,(5,5),0)
-cv2.imwrite('Blur.jpg',img)
+img = cv2.imread('mask.jpg')
+img = cv2.GaussianBlur(img, (5,5), 2)
 #
 # "Canny" is the guy who invented the edge detection algorithm
 # that is very widely used.
 # the two arguments are the thresholds used in the algorithm
 #
-edges = cv2.Canny(img,20,80)
+edges = cv2.Canny(img[100:],20,80)
 #
 # show the edges and save the edges image
 # note that edges is effectively black-and-white, with white only
@@ -47,8 +47,8 @@ cv2.imwrite('edges.jpg',edges)
 # threshold = how many points share the same line?
 #
 minLineLength = 50
-maxLineGap = 10
-lines = cv2.HoughLinesP(edges,rho=1,theta=np.pi/180,threshold=50,minLineLength=minLineLength,maxLineGap=maxLineGap)
+maxLineGap = 50
+lines = cv2.HoughLinesP(edges,rho=1,theta=np.pi/20,threshold=100,minLineLength=minLineLength,maxLineGap=maxLineGap)
 #
 # now parse through the lines that were found
 # WE NEED TO IGNORE MOST OF THESE LINES
