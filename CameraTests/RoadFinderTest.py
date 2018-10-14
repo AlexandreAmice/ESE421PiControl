@@ -63,6 +63,9 @@ class Lines():
         self.enlarge = 2.5
         # warning from numpy polyfit
         self.poly_warning = False
+
+        #find the edge
+        self.road_edge = None
         
 
     # set camera calibration parameters
@@ -137,13 +140,9 @@ class Lines():
         low_black = np.array([50,50,50])
         high_black = np.array([100,255,255])
         mask = cv2.inRange(img, low_black, high_black)
-        final = cv2.bitwise_and(img, img, mask)
-        cv2.imwrite('final.jpg', final)
-        return final
-
+        
+        #color_bin = self.color_thresh(image,thresh=(90, 150))              # initial values 110, 255
         '''
-        Deprecated
-        color_bin = self.color_thresh(image,thresh=(90, 150))              # initial values 110, 255
         g = image.copy()
         g[:,:,0] = 0
         g[:,:,2] = 0
@@ -158,22 +157,30 @@ class Lines():
         cv2.imwrite('blue.jpg', r)
         cv2.imwrite('red.jpg', b)
         
-        sobelx = cv2.Sobel(g, cv2.CV_64F, 1, 0, ksize)
-        sobely = cv2.Sobel(g, cv2.CV_64F, 0, 1, ksize)
+        gray = cv2.cvtColor(mask, cv2.COLOR_RGB2GRAY)
+        '''
+        sobelx = cv2.Sobel(mask, cv2.CV_64F, 1, 0, ksize)
+        sobely = cv2.Sobel(mask, cv2.CV_64F, 0, 1, ksize)
 
         
         gradx = self.abs_sobel_thresh(sobelx, thresh=(50, 160))            #past val 100, 190 # initial values 40, 160
         grady = self.abs_sobel_thresh(sobely, thresh=(50, 160))             # initial values 40, 160
         mag_binary = self.mag_thresh(sobelx, sobely, mag_thresh=(40, 160))  # initial values 40, 160
         #dir_binary = self.dir_threshold(sobelx, sobely, thresh=(0.7, 1.3))
-
+        '''
+        print gradx.shape
+        print grady.shape
+        print mag_binary.shape
+        print mask.shape
+        '''
+        
         combined = np.zeros_like(gradx)
         #combined[(((gradx == 1) & (grady == 1)) | ((mag_binary == 1) & (dir_binary == 1))) | (color_bin==1) ] = 1
-        combined[(((gradx == 1) & (grady == 1)) | (mag_binary == 1)) | (color_bin==1) ] = 1
+        combined[(((gradx == 1) & (grady == 1)) | (mag_binary == 1)) | (mask==1) ] = 1
         #combined[(((gradx == 1) & (grady == 1)) | (mag_binary == 1)) ] = 1
-
-        return combined
-        '''
+        cv2.imwrite('mask.jpg',mask)
+        return mask
+        
 
     # transform perspective
     def trans_per(self, image):
@@ -187,7 +194,7 @@ class Lines():
         xsize = image.shape[1]
 
         # define region of interest
-        xscale = 10
+        xscale = 1
         left_bottom = (xsize/xscale, ysize)
         right_bottom = (xsize - xsize/xscale, ysize)
         scaleLookAhead = 275.0/30.0
@@ -207,9 +214,10 @@ class Lines():
             warped = cv2.warpPerspective(image, self.M, image.shape[-2:None:-1], flags=cv2.INTER_LINEAR)
         else:
             warped = cv2.warpPerspective(image, self.M, image.shape[-1:None:-1], flags=cv2.INTER_LINEAR)
+    
         return warped
 
-    # creat window mask for lane detecion
+    # create window mask for lane detecion
     def window_mask(self, width, height, img_ref, center,level):
         output = np.zeros_like(img_ref)
         output[int(img_ref.shape[0]-(level+1)*height):int(img_ref.shape[0]-level*height), \
@@ -257,6 +265,7 @@ class Lines():
     # fit polynomials on the extracted left and right lane
     def get_fit(self, image):
 
+        
         # check if the lanes were detected in the last iteration, if not search for the lanes
         if not self.detected:
             # window settings
@@ -268,7 +277,6 @@ class Lines():
 
             # if we found any window centers
             if len(window_centroids) > 0:
-
                 # points used to draw all the left and right windows
                 l_points = np.zeros_like(image)
                 r_points = np.zeros_like(image)
@@ -277,78 +285,78 @@ class Lines():
                 for level in range(0,len(window_centroids)):
                     # Window_mask is a function to draw window areas
                     l_mask = self.window_mask(window_width,window_height,image,window_centroids[level][0],level)
-                    r_mask = self.window_mask(window_width,window_height,image,window_centroids[level][1],level)
+                    #r_mask = self.window_mask(window_width,window_height,image,window_centroids[level][1],level)
                     # Add graphic points from window mask here to total pixels found
+                    print image == 1
+                    print l_mask == 1
+                    print '#'*30
                     l_points[(image == 1) & (l_mask == 1) ] = 1
-                    r_points[(image == 1) & (r_mask == 1) ] = 1
+                    #r_points[(image == 1) & (r_mask == 1) ] = 1
 
                 # construct images of the results
                 template_l = np.array(l_points*255,np.uint8) # add left window pixels
-                template_r = np.array(r_points*255,np.uint8) # add right window pixels
+                #template_r = np.array(r_points*255,np.uint8) # add right window pixels
                 zero_channel = np.zeros_like(template_l) # create a zero color channel
-                left_right = np.array(cv2.merge((template_l,zero_channel,template_r)),np.uint8) # make color image left and right lane
-
+                #left_right = np.array(cv2.merge((template_l,zero_channel,template_r)),np.uint8) # make color image left and right lane
+                edge = np.array(cv2.merge((template_l, zero_channel)),np.uint8)#make the lane edge
                 # get points for polynomial fit
                 self.allyl,self.allxl = l_points.nonzero()
-                self.allyr,self.allxr = r_points.nonzero()
-
+                #self.allyr,self.allxr = r_points.nonzero()
 
                 # check if lanes are detected
-                if (len(self.allxl)>0) & (len(self.allxr)>0):
+                if (len(self.allxl)>0):
                     try:
                         self.current_fit_l = np.polyfit(self.allyl,self.allxl, 2)
-                        self.current_fit_r = np.polyfit(self.allyr,self.allxr, 2)
                         self.poly_warning = False
                     except np.RankWarning:
                         self.poly_warning = True
-                        pass
 
                     # check if lanes are detected correctly
                     if self.check_fit():
                         self.detected = True
-
+                        
                         # if this is the first detection initialize the best values
                         if not self.detected_first:
                             self.best_fit_l = self.current_fit_l
-                            self.best_fit_r = self.current_fit_r
                         # if not then average with new
                         else:
                             self.best_fit_l = self.best_fit_l*0.6 + self.current_fit_l * 0.4
-                            self.best_fit_r = self.best_fit_r*0.6 + self.current_fit_r * 0.4
 
                         # assign new best values based on this iteration
                         self.detected_first = True
                         self.bestxl = self.allxl
                         self.bestyl = self.allyl
-                        self.bestxr = self.allxr
-                        self.bestyr = self.allyr
-                        self.left_right = left_right
+                        #self.bestxr = self.0
+                        #self.bestyr = self.0
+                        #self.left_right = left_right
 
                     # set flag if lanes are not detected correctly
                     else:
+                        print 'no lane detected'
                         self.detected = False
 
         # if lanes were detected in the last frame, search area for current frame
         else:
+
             non_zero_y, non_zero_x = image.nonzero()
 
             margin = 10 # search area margin
             left_lane_points_indx = ((non_zero_x > (self.best_fit_l[0]*(non_zero_y**2) + self.best_fit_l[1]*non_zero_y + self.best_fit_l[2] - margin)) & (non_zero_x < (self.best_fit_l[0] *(non_zero_y**2) + self.best_fit_l[1]*non_zero_y + self.best_fit_l[2] + margin)))
-            right_lane_points_indx = ((non_zero_x > (self.best_fit_r[0]*(non_zero_y**2) + self.best_fit_r[1]*non_zero_y + self.best_fit_r[2] - margin)) & (non_zero_x < (self.best_fit_r[0]*(non_zero_y**2) + self.best_fit_r[1]*non_zero_y + self.best_fit_r[2] + margin)))
+            #right_lane_points_indx = ((non_zero_x > (self.best_fit_r[0]*(non_zero_y**2) + self.best_fit_r[1]*non_zero_y + self.best_fit_r[2] - margin)) & (non_zero_x < (self.best_fit_r[0]*(non_zero_y**2) + self.best_fit_r[1]*non_zero_y + self.best_fit_r[2] + margin)))
 
             # extracted lef lane pixels
             self.allxl= non_zero_x[left_lane_points_indx]
             self.allyl= non_zero_y[left_lane_points_indx]
 
             # extracted rightt lane pixels
-            self.allxr= non_zero_x[right_lane_points_indx]
-            self.allyr= non_zero_y[right_lane_points_indx]
+            #self.allxr= non_zero_x[right_lane_points_indx]
+            #self.allyr= non_zero_y[right_lane_points_indx]
 
             # if lines were found
-            if (len(self.allxl)>0) & (len(self.allxr)>0):
+            if (len(self.allxl)>0):
                 try:
                     self.current_fit_l = np.polyfit(self.allyl,self.allxl, 2)
-                    self.current_fit_r = np.polyfit(self.allyr,self.allxr, 2)
+                    #self.current_fit_r = np.polyfit(self.allyr,self.allxr, 2)
                 except np.RankWarning:
                     self.poly_warning = True
                     pass
@@ -357,24 +365,25 @@ class Lines():
                 if self.check_fit():
                     # average out the best fit with new values
                     self.best_fit_l = self.best_fit_l*0.6 + self.current_fit_l * 0.4
-                    self.best_fit_r = self.best_fit_r*0.6 + self.current_fit_r * 0.4
+                    #self.best_fit_r = self.best_fit_r*0.6 + self.current_fit_r * 0.4
 
                     # assign new best values based on this iteration
                     self.bestxl = self.allxl
                     self.bestyl = self.allyl
-                    self.bestxr = self.allxr
-                    self.bestyr = self.allyr
+                    #self.bestxr = self.allxr
+                    #self.bestyr = self.allyr
 
                     # construct images of the results
                     template_l = np.copy(image).astype(np.uint8)
-                    template_r = np.copy(image).astype(np.uint8)
+                    #template_r = np.copy(image).astype(np.uint8)
 
                     template_l[non_zero_y[left_lane_points_indx],non_zero_x[left_lane_points_indx]] = 255 # add left window pixels
-                    template_r[non_zero_y[right_lane_points_indx],non_zero_x[right_lane_points_indx]] = 255 # add right window pixels
+                    #template_r[non_zero_y[right_lane_points_indx],non_zero_x[right_lane_points_indx]] = 255 # add right window pixels
                     zero_channel = np.zeros_like(template_l) # create a zero color channel
-                    self.left_right = np.array(cv2.merge((template_l,zero_channel,template_r)),np.uint8) # make color image left and right lane
-
-                # set flag if lanes are not detected correctly
+                    #self.left_right = np.array(cv2.merge((template_l,zero_channel,template_r)),np.uint8) # make color image left and right lane
+                    self.edge = np.array(cv2.merge((template_l, zero_channel)),np.uint8)
+                    cv2.imwrite('edge.jpg', self.edge)
+                    # set flag if lanes are not detected correctly
                 else:
                     self.detected = False
 
@@ -383,12 +392,12 @@ class Lines():
         # Generate x and y values of the fit
         ploty = np.linspace(0, self.im_shape[0]-1, self.im_shape[0])
         left_fitx = self.current_fit_l[0]*ploty**2 + self.current_fit_l[1]*ploty + self.current_fit_l[2]
-        right_fitx = self.current_fit_r[0]*ploty**2 + self.current_fit_r[1]*ploty + self.current_fit_r[2]
+        #right_fitx = self.current_fit_r[0]*ploty**2 + self.current_fit_r[1]*ploty + self.current_fit_r[2]
 
         # find max, min and mean distance between the lanes
-        max_dist  = np.amax(np.abs(right_fitx - left_fitx))
-        min_dist  = np.amin(np.abs(right_fitx - left_fitx))
-        mean_dist = np.mean(np.abs(right_fitx - left_fitx))
+        max_dist  = np.amax(np.abs(left_fitx))#np.amax(np.abs(right_fitx - left_fitx))
+        min_dist  = np.amin(np.abs(left_fitx))#np.amin(np.abs(right_fitx - left_fitx))
+        mean_dist = np.amean(np.abs(left_fitx))#np.mean(np.abs(right_fitx - left_fitx))
         # check if the lanes don't have a big deviation from the mean
         if (max_dist > 250) |  (np.abs(max_dist - mean_dist)> 100) | (np.abs(mean_dist - min_dist) > 100) | (mean_dist<50) | self.poly_warning:
             return False
@@ -447,7 +456,10 @@ class Lines():
     # project results on the source image
     def project_on_road_debug(self, image_input):
         image = image_input[self.remove_pixels:, :]
+        #cv2.imshow('image', image)
+        
         image = self.trans_per(image)
+        cv2.imwrite('trans.jpg', image)
         self.im_shape = image.shape
         self.get_fit(image)
 
@@ -570,17 +582,27 @@ class Lines():
 
 lines = Lines()
 lines.look_ahead = 10
-lines.remove_pixels = 0
-lines.enlarge = 2.25
+lines.remove_pixels = 100
+lines.enlarge = 0.5 #2.25
+while True:
+    image = cv2.imread('blackRoad.jpg')
+        
+        # show the frame
+    cv2.imwrite('Road.jpg', lines.project_on_road_debug(image))
+    time.sleep(0.1)
+    key = cv2.waitKey(1) & 0xF
+    if key == ord("q"):
+        break
+'''
 # capture frames from the camera
 for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
         # grab the raw NumPy array representing the image, then initialize the timestamp
         # and occupied/unoccupied text
-        image = frame.array
+        image = cv2.imread('blackRoad.jpg')
         
         # show the frame
-        #lines.project_on_road_debug(image)
-        cv2.imshow("Rpi lane detection", lines.project_on_road_debug(image))
+        lines.project_on_road_debug(image)
+        #cv2.imshow("Rpi lane detection", lines.project_on_road_debug(image))
         key = cv2.waitKey(1) & 0xFF
 
         # clear the stream in preparation for the next frame
@@ -590,4 +612,5 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
         # if the `q` key was pressed, break from the loop
         if key == ord("q"):
                 break
+'''
 
