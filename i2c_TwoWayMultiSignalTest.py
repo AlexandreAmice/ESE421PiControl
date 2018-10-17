@@ -19,17 +19,22 @@ def getByteData(oldBytes):
         newBytes = [data_received[0]*255 + data_received[1]]
         newBytes.append(data_received[2])
         newBytes.append(data_received[3])
+        string = parse_serial(data_received)
         with open(dataFile, 'a') as f:
-            f.write(data[1])
-    except:
+            f.write(string)
+    
+    
+    except Exception as e:
+        print e
         print("error reading byte data")
         newBytes = oldBytes;
 
     return newBytes
 
 def parse_serial(data):
-    print ("heading: " + data[1] +"velocity: " + data[2])
-    return ("heading: " + data[1] +"velocity: " + data[2])
+    string = "heading: " + str(data[1]) +" velocity: " + str(data[2]) +'\n'
+    #print(string)
+    return string
     
 
 #
