@@ -2,7 +2,23 @@ import numpy as np
 import cv2
 import time
 import warnings
+import picamera
+from picamera.array import PiRGBArray
 
+
+warnings.filterwarnings('error')
+
+image_size = (320, 192)
+camera = picamera.PiCamera()
+camera.resolution = image_size
+camera.framerate = 7
+camera.vflip = False
+camera.hflip = False
+# camera.exposure_mode='off'
+rawCapture = PiRGBArray(camera, size=image_size)
+
+# allow the camera to warmup
+time.sleep(0.1)
 
 image_size=(320, 192)
 
@@ -420,6 +436,7 @@ roadEdge.enlarge = 0.5  # 2.25
 image = cv2.GaussianBlur(image, (3,3),1)
 roadEdge.look_left = False
 result = roadEdge.project_on_road()
+'''
 print roadEdge.calc_phi_d()
 cv2.imwrite('Result.jpg', result)
 # show the frame
@@ -428,3 +445,22 @@ time.sleep(0.1)
 key = cv2.waitKey(1) & 0xF
     #if key == ord("q"):
     #    break
+'''
+for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
+    # grab the raw NumPy array representing the image, then initialize the timestamp
+    # and occupied/unoccupied text
+    image = frame.array
+
+    # show the frame
+    # lines.project_on_road_debug(image)
+    roadEdge.cur_image = image
+    cv2.imshow("Rpi lane detection", roadEdge.project_on_road())
+    key = cv2.waitKey(1) & 0xFF
+
+    # clear the stream in preparation for the next frame
+    rawCapture.truncate()
+    rawCapture.seek(0)
+
+    # if the `q` key was pressed, break from the loop
+    if key == ord("q"):
+        break
