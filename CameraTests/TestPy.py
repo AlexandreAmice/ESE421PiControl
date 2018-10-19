@@ -5,6 +5,7 @@ import warnings
 
 image = cv2.imread('blackRoad.jpg')
 img = cv2.cvtColor(image, cv2.COLOR_RGB2HSV)
+cv2.imwrite('HSV.jpg', img)
 
 low_black = np.array([50, 50, 50]) #if value is
 high_black = np.array([100, 255, 255])
