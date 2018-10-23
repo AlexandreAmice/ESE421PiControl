@@ -2,13 +2,15 @@ import numpy as np
 import cv2
 import time
 import warnings
-import picamera
-from picamera.array import PiRGBArray
+
+#import picamera
+#from picamera.array import PiRGBArray
 
 
 warnings.filterwarnings('error')
 
 image_size = (320, 192)
+'''
 camera = picamera.PiCamera()
 camera.resolution = image_size
 camera.framerate = 7
@@ -19,8 +21,7 @@ rawCapture = PiRGBArray(camera, size=image_size)
 
 # allow the camera to warmup
 time.sleep(0.1)
-
-image_size=(320, 192)
+'''
 
 # class for Road detection
 class Road_Edge():
@@ -76,9 +77,6 @@ class Road_Edge():
 
         self.cur_image = img
 
-        #canny edge image
-        self.canny_collect = None
-
         #desired offset
         self.desired_offset = 4
 
@@ -100,23 +98,26 @@ class Road_Edge():
         :return: whitewashed image in gray scale
         '''
         img = cv2.cvtColor(img, cv2.COLOR_RGB2HSV)
-
         h,s,v = cv2.split(img)
-        v = np.zeros_like(v)
         low_h = 50 #np.array([50, 0, 0])
         high_h = 100 #np.array([100, 255, 255])
         low_s = 25
         high_s = 70
         h_mask = cv2.inRange(h, low_h, high_h)
         s_mask = 255-cv2.inRange(s, low_s, high_s)
-        h_mask = cv2.medianBlur(h_mask, 5) #large median blur to ensure that patches are very rare
-        s_mask = cv2.medianBlur(s_mask, 5)  # large median blur to ensure that patches are very rare
-        res = cv2.merge([h_mask,s_mask,v])
-        res = cv2.Sobel(h_mask, cv2.CV_8U, 1, 0, ksize=3)
+        h_mask = cv2.medianBlur(h_mask, 19) #large median blur to ensure that patches are very rare
+        s_mask = cv2.medianBlur(s_mask, 19)  #large median blur to ensure that patches are very rare
+        tempS = np.zeros_like(s_mask)
+        tempS[np.nonzero(s_mask)] = 1
+        tempH = np.zeros_like(s_mask)
+        tempH[np.nonzero(h_mask)] = 1
+        res = tempS & tempH #take only the parts that thresholded white in both H and S
+        res[np.nonzero(res)] = 255
+        res = cv2.Sobel(res, cv2.CV_8U, 1, 0, ksize=3)
         res = cv2.Sobel(res, cv2.CV_8U, 0, 1, ksize=3)
+        cv2.imwrite('gray.jpg', res)
         cv2.imwrite('gradX.jpg', res)
         cv2.imwrite('gradY.jpg', res)
-
         cv2.imwrite('hWash.jpg', h_mask)
         cv2.imwrite('sWash.jpg', s_mask)
         cv2.imwrite('whiteWash.jpg', res)
@@ -150,25 +151,23 @@ class Road_Edge():
 
         return sbinary
 
-    def collect_edge(self, img, lowThresh, highThresh, window_height = 40, window_width = 40, margin = 10):
+    def collect_edge(self, img, lowThresh, highThresh, window_height = 10, window_width = 10, margin = 40):
         '''
         collect edge
-        :param img: source image
+        :param img: Source image
         :param threshold: threshold above which potentially an edge
         :return: collected edge
         '''
-
-        canny = cv2.Canny(img, highThresh, lowThresh)
-        self.canny_collect = canny
-        cv2.imwrite('cannyCollect.jpg', img)
-        xs = self.find_window_centroids(canny, window_width, window_height, margin)
+        whitewash = self.whitewash(img)
+        xs = self.find_window_centroids(whitewash, window_width, window_height, margin)
         xs.reverse()
         ys = range(1, (int)(img.shape[0] / window_height)+1)
         ys = [i * window_height - 1 for i in ys]
-        temp = np.zeros_like(img)
+        temp = np.zeros_like(whitewash)
         self.edge = temp
-        self.edge[ys,xs] = 255
-        self.edgeCoord = np.transpose(np.array([xs, ys]))
+        for i in range(0,len(ys)):
+            self.edge[ys[i]-margin:ys[i]+margin,xs[i]-margin:xs[i]+margin] = \
+                whitewash[ys[i]-margin:ys[i]+margin,xs[i]-margin:xs[i]+margin]
         cv2.imwrite('edge.jpg', self.edge)
         return xs, ys
 
@@ -185,20 +184,26 @@ class Road_Edge():
         :return: a set of windows that contain the line
         '''
         window_centroids = []  # Store the (left,right) window centroid positions per level
-        window = np.ones(window_width)  # Create our window template that we will use for convolutions
+        if self.look_left:
+            window = np.array([float(i**2)/window_width for i in range(0, window_width)])
+        else:
+            window = np.array([float(i**2) / window_width for i in range(window_width, 0, -1)])
+        #window = np.ones(window_width)  # Create our window template that we will use for convolutions
 
         # First find the two starting positions for the left and right lane by using np.sum to get the vertical image slice
         # and then np.convolve the vertical image slice with the window template
 
         # Sum bottom ratio of image
-        ratio = 11 / 12.0
+        ratio = 1 / 4
+        cv2.imwrite('partialL.jpg', image[int(ratio * image.shape[0]):, :int(image.shape[1] / 2)])
+        cv2.imwrite('partialR.jpg', image[int(image.shape[0] * ratio):, int(image.shape[1] / 2):])
         if self.look_left:
             totSum = np.sum(image[int(ratio * image.shape[0]):, :int(image.shape[1] / 2)], axis=0)
             center = np.argmax(np.convolve(window, totSum)) - window_width / 2
             if sum(totSum) < 20:
                 self.found_edge = False
         else:
-            totSum = np.sum(image[int( image.shape[0] * ratio):, int(image.shape[1] / 2):], axis=0)
+            totSum = np.sum(image[int(image.shape[0] * ratio):, int(image.shape[1] / 2):], axis=0)
             center = np.argmax(np.convolve(window, totSum)) - window_width / 2 + int(image.shape[1] / 2)
             if sum(totSum) < 20:
                 self.found_edge = False
@@ -259,23 +264,24 @@ class Road_Edge():
         :return:
         '''
         # window setting
-        wind_width = 5
-        wind_height = 5
-        margin = 25  # how much road can deviate ahead
-        self.allx,self.ally = self.collect_edge(image,180, 255,wind_height, wind_width, margin)
+        wind_width = 10
+        wind_height = 10
+        margin = 20  # how much road can deviate ahead
+        self.allx,self.ally = self.collect_edge(image, 180, 255,wind_height, wind_width, margin)
         self.bestx, self.besty = np.array(self.allx), np.array(self.ally)
 
         if (len(self.allx) > 0):
             try:
-                self.current_fit = np.polyfit(self.ally, self.allx, 2)
+                self.current_fit = np.polyfit(self.ally, self.allx, 1)
                 self.best_fit = self.current_fit
             except np.RankWarning:
                 self.poly_warning = True
         self.detected = True
         self.detected_first = True
-        template = np.array(image, np.uint8)  # add left window pixel
-        zero_channel = np.zeros_like(template)  # create a zero color channel
-        self.edge = np.array(cv2.merge((template, zero_channel, template)), np.uint8)
+        #UNCLEAR WHY I DID THE BELOW
+        #template = np.array(image, np.uint8)  # add left window pixel
+        #zero_channel = np.zeros_like(template)  # create a zero color channel
+       #self.edge = np.array(cv2.merge((template, zero_channel, template)), np.uint8)
     
     
     def calculate_curvature_offset(self):
@@ -327,7 +333,7 @@ class Road_Edge():
     def project_on_road(self):
         image_input = self.cur_image
         image = image_input[self.remove_pixels:,:]
-        image = self.whitewash(image)
+        #image = self.whitewash(image) REFACTOR PUT THIS IN COLLECT EDGE
         self.im_shape = image.shape
         self.get_fit2(image)
         #cv2.imwrite('edge.jpg', self.edge)
@@ -340,25 +346,37 @@ class Road_Edge():
             warp_zero = np.zeros_like(image).astype(np.uint8)
             color_warp = np.dstack((warp_zero, warp_zero, warp_zero))
 
-            ploty = np.linspace(0, image_input.shape[0] - 1, image_input.shape[0])
-            fit = self.best_fit[0] * ploty ** 2 + self.best_fit[1] * ploty + self.best_fit[2]
+            #ploty = np.linspace(0, image_input.shape[0] - 1, image_input.shape[0])
+            #fit = self.best_fit[0] * ploty ** 2 + self.best_fit[1] * ploty + self.best_fit[2]
 
 
             # recast the x and y points into usable format for cv2.fillPoly()
-            pts1 = np.array([np.transpose(np.vstack([fit, ploty]))])
-            pts2 = pts1
-            pts = np.hstack((pts1, pts2))
+            #pts1 = np.array([np.transpose(np.vstack([fit, ploty]))])
+            #pts2 = pts1
+            #pts = np.hstack((pts1, pts2))
 
 
             # draw the lane onto the warped blank image
-            cv2.fillPoly(color_warp, np.int_([pts]), (0, 255, 0))
+            #cv2.fillPoly(color_warp, np.int_([pts]), (0, 255, 0))
 
 
             # combine the result with the original image
-            edgeFill = np.vstack((filler, self.edge))
+            rEdge = np.zeros_like(self.edge)
+            gEdge = np.zeros_like(self.edge)
+            bEdge = np.zeros_like(self.edge)
+            rEdge[np.nonzero(self.edge)] = 255
+            rEdge[np.nonzero(self.edge)] = 180
+            edgeStack = np.dstack((bEdge,gEdge,rEdge))
+            edgeFill = np.vstack((filler, edgeStack))
             #filled = cv2.cvtColor(np.vstack((filler, self.edge)), cv2.COLOR_GRAY2RGB)
             #cv2.imwrite('filled.jpg', filled)
             result = cv2.addWeighted(edgeFill, 1, image_input, 1, 0) #edgeFill = filled
+            x1 = 0
+            x2 = image_input.shape[0] - 1
+            point1 = (int(self.best_fit[0] * x1 + self.best_fit[1])-self.remove_pixels, x1)
+            point2 = (int(self.best_fit[0] * x2 + self.best_fit[1])-self.remove_pixels, x2)
+            cv2.line(result, point1, point2, [255, 0, 0])
+            '''
             for idx1, point1 in enumerate(self.edgeCoord):
                 for idx2, point2 in enumerate(self.edgeCoord):
                     point1 = self.edgeCoord[idx1]
@@ -366,6 +384,7 @@ class Road_Edge():
                         temp1 = (point1[0], point1[1] + self.remove_pixels)
                         temp2 = (point2[0], point2[1] + self.remove_pixels)
                         cv2.line(result, temp1, temp2, [255,0,0])
+            '''
             # get curvature and offset
             self.calculate_curvature_offset()
 
@@ -391,8 +410,8 @@ class Road_Edge():
 
 
     def can_find_edge(self):
-        window_width = 5
-        window_height = 5
+        window_width = 10
+        window_height = 10
         margin = 25
         window = np.ones(window_width)  # Create our window template that we will use for convolutions
 
@@ -436,6 +455,7 @@ roadEdge.enlarge = 0.5  # 2.25
 image = cv2.GaussianBlur(image, (3,3),1)
 roadEdge.look_left = False
 result = roadEdge.project_on_road()
+cv2.imwrite('result.jpg',result)
 '''
 print roadEdge.calc_phi_d()
 cv2.imwrite('Result.jpg', result)
@@ -445,7 +465,7 @@ time.sleep(0.1)
 key = cv2.waitKey(1) & 0xF
     #if key == ord("q"):
     #    break
-'''
+
 for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
     # grab the raw NumPy array representing the image, then initialize the timestamp
     # and occupied/unoccupied text
@@ -464,3 +484,4 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
     # if the `q` key was pressed, break from the loop
     if key == ord("q"):
         break
+'''
