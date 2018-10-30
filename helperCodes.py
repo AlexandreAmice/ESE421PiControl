@@ -1,6 +1,7 @@
-from math import sin, cos, sqrt, atan2, radians
+from math import sin, cos, sqrt, atan2, radians, degrees
 from numpy.linalg import norm
 import numpy as np
+from vectors import *
 
 def tsplit(s, sep):
     stack = [s]
@@ -10,6 +11,19 @@ def tsplit(s, sep):
             pieces.extend(substr.split(char))
         stack = pieces
     return stack
+
+def sphereBear(lat1, lon1, lat2, lon2):
+    """
+    :param lat1:
+    :param lon1:
+    :param lat2:
+    :param lon2:
+    :return: return the spherical bearing from north between two points
+    """
+    lat1,lat2,lon1,lon2 = map(radians, [lat1,lat2,lon1,lon2])
+
+    return (degrees(atan2(cos(lat1) * sin(lat2) - sin(lat1) * cos(lat2) * cos(lon2 - lon1), sin(lon2 - lon1) * cos(lat2))) + 360)%360
+
 
 def sphereDist(lat1, long1, lat2, long2, distOnly = True):
     '''
@@ -55,17 +69,16 @@ def distPointToLine(endPt1, endPt2, pointOff, distOnly = True):
     :return: distance from pointOff to line (x,y) tuple constrained to points lying inside the end points
     '''
     #calculated using equations from https://en.wikipedia.org/wiki/Distance_from_a_point_to_a_line#Cartesian_coordinates
-    (minX, ptX) = min((endPt1[0], endPt2[0])), (endPt1[0], endPt2[0]).index(min(endPt1[0], endPt2[0]))
-    minY. pt = min(endPt1[1], endPt2[1]), (endPt1[1], endPt2[1]).index(min(endPt1[1], endPt2[1]))
-    maxX = max(endPt1[0], endPt2[0]), (endPt1[0], endPt2[0]).index(max(endPt1[0], endPt2[0]))
-    maxY = max(endPt1[1], endPt2[1]), (endPt1[1], endPt2[1]).index(min(endPt1[1], endPt2[1]))
+    (minX, ptXmin) = min((endPt1[0], endPt2[0])), (endPt1[0], endPt2[0]).index(min(endPt1[0], endPt2[0]))
+    minY, ptYmin = min(endPt1[1], endPt2[1]), (endPt1[1], endPt2[1]).index(min(endPt1[1], endPt2[1]))
+    maxX, ptXmax = max(endPt1[0], endPt2[0]), (endPt1[0], endPt2[0]).index(max(endPt1[0], endPt2[0]))
+    maxY, ptYmax = max(endPt1[1], endPt2[1]), (endPt1[1], endPt2[1]).index(min(endPt1[1], endPt2[1]))
     m = float(endPt1[1] - endPt2[1])/float(endPt1[0] - endPt2[0])
     a = -m
     b = 1
     c = ((-1)*endPt1[1] + m * endPt1[1])
     nearestX = float(b*(b*pointOff[0] - a*pointOff[1])- a * c)/float(a**2 + b**2) #in lat
     nearestY = float(a* ((-1)*b*pointOff[0] + a * pointOff[1])-b*c)/float(a**2 + b**2) #in long
-
     #constrain this to lie inside the endpoints
     if nearestX < minX:
         nearestX = minX
@@ -83,17 +96,15 @@ def distPointToLine(endPt1, endPt2, pointOff, distOnly = True):
         nearestY = minY
     elif nearestY > maxY:
         nearestY = maxY
-    #DEPRECATED CODE AS ONLY CALCULATE LAT LONG OFFSETS
-    #endPt1 = np.array(endPt1)
-    #endPt2 = np.array(endPt2)
-    #d = norm(np.cross(endPt2-endPt1, endPt1 - pointOff))/norm(endPt2-endPt1)
+
 
     dist = sphereDist(pointOff[0], pointOff[1], nearestX, nearestY)
-    print pointOff[0], pointOff[1], nearestX, nearestY
+    #print pointOff[0], pointOff[1], nearestX, nearestY
     if distOnly:
         return dist
     else:
         return (dist, nearestX, nearestY)
+
 
 def wrapAngle(angle):
     '''

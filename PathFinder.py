@@ -8,7 +8,7 @@ import warnings
 
 
 warnings.filterwarnings('error')
-
+'''
 image_size = (320, 192)
 camera = picamera.PiCamera()
 camera.resolution = image_size
@@ -20,11 +20,11 @@ rawCapture = PiRGBArray(camera, size=image_size)
 
 # allow the camera to warmup
 time.sleep(0.1)
-
+'''
 
 # class for Road detection
-class Road_Edge():
-    def __init__(self, img):
+class PathFinder():
+    def __init__(self, img, removePixels = None):
         # average x values of the fitted road edge
         self.bestx = None
         self.besty = None
@@ -55,7 +55,7 @@ class Road_Edge():
         # distance to look ahead in meters
         self.look_ahead = 10 #currently arbitrary
         # cut off image from top to restrict view
-        self.remove_pixels = 300
+        self.remove_pixels = removePixels
 
         #windowing parameters for edge detection.
         #WARNING THESE ARE REALLY SENSITIVE TAKE CARE WHEN CHANGING
@@ -142,8 +142,6 @@ class Road_Edge():
         whitewash = self.whitewash(img)
         xs,ys = self.find_window_centroids(whitewash, window_width, window_height, margin)
         xs.reverse()
-        #ys = range(1, (int)(img.shape[0] / window_height)+1)
-        ys = [i * window_height - 1 for i in ys]
         #be sure that we found an edge
 
         if not self.found_edge:
@@ -218,8 +216,10 @@ class Road_Edge():
             window_centroids.append(center)
         #make sure we actually found a road
         self.found_edge = sum(totSum) > 255 * 50
+        ys = range(1, (int)(image.shape[0] / window_height)+1)
+        ys = [i * window_height - 1 for i in ys]
         #need to reverse the x because of convolution doing things backward
-        return window_centroids, range(1, (int)(image.shape[0] / window_height)+1)
+        return window_centroids, ys
 
 
 
@@ -242,10 +242,6 @@ class Road_Edge():
             except np.RankWarning:
                 self.poly_warning = True
 
-        #UNCLEAR WHY I DID THE BELOW
-        #template = np.array(image, np.uint8)  # add left window pixel
-        #zero_channel = np.zeros_like(template)  # create a zero color channel
-       #self.edge = np.array(cv2.merge((template, zero_channel, template)), np.uint8)
     
     #TODO: FIX THIS
     def calculate_curvature_offset(self):
@@ -286,12 +282,10 @@ class Road_Edge():
 
                 # initialize the curvature and offset if this is the first detection
                 if self.curve_rad == None:
-                    self.curve_rad = curve_rad
                     self.offset = offset
 
-                # average out the curvature and offset
+                # average out the offset
                 else:
-                    self.curve_rad = self.curve_rad * 0.8 + curve_rad * 0.2
                     self.offset = self.offset * 0.9 + offset * 0.1
 
     def project_on_road(self):
@@ -354,6 +348,8 @@ class Road_Edge():
 
 
     def calc_phi_d(self):
+        image = self.cur_image[self.remove_pixels:, :]
+        self.get_fit2(self.cur_image)
         if not self.found_edge:
             return 20*(-self.look_left*1 + (not self.look_left)*1)
         else:
@@ -364,14 +360,16 @@ class Road_Edge():
             print (self.offset - self.desired_offset)
             return 5 * (self.offset-self.desired_offset) * (-self.look_left*1 + (not self.look_left)*1)
 
+    def setLookLeft(self, val):
+        self.look_left = val
 
 
 
         #############################################################################
-'''
+
 #while True:
 image = cv2.imread('blackRoad.jpg')
-roadEdge = Road_Edge(image)
+roadEdge = PathFinder(image)
 roadEdge.look_ahead = 10
 roadEdge.remove_pixels = 300
 roadEdge.enlarge = 0.5  # 2.25
@@ -402,3 +400,4 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
     # if the `q` key was pressed, break from the loop
     if key == ord("q"):
         break
+'''

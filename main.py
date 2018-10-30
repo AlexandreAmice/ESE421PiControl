@@ -1,7 +1,52 @@
 from MapObj import MapObj
+import time
+import threading
+import matplotlib.pyplot as plt
+import networkx as nx
 #from CameraTests import RoadFinderTest
-#pathPlan = MapObj('mapPennParkNodes.txt', 'mapPennParkEdges.txt')
-cameraData = 0#PathFinder()
-look_left = False
 
-print 20*(look_left*1 - (not look_left)*1)
+curLat = 39.9509507  #dummy values will be updated in the loop TODO
+curLon =  -75.1853272 #dummy values will be updated in the main loop TODO
+turnLeft = True
+
+#setup map object
+pathPlan = MapObj('mapPennParkNodes.txt', 'mapPennParkEdges.txt')
+currentRoad = pathPlan.guessRoadData()
+count = 1*10**20
+flag = True
+nodeNearThresh = 0.001
+while True:
+    if count > 20:
+        count = 0
+        if flag:
+            curLat, curLon = pathPlan.getNodeLatLon('C')
+            curLat += 0.003
+            curLon += 0.003
+            pathPlan.setGoalNode('G')
+            flag = not flag
+            print pathPlan.goalNode
+        else:
+            curLat, curLon = pathPlan.getNodeLatLon('T')
+            pathPlan.setGoalNode('S')
+            curLat += 0.003
+            curLon += 0.003
+            flag = not flag
+            print pathPlan.goalNode
+    dist1 = pathPlan.curDistToNode(currentRoad[0][0])
+    dist2 = pathPlan.curDistToNode(currentRoad[0][1])
+
+    if not (dist1 < nodeNearThresh or dist2 < nodeNearThresh): #if we are too close to the nodes of the road let jesus take the wheel and hope car turns correctly
+        pathPlan.setGPSCoord(curLat,curLon)
+        guessRoadData = pathPlan.guessRoadData()
+        if currentRoad[0] != guessRoadData[0]: #if the current road has changed replan the route
+            currentRoad = guessRoadData
+            pathPlan.planPath()
+            pathPlan.setTurnLeft()
+            turnLeft = pathPlan.getTurnLeft()
+            print pathPlan.curPlan
+            print turnLeft
+
+    count += 1
+    time.sleep(0.1)
+
+
