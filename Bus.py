@@ -105,5 +105,52 @@ class CameraThread(threading.Thread):
 #END CAMERA THREAD CLASS
 ########################################################################################################################
 
+########################################################################################################################
+# START SOPHIA CODE
+########################################################################################################################
 
 
+phiD = 0
+desiredOffset = 3
+curOffset = 3
+camLookLeft = True
+
+    #get psi_map and speed from main and send to path planner
+    speedLimit = pathPlan.getRoadSpeedCurGPS() #use lat and lon, determine max speed on this path
+
+    #send GPS to path planner from I2C
+    curLat, curLon = mainI2C.getGPS()
+
+    #get psi_r from camera
+    psiR = camera.getPsiR()
+
+    #look left / right (included above)
+
+    #get psi_d, speed from Arduino
+    psiD = mainI2C.getPsiD()
+    speedCurrent = mainI2C.getSpeed() ##not sure how sending speed --> need to decide as lab group whether using PWM
+
+    #read in from text file
+    #assumes data organized as psiD then speedCurrent
+    with open("data.txt") as in_file:
+        # create a csv reader object
+        csv_reader = reader(in_file)
+
+        # extract headers
+        headers = [x.strip() for x in next(csv_reader)]
+
+        # go over each line 
+        for line in csv_reader:
+            # if line is not empty
+            if line:
+                psiD = line
+                speedCurrent = line
+    
+    #send GPS using I2C
+    mainI2C.setGPS(lat, lon)
+
+########################################################################################################################
+# END SOPHIA CODE
+# between Pi and Arduino
+# i2C
+########################################################################################################################
