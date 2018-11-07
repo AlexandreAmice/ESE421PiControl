@@ -1,0 +1,909 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BookmarkManager">
+    <bookmark url="file://$PROJECT_DIR$/helperCodes.py" description="#constrain this to lie inside the endpoints" line="81" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="137b37d1-bf89-45b9-9b76-6f59f74be7a0" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/ArduinoCom.py" beforeDir="false" afterPath="$PROJECT_DIR$/ArduinoCom.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bus.py" beforeDir="false" afterPath="$PROJECT_DIR$/Bus.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FUSProjectUsageTrigger">
+    <session id="603291829">
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.closed" value="14" />
+          <entry key="project.open.time.1" value="3" />
+          <entry key="project.open.time.10" value="1" />
+          <entry key="project.open.time.11" value="1" />
+          <entry key="project.open.time.12" value="2" />
+          <entry key="project.open.time.2" value="2" />
+          <entry key="project.open.time.3" value="2" />
+          <entry key="project.open.time.5" value="1" />
+          <entry key="project.open.time.6" value="3" />
+          <entry key="project.open.time.7" value="5" />
+          <entry key="project.open.time.8" value="1" />
+          <entry key="project.open.time.9" value="1" />
+          <entry key="project.opened" value="22" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.open">
+        <counts>
+          <entry key="jpg" value="182" />
+          <entry key="py" value="63" />
+          <entry key="txt" value="5" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.open">
+        <counts>
+          <entry key="Image" value="182" />
+          <entry key="PLAIN_TEXT" value="5" />
+          <entry key="Python" value="63" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.edit">
+        <counts>
+          <entry key="dummy" value="61" />
+          <entry key="py" value="40885" />
+          <entry key="txt" value="283" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.edit">
+        <counts>
+          <entry key="PLAIN_TEXT" value="344" />
+          <entry key="Python" value="40885" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.vcs.git.usages">
+        <counts>
+          <entry key="git.branch.rebase" value="1" />
+        </counts>
+      </usages-collector>
+    </session>
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Bus.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="77">
+              <caret line="185" lean-forward="true" selection-start-line="185" selection-end-line="185" />
+              <folding>
+                <element signature="e#0#16#0" expanded="true" />
+                <marker date="1541565093320" expanded="true" signature="1121:1190" ph="..." />
+                <marker date="1541565093320" expanded="true" signature="1758:2840" ph="..." />
+                <marker date="1541565093320" expanded="true" signature="3418:4953" ph="..." />
+                <marker date="1541565093320" expanded="true" signature="7056:7057" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ArduinoCom.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="28">
+              <caret line="49" column="21" selection-start-line="49" selection-start-column="21" selection-end-line="49" selection-end-column="21" />
+              <folding>
+                <element signature="e#0#13#0" expanded="true" />
+                <marker date="1541563434895" expanded="true" signature="1540:1545" ph="..." />
+                <marker date="1541563434895" expanded="true" signature="2066:2676" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/PathFinder.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="168">
+              <caret line="9" column="32" selection-start-line="9" selection-end-line="10" />
+              <folding>
+                <element signature="e#0#18#0" expanded="true" />
+                <marker date="1540604999430" expanded="true" signature="11002:11007" ph="..." />
+                <marker date="1540604999430" expanded="true" signature="13475:13480" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/MapObj.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="3752">
+              <caret line="138" column="24" selection-start-line="138" selection-start-column="24" selection-end-line="138" selection-end-column="24" />
+              <folding>
+                <element signature="e#0#30#0" expanded="true" />
+                <marker date="1540583793527" expanded="true" signature="3165:3170" ph="..." />
+                <marker date="1540583793527" expanded="true" signature="3320:3372" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/helperCodes.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2128">
+              <caret line="79" selection-start-line="79" selection-end-line="79" />
+              <folding>
+                <element signature="e#0#56#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/mapPennParkNodes.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="56">
+              <caret line="2" column="3" selection-start-line="2" selection-start-column="3" selection-end-line="2" selection-end-column="26" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/mapPennParkEdges.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="140">
+              <caret line="5" column="5" selection-start-line="5" selection-start-column="5" selection-end-line="5" selection-end-column="5" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/CameraTests/sWash.jpg">
+          <provider selected="true" editor-type-id="images" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/CameraTests/whiteWash.jpg">
+          <provider selected="true" editor-type-id="images" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/CameraTests/edge.jpg">
+          <provider selected="true" editor-type-id="images" />
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>self.im_shape</find>
+      <find>self.bestx</find>
+      <find>self.besty</find>
+      <find>window</find>
+      <find>self.edge</find>
+      <find>cur_image</find>
+      <find>choose</find>
+      <find>collect_edge</find>
+      <find>self.canny_collect</find>
+      <find>get_fit</find>
+      <find>self.edgeCoord</find>
+      <find>edge.jpg</find>
+      <find>calc_</find>
+      <find>wind</find>
+      <find>w</find>
+      <find>rEdge</find>
+      <find>can_find_edge</find>
+      <find>check_fit</find>
+      <find>window_mask</find>
+      <find>abs_sobel_thresh</find>
+      <find>detected_first</find>
+      <find>self.detected</find>
+      <find>self.mapGraph</find>
+      <find>distPointT</find>
+      <find>curPlan</find>
+      <find>planPath</find>
+      <find>setGoal</find>
+      <find>print</find>
+      <find>desiredHeading</find>
+      <find>wr</find>
+    </findStrings>
+    <replaceStrings>
+      <replace>self.bus</replace>
+      <replace>self.address</replace>
+      <replace>road edges</replace>
+      <replace>road_edge</replace>
+      <replace>RoadEdge</replace>
+      <replace>road edge</replace>
+      <replace>current_fit</replace>
+      <replace />
+      <replace>self.bestx</replace>
+      <replace>canny_collect</replace>
+      <replace>choice</replace>
+      <replace>mapGraph</replace>
+      <replace>psiD</replace>
+    </replaceStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="PREVIOUS_COMMIT_AUTHORS">
+      <list>
+        <option value="Amice" />
+      </list>
+    </option>
+    <option name="UPDATE_TYPE" value="MERGE" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/mapPennParkNodes.txt" />
+        <option value="$PROJECT_DIR$/SamplePy.py" />
+        <option value="$PROJECT_DIR$/Path.py" />
+        <option value="$PROJECT_DIR$/CameraTests/TestCV.py" />
+        <option value="$PROJECT_DIR$/CameraTests/TestPy.py" />
+        <option value="$USER_HOME$/Desktop/Test/test.py" />
+        <option value="$PROJECT_DIR$/helperCodes.py" />
+        <option value="$PROJECT_DIR$/mapPennParkEdges.txt" />
+        <option value="$PROJECT_DIR$/MapObj.py" />
+        <option value="$PROJECT_DIR$/CameraTests/RoadFinderTest.py" />
+        <option value="$PROJECT_DIR$/CameraTests/PathFinder.py" />
+        <option value="$PROJECT_DIR$/PathFinder.py" />
+        <option value="$PROJECT_DIR$/main.py" />
+        <option value="$PROJECT_DIR$/ArduinoCom.py" />
+        <option value="$PROJECT_DIR$/Bus.py" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="4">
+    <option name="x" value="960" />
+    <option name="y" value="25" />
+    <option name="width" value="960" />
+    <option name="height" value="978" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="Pi Control" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Pi Control" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Pi Control" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Pi Control" type="462c0819:PsiDirectoryNode" />
+              <item name="CameraTests" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Pi Control" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="project.scopes" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/CameraTests" />
+      <recent name="$PROJECT_DIR$" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="Python.main">
+    <configuration name="PathFinder" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="Pi Control" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/CameraTests" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/PathFinder.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="RoadFinderTest" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="Pi Control" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/CameraTests" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/CameraTests/RoadFinderTest.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="TestPy" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="Pi Control" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/CameraTests" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/CameraTests/TestPy.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="Pi Control" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="test" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="Pi Control" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$USER_HOME$/Desktop/Test" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$USER_HOME$/Desktop/Test/test.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Python.main" />
+      <item itemvalue="Python.TestPy" />
+      <item itemvalue="Python.PathFinder" />
+      <item itemvalue="Python.RoadFinderTest" />
+      <item itemvalue="Python.test" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.main" />
+        <item itemvalue="Python.PathFinder" />
+        <item itemvalue="Python.test" />
+        <item itemvalue="Python.RoadFinderTest" />
+        <item itemvalue="Python.TestPy" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="137b37d1-bf89-45b9-9b76-6f59f74be7a0" name="Default Changelist" comment="" />
+      <created>1538185689888</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1538185689888</updated>
+    </task>
+    <task id="LOCAL-00001" summary="Commit 9/30">
+      <created>1538378728416</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1538378728417</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Dummy ArduinoCom added">
+      <created>1538435980895</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1538435980895</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Added Camera Test.&#10;Some junk for the path planner">
+      <created>1539287620851</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1539287620851</updated>
+    </task>
+    <task id="LOCAL-00004" summary="RoadFinder">
+      <created>1539304993014</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1539304993014</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Edge finder fixed">
+      <created>1539506816967</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1539506816967</updated>
+    </task>
+    <task id="LOCAL-00006" summary="backupPush">
+      <created>1539915892732</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1539915892733</updated>
+    </task>
+    <task id="LOCAL-00007" summary="backupPush to pi">
+      <created>1539979450576</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1539979450576</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Fixed Edge Detection">
+      <created>1540307290789</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1540307290789</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Refactored 10/23. Prepared to Push to Pi">
+      <created>1540310650526</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1540310650526</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Refactored backup 10/30">
+      <created>1540924798199</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1540924798199</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
+    <servers />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="960" y="25" width="960" height="978" extended-state="4" />
+    <editor active="true" />
+    <layout>
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2625" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.3295063" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.26061997" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49895832" weight="0.33869115" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.49947917" weight="0.31113663" />
+      <window_info anchor="bottom" id="Terminal" order="8" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5005208" side_tool="true" weight="0.0" />
+      <window_info anchor="bottom" id="Python Console" order="10" />
+      <window_info anchor="bottom" id="Messages" order="11" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="R Graphics" order="3" />
+      <window_info anchor="right" id="R Packages" order="4" />
+    </layout>
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="RECENTLY_FILTERED_USER_GROUPS">
+                <collection />
+              </option>
+              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+                <collection />
+              </option>
+              <option name="COLUMN_ORDER">
+                <list>
+                  <option value="0" />
+                  <option value="1" />
+                  <option value="2" />
+                  <option value="3" />
+                </list>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="First Commit" />
+    <MESSAGE value="Commit 9/30" />
+    <MESSAGE value="Dummy ArduinoCom added" />
+    <MESSAGE value="Added Camera Test.&#10;Some junk for the path planner" />
+    <MESSAGE value="RoadFinder" />
+    <MESSAGE value="Edge finder fixed" />
+    <MESSAGE value="backupPush" />
+    <MESSAGE value="backupPush to pi" />
+    <MESSAGE value="Fixed Edge Detection" />
+    <MESSAGE value="Refactored 10/23. Prepared to Push to Pi" />
+    <MESSAGE value="Refactored backup 10/30" />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactored backup 10/30" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/SamplePy.py</url>
+          <line>29</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Path.py</url>
+          <line>48</line>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/PathFinder.py</url>
+          <line>143</line>
+          <option name="timeStamp" value="23" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/MapObj.py</url>
+          <line>162</line>
+          <option name="timeStamp" value="28" />
+        </line-breakpoint>
+      </breakpoints>
+      <default-breakpoints>
+        <breakpoint type="python-exception">
+          <properties notifyOnTerminate="true" exception="BaseException">
+            <option name="notifyOnTerminate" value="true" />
+          </properties>
+        </breakpoint>
+      </default-breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="debuggerHistoryManager">
+    <expressions id="evaluateCodeFragment">
+      <expression>
+        <expression-string>np.nonzero(window_points)</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>np.nonzero(mask)</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>np.nonzero(output)</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>output</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>output[int(img_ref.shape[0] - (level + 1) * height):int(img_ref.shape[0] - level * height), \
+        max(0, int(center - width / 2)):min(int(center + width / 2), img_ref.shape[1])]</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>output[int(img_ref.shape[0] - (level + 1) * height):int(img_ref.shape[0] - level * height), \
+        max(0, int(center - width / 2)):min(int(center + width / 2), img_ref.shape[1])] =1</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>output[int(img_ref.shape[0] - (level + 1) * height):int(img_ref.shape[0] - level * height), \         max(0, int(center - width / 2)):min(int(center + width / 2), img_ref.shape[1])]</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+    </expressions>
+    <expressions id="evaluateExpression">
+      <expression>
+        <expression-string>self.mapGraph.node</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>nearestY</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>nearestX</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>print nearestX</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>letToNum</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>adj</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>self.found_edge</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>len(ys)</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>len(ys()</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+    </expressions>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/CameraTests/imgBlur.jpg" />
+    <entry file="file://$PROJECT_DIR$/CameraTests/mask.jpg" />
+    <entry file="file://$PROJECT_DIR$/CameraTests/maskCrop.jpg" />
+    <entry file="file://$PROJECT_DIR$/CameraTests/vWash.jpg" />
+    <entry file="file://$PROJECT_DIR$/CameraTests/V.jpg" />
+    <entry file="file://$PROJECT_DIR$/CameraTests/Road.jpg" />
+    <entry file="file://$PROJECT_DIR$/CameraTests/edgesMask.jpg" />
+    <entry file="file://$PROJECT_DIR$/CameraTests/edges.jpg" />
+    <entry file="file://$PROJECT_DIR$/CameraTests/gray.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CameraTests/Result.jpg" />
+    <entry file="file://$PROJECT_DIR$/CameraTests/cannyCollect.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CameraTests/gradY.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CameraTests/partialR.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CameraTests/partial.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CameraTests/slice.jpg" />
+    <entry file="file://$PROJECT_DIR$/CameraTests/slice1.jpg" />
+    <entry file="file://$PROJECT_DIR$/CameraTests/slice2.jpg" />
+    <entry file="file://$PROJECT_DIR$/CameraTests/slice3.jpg" />
+    <entry file="file://$PROJECT_DIR$/CameraTests/slice4.jpg" />
+    <entry file="file://$PROJECT_DIR$/CameraTests/slice5.jpg" />
+    <entry file="file://$PROJECT_DIR$/CameraTests/slice6.jpg" />
+    <entry file="file://$PROJECT_DIR$/CameraTests/slice7.jpg" />
+    <entry file="file://$PROJECT_DIR$/CameraTests/slice8.jpg" />
+    <entry file="file://$PROJECT_DIR$/CameraTests/slice10.jpg" />
+    <entry file="file://$PROJECT_DIR$/CameraTests/slice11.jpg" />
+    <entry file="file://$PROJECT_DIR$/CameraTests/slice13.jpg" />
+    <entry file="file://$PROJECT_DIR$/CameraTests/slice14.jpg" />
+    <entry file="file://$PROJECT_DIR$/CameraTests/slice16.jpg" />
+    <entry file="file://$PROJECT_DIR$/CameraTests/slice17.jpg" />
+    <entry file="file://$PROJECT_DIR$/CameraTests/slice18.jpg" />
+    <entry file="file://$PROJECT_DIR$/CameraTests/slice21.jpg" />
+    <entry file="file://$PROJECT_DIR$/CameraTests/slice20.jpg" />
+    <entry file="file://$USER_HOME$/.local/lib/python2.7/site-packages/numpy/core/shape_base.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="8036">
+          <caret line="287" selection-start-line="287" selection-end-line="287" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CameraTests/blackRoad.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CameraTests/hWash.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CameraTests/result.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CameraTests/gradX.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Path.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="46" selection-start-column="36" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CameraTests/RoadFinderTest.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="623">
+          <caret line="571" column="13" lean-forward="true" selection-start-line="550" selection-end-line="571" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CameraTests/CameraControl.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="644">
+          <caret line="27" column="37" selection-start-line="27" selection-start-column="37" selection-end-line="27" selection-end-column="37" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PathFinder.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="9" column="32" selection-start-line="9" selection-end-line="10" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+            <marker date="1540604999430" expanded="true" signature="11002:11007" ph="..." />
+            <marker date="1540604999430" expanded="true" signature="13475:13480" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MapObj.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3752">
+          <caret line="138" column="24" selection-start-line="138" selection-start-column="24" selection-end-line="138" selection-end-column="24" />
+          <folding>
+            <element signature="e#0#30#0" expanded="true" />
+            <marker date="1540583793527" expanded="true" signature="3165:3170" ph="..." />
+            <marker date="1540583793527" expanded="true" signature="3320:3372" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/helperCodes.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2128">
+          <caret line="79" selection-start-line="79" selection-end-line="79" />
+          <folding>
+            <element signature="e#0#56#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mapPennParkNodes.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="56">
+          <caret line="2" column="3" selection-start-line="2" selection-start-column="3" selection-end-line="2" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mapPennParkEdges.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="140">
+          <caret line="5" column="5" selection-start-line="5" selection-start-column="5" selection-end-line="5" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CameraTests/sWash.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CameraTests/whiteWash.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CameraTests/edge.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ArduinoCom.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="28">
+          <caret line="49" column="21" selection-start-line="49" selection-start-column="21" selection-end-line="49" selection-end-column="21" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+            <marker date="1541563434895" expanded="true" signature="1540:1545" ph="..." />
+            <marker date="1541563434895" expanded="true" signature="2066:2676" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Bus.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="77">
+          <caret line="185" lean-forward="true" selection-start-line="185" selection-end-line="185" />
+          <folding>
+            <element signature="e#0#16#0" expanded="true" />
+            <marker date="1541565093320" expanded="true" signature="1121:1190" ph="..." />
+            <marker date="1541565093320" expanded="true" signature="1758:2840" ph="..." />
+            <marker date="1541565093320" expanded="true" signature="3418:4953" ph="..." />
+            <marker date="1541565093320" expanded="true" signature="7056:7057" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ScopeChooserConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>

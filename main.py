@@ -20,16 +20,12 @@ while True:
         count = 0
         if flag:
             curLat, curLon = pathPlan.getNodeLatLon('C')
-            curLat += 0.003
-            curLon += 0.003
             pathPlan.setGoalNode('G')
             flag = not flag
             print pathPlan.goalNode
         else:
             curLat, curLon = pathPlan.getNodeLatLon('T')
             pathPlan.setGoalNode('S')
-            curLat += 0.003
-            curLon += 0.003
             flag = not flag
             print pathPlan.goalNode
     dist1 = pathPlan.curDistToNode(currentRoad[0][0])
