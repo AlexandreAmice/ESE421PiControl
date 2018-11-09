@@ -6,16 +6,17 @@ import warnings
 import time
 from MapObj import MapObj
 import cv2
-from thread import Lock
+from threading import Lock
 from ArduinoCom import ArduinoCom
 
+print __name__
 ########################################################################################################################
 #START GLOBAL DATA
 ########################################################################################################################
 curLat = 39.9509507
 curLon = -75.185327
 gpsV = 0
-phiD = 0
+psiD = -20
 desiredOffset = 3
 curOffset = 3
 camLookLeft = True
@@ -27,7 +28,7 @@ gpsPsi = 0
 #This is gross. need to consider refactor
 curLatLock = Lock()
 curLonLock = Lock()
-phiDLock = Lock()
+psiDLock = Lock()
 desiredOffsetLock = Lock()
 curOffsetLock = Lock()
 camLookLeftLock = Lock()
@@ -35,7 +36,7 @@ lastNodeLock = Lock()
 speedDLock = Lock()
 gpsVLock = Lock()
 gpsPsiLock = Lock()
-locks = [curLatLock, curLonLock, phiDLock, desiredOffsetLock, curOffsetLock, camLookLeftLock, lastNodeLock, speedDLock,
+locks = [curLatLock, curLonLock, psiDLock, desiredOffsetLock, curOffsetLock, camLookLeftLock, lastNodeLock, speedDLock,
          gpsVLock, gpsPsiLock]
 
 def releaseAllLocks():
@@ -53,7 +54,8 @@ def releaseAllLocks():
 ########################################################################################################################
 class MapThread(threading.Thread):
     def run(self):
-        global camLookLeft, curLon, curLat, phiD, lastNode, locks
+        print "Launching Map Thread"
+        global camLookLeft, curLon, curLat, psiD, lastNode, locks
         pathPlan = MapObj('mapPennParkNodes.txt', 'mapPennParkEdges.txt')
         while True:
             try:
@@ -83,10 +85,12 @@ class MapThread(threading.Thread):
 ########################################################################################################################
 #START CAMERA THREAD CLASS
 ########################################################################################################################
+
 class CameraThread(threading.Thread):
     def run(self):
+        print "Launching Cam Thread"
         global camLookLeft
-        global phiD
+        global psiD
 
         warnings.filterwarnings('error')
 
@@ -106,6 +110,7 @@ class CameraThread(threading.Thread):
 
         for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
             try:
+                print "I'm here"
                 # grab the raw NumPy array representing the image, then initialize the timestamp
                 # and occupied/unoccupied text
                 pathFinder.setLookLeft(camLookLeft)
@@ -114,7 +119,7 @@ class CameraThread(threading.Thread):
                 # show the frame
                 # lines.project_on_road_debug(image)
                 pathFinder.cur_image = image
-                phiD = pathFinder.calc_phi_d()
+                psiD = pathFinder.calc_phi_d()
                 cv2.imshow("Rpi lane detection", pathFinder.project_on_road())
                 key = cv2.waitKey(1) & 0xFF
 
@@ -128,7 +133,6 @@ class CameraThread(threading.Thread):
             except:
                 releaseAllLocks() #if there is an error release all the locks
 
-
 ########################################################################################################################
 #END CAMERA THREAD CLASS
 ########################################################################################################################
@@ -138,13 +142,17 @@ class CameraThread(threading.Thread):
 ########################################################################################################################
 class ArduinoComThread(threading.Thread):
     def run(self):
-        global curLat, curLon, phiD, desiredOffset, curOffset, camLookLeft, lastNode, gpsV
-        global curLatLock, curLonLock, phiDLock, desiredOffsetLock, curOffsetLock, camLookLeftLock, lastNodeLock, gpsVLock, locks
-        receiveFromArd = {'gpsLat': (curLat, curLatLock), 'gpsLon': (curLon, curLonLock), 'gpsV': (gpsV, gpsVLock), 'gpsPsi': (gpsPsi, gpsPsiLock)}
-        sendToArd = {'phiD': (phiD, phiDLock), 'speedD': (speedD, speedDLock)}
+        print "Launching Com Thread"
+        global curLat, curLon, psiD, desiredOffset, curOffset, camLookLeft, lastNode, gpsV
+        global curLatLock, curLonLock, psiDLock, desiredOffsetLock, curOffsetLock, camLookLeftLock, lastNodeLock, gpsVLock, locks
         sendCtr = 0
         receiveCtr = 0
+        com = ArduinoCom()
         while True:
+            time.sleep(1)
+            receiveFromArd = {'gpsLat': (curLat, curLatLock), 'gpsLon': (curLon, curLonLock), 'gpsV': (gpsV, gpsVLock), 'gpsPsi': (gpsPsi, gpsPsiLock)}
+            sendToArd = {'psiD': (psiD, psiDLock), 'speedD': (speedD, speedDLock)}
+
             if sendCtr >= len(sendToArd):
                 sendCtr = 0
             if receiveCtr >= len(receiveFromArd):
@@ -152,26 +160,34 @@ class ArduinoComThread(threading.Thread):
             try:
                 #send data
                 sendDataName = sendToArd.keys()[sendCtr]
+                #print sendDataName
                 varToSend, varToSendLock = sendToArd[sendDataName]
                 varToSendLock.acquire()
-                ArduinoCom.setData(sendDataName, varToSend)
+                com.setData(sendDataName, varToSend)
                 varToSendLock.release()
-                ArduinoCom.sendData(sendDataName)
-
-                #acquire data
-                acqDataName = sendToArd.keys()[receiveCtr]
-                varToAcq, varToAcqLock = sendToArd[acqDataName]
-                ArduinoCom.getData(acqDataName)
-                varToAcqLock.acquire()
-                varToAcq = ArduinoCom.getData(acqDataName)
-                varToAcqLock.release()
-
-
+                com.sendData(sendDataName)
+                
                 #incr counter
                 sendCtr += 1
-                receiveCtr += 1
+               
+                #acquire data
+                
+                acqDataName = receiveFromArd.keys()[receiveCtr]
+                #print acqDataName
+                varToAcq, varToAcqLock = receiveFromArd[acqDataName]
+                com.getData(acqDataName)
+                varToAcqLock.acquire()
+                varToAcq = com.getData(acqDataName)
+                varToAcqLock.release()
 
-            except:
+                #incr counter
+                receiveCtr += 1
+                
+                
+
+            except Exception as e:
+                #print "failed communication"
+                #print e
                 releaseAllLocks()
 
 
@@ -180,23 +196,35 @@ class ArduinoComThread(threading.Thread):
 ########################################################################################################################
 
 if __name__ == "__main__":
-    camThread = CameraThread()
-    mapThread = MapThread()
+    print "running main"
     comThread = ArduinoComThread()
-
-    #prevents background program from runnin on exit
-    camThread.setDaemon(True)
-    mapThread.setDaemon(True)
     comThread.setDaemon(True)
-
-    #start the threads
-    camThread.start()
-    mapThread.start()
     comThread.start()
+    #prevents background program from runnin on exit
 
+
+    #mapThread = MapThread()
+    #mapThread.setDaemon(True)
+    #mapThread.start()
+
+    #camThread = CameraThread()
+    #camThread.setDaemon(True)
+    #camThread.start()
+    
     #keep main thread alive
+    count = 0;
     while True:
-        pass
+        temp = raw_input("new speedD")
+##        psiDLock.acquire()
+##        psiD = temp
+##        psiDLock.release()
+        
+        speedDLock.acquire()
+        speedD = temp
+        speedDLock.release()
+            
+        
+        
 
 
 

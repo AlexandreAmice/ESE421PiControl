@@ -2,6 +2,7 @@ import struct
 import smbus
 import time
 from helperCodes import wrapAngle
+import traceback
 
 class ArduinoCom:
     def __init__(self):
@@ -52,33 +53,39 @@ class ArduinoCom:
     # endregion
 
     def sendData(self, dataName):
+        
         if dataName in self.dataCommands.keys():
-            dataStr = self.data[dataName]
+            dataStr = str(self.data[dataName])
+            #print dataStr
             dataArr = []
             for c in dataStr: #parse the data string into an array of chars
-                dataArr.append(c)
+                dataArr.append(ord(c))
             try:
                 self.bus.write_i2c_block_data(self.address, self.dataCommands[dataName], dataArr)
-            except:
+                #print "sent " + str(dataArr)
+            except Exception as e:
                 print 'failed to write to Arduino'
+                traceback.print_exc()
+                print
 
     def getData(self, dataName):
-        __numBytesRead__ = 9
         try:
-            data_received = self.bus.read_i2c_block_data(self.address, self.dataCommands[dataName],__numBytesRead__)
-            floatString = ''
-            for b in data_received:
-                if b == '?':
-                    break
-                elif b.isnumeric():
-                    floatString += b.decode('ascii')
-                else:
-                    raise ValueError('bytes not of right form. Byte given was: ' + str(b))
-            self.data[dataName] = float(floatString)
-
+            #print self.dataCommands[dataName]
+            data_received = self.bus.read_i2c_block_data(self.address, self.dataCommands[dataName],4)
+            val = self.bytes_2_float(data_received, 0)
+            #print val
+            #print(dataName + " was: " + str(self.data[dataName]))
+            self.data[dataName] = val
+            print(dataName + " is: " + str(self.data[dataName]))
+            print "com completed"
         except Exception as e:
             print 'failed to receive from Arduino'
             print e
+            print
+
+    def bytes_2_float(self, data, index):
+        bytes = data[4*index:(index+1)*4]
+        return struct.unpack('f', "".join(map(chr,bytes)))[0]
 
  ############################################################################################
  #####DEPRECATED
