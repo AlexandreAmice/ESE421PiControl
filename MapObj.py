@@ -83,9 +83,6 @@ class MapObj:
     # endregion
 
 
-
-    #TODO: get shortest path. Probably will implement in the path object
-
     # endregion
 
     def findNearestPath(self, lat, lon, posEdges = None):

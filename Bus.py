@@ -16,7 +16,7 @@ print __name__
 curLat = 39.9509507
 curLon = -75.185327
 gpsV = 0
-psiD = -20
+psiD = 10
 desiredOffset = 3
 curOffset = 3
 camLookLeft = True
@@ -75,6 +75,7 @@ class MapThread(threading.Thread):
                     if pathPlan.lastNode:
                         pass
                     pathPlan.planPath()
+                    print pathPlan.curPlan
             except:
                 releaseAllLocks() #if there is an exception release all the locks so there is no accidental blocking
 
@@ -110,7 +111,6 @@ class CameraThread(threading.Thread):
 
         for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
             try:
-                print "I'm here"
                 # grab the raw NumPy array representing the image, then initialize the timestamp
                 # and occupied/unoccupied text
                 pathFinder.setLookLeft(camLookLeft)
@@ -200,7 +200,7 @@ if __name__ == "__main__":
     comThread = ArduinoComThread()
     comThread.setDaemon(True)
     comThread.start()
-    #prevents background program from runnin on exit
+    #prevents background program from running on exit
 
 
     #mapThread = MapThread()
@@ -214,14 +214,18 @@ if __name__ == "__main__":
     #keep main thread alive
     count = 0;
     while True:
-        temp = raw_input("new speedD")
-##        psiDLock.acquire()
-##        psiD = temp
-##        psiDLock.release()
-        
-        speedDLock.acquire()
-        speedD = temp
-        speedDLock.release()
+        if count == 0:
+            temp = raw_input("new psiD")
+            psiDLock.acquire()
+            psiD = temp
+            psiDLock.release()
+            count = 1
+        else:
+            temp = raw_input("new speedD")
+            speedDLock.acquire()
+            speedD = temp
+            speedDLock.release()
+            count = 0
             
         
         
