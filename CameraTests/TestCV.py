@@ -13,7 +13,7 @@ camera.resolution = (16*photoHeight/9, photoHeight)
 # captue an image and read it back in
 # (Do this because picamera does not play nice with openCV?)
 #
-camera.capture('Blah.jpg')
+camera.capture('TestAligned.jpg')
 '''
 imgColor = cv2.imread('blackRoad.jpg') 
 #
