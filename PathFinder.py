@@ -134,6 +134,16 @@ class PathFinder():
 
         return res
 
+    def whitewash2(self):
+        temp = cv2.GaussianBlur(self.cur_image, (13, 13), 3)
+        r, g, b = cv2.split(temp)
+        subtract = r-g-b
+        thresh = cv2.inRange(subtract, 0, 80)
+        thresh = cv2.merge((r, thresh, b))
+        thresh = cv2.cvtColor(thresh, cv2.COLOR_RGB2GRAY)
+        self.whiteImg = thresh
+        return thresh
+
 
     def collect_edge(self, img, lowThresh, highThresh, window_height = 10, window_width = 10, margin = 40):
         '''
@@ -171,7 +181,8 @@ class PathFinder():
         :param margin: margin off from past center we can be
         :return: x,y pairs of the
         '''
-        window_centroids = []  # Store the (left,right) window centroid positions per level
+        self.found_edge = False
+        window_centroids = []  # Store the window centroid positions per level
         if self.look_left:
             window = np.array([float(i**2)/window_width for i in range(0, window_width)])
         else:
@@ -185,16 +196,19 @@ class PathFinder():
         ratio = 1 / 4
         cv2.imwrite('partialL.jpg', image[int(ratio * image.shape[0]):, :int(image.shape[1] / 2)])
         cv2.imwrite('partialR.jpg', image[int(image.shape[0] * ratio):, int(image.shape[1] / 2):])
-        if self.look_left:
-            totSum = np.sum(image[int(ratio * image.shape[0]):, :int(image.shape[1] / 2)], axis=0)
-            center = np.argmax(np.convolve(window, totSum)) - window_width / 2
-            if sum(totSum) < 20:
-                self.found_edge = False
-        else:
-            totSum = np.sum(image[int(image.shape[0] * ratio):, int(image.shape[1] / 2):], axis=0)
-            center = np.argmax(np.convolve(window, totSum)) - window_width / 2 + int(image.shape[1] / 2)
-            if sum(totSum) < 20:
-                self.found_edge = False
+        level = 0
+        while not self.found_edge and level < (int)(image.shape[0] / window_height):
+            if self.look_left:
+                totSum = np.sum(image[int(ratio * (image.shape[0] - (level + 1)) * window_height):, :int(image.shape[1] / 2)], axis=0)
+                center = np.argmax(np.convolve(window, totSum)) - window_width / 2
+                if sum(totSum) > 20:
+                    self.found_edge = False
+            else:
+                totSum = np.sum(image[int(image.shape[0] * ratio):, int(image.shape[1] / 2):], axis=0)
+                center = np.argmax(np.convolve(window, totSum)) - window_width / 2 + int(image.shape[1] / 2)
+                if sum(totSum) > 20:
+                    self.found_edge = False
+            level += 1
 
 
 
@@ -202,7 +216,7 @@ class PathFinder():
         window_centroids.append(center)
 
         # Go through each layer looking for max pixel locations
-        for level in range(1, (int)(image.shape[0] / window_height)):
+        while level < (int)(image.shape[0] / window_height):
             # convolve the window into the vertical slice of the image
             image_layer = np.sum(image[int(image.shape[0] - (level + 1) * window_height):int(
                 image.shape[0] - level * window_height), :], axis=0)

@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/helperCodes.py" description="#constrain this to lie inside the endpoints" line="81" />
-  </component>
   <component name="ChangeListManager">
     <list default="true" id="137b37d1-bf89-45b9-9b76-6f59f74be7a0" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/ArduinoCom.py" beforeDir="false" afterPath="$PROJECT_DIR$/ArduinoCom.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Bus.py" beforeDir="false" afterPath="$PROJECT_DIR$/Bus.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CameraTests/Test2.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Follower.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PathFinder2.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CameraTests/TestCV.py" beforeDir="false" afterPath="$PROJECT_DIR$/CameraTests/TestCV.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CameraTests/TestPy.py" beforeDir="false" afterPath="$PROJECT_DIR$/CameraTests/TestPy.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PathFinder.py" beforeDir="false" afterPath="$PROJECT_DIR$/PathFinder.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -19,7 +20,7 @@
     <session id="603291829">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="14" />
+          <entry key="project.closed" value="17" />
           <entry key="project.open.time.1" value="3" />
           <entry key="project.open.time.10" value="1" />
           <entry key="project.open.time.11" value="1" />
@@ -27,38 +28,38 @@
           <entry key="project.open.time.2" value="2" />
           <entry key="project.open.time.3" value="2" />
           <entry key="project.open.time.5" value="1" />
-          <entry key="project.open.time.6" value="3" />
+          <entry key="project.open.time.6" value="5" />
           <entry key="project.open.time.7" value="5" />
-          <entry key="project.open.time.8" value="1" />
+          <entry key="project.open.time.8" value="3" />
           <entry key="project.open.time.9" value="1" />
-          <entry key="project.opened" value="22" />
+          <entry key="project.opened" value="26" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="jpg" value="182" />
-          <entry key="py" value="63" />
+          <entry key="jpg" value="255" />
+          <entry key="py" value="89" />
           <entry key="txt" value="5" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="Image" value="182" />
+          <entry key="Image" value="255" />
           <entry key="PLAIN_TEXT" value="5" />
-          <entry key="Python" value="63" />
+          <entry key="Python" value="89" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="dummy" value="61" />
-          <entry key="py" value="40885" />
+          <entry key="dummy" value="70" />
+          <entry key="py" value="49245" />
           <entry key="txt" value="283" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="PLAIN_TEXT" value="344" />
-          <entry key="Python" value="40885" />
+          <entry key="PLAIN_TEXT" value="353" />
+          <entry key="Python" value="49245" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.vcs.git.usages">
@@ -70,107 +71,40 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Bus.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="77">
-              <caret line="185" lean-forward="true" selection-start-line="185" selection-end-line="185" />
-              <folding>
-                <element signature="e#0#16#0" expanded="true" />
-                <marker date="1541565093320" expanded="true" signature="1121:1190" ph="..." />
-                <marker date="1541565093320" expanded="true" signature="1758:2840" ph="..." />
-                <marker date="1541565093320" expanded="true" signature="3418:4953" ph="..." />
-                <marker date="1541565093320" expanded="true" signature="7056:7057" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ArduinoCom.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="28">
-              <caret line="49" column="21" selection-start-line="49" selection-start-column="21" selection-end-line="49" selection-end-column="21" />
-              <folding>
-                <element signature="e#0#13#0" expanded="true" />
-                <marker date="1541563434895" expanded="true" signature="1540:1545" ph="..." />
-                <marker date="1541563434895" expanded="true" signature="2066:2676" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/PathFinder.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="168">
-              <caret line="9" column="32" selection-start-line="9" selection-end-line="10" />
+            <state relative-caret-position="915">
+              <caret line="408" column="31" selection-start-line="408" selection-start-column="31" selection-end-line="408" selection-end-column="31" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
-                <marker date="1540604999430" expanded="true" signature="11002:11007" ph="..." />
-                <marker date="1540604999430" expanded="true" signature="13475:13480" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/MapObj.py">
+        <entry file="file://$PROJECT_DIR$/CameraTests/Test2.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3752">
-              <caret line="138" column="24" selection-start-line="138" selection-start-column="24" selection-end-line="138" selection-end-column="24" />
+            <state relative-caret-position="397">
+              <caret line="83" column="38" lean-forward="true" selection-start-line="83" selection-end-line="84" />
               <folding>
-                <element signature="e#0#30#0" expanded="true" />
-                <marker date="1540583793527" expanded="true" signature="3165:3170" ph="..." />
-                <marker date="1540583793527" expanded="true" signature="3320:3372" ph="..." />
+                <element signature="e#0#18#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/helperCodes.py">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Follower.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2128">
-              <caret line="79" selection-start-line="79" selection-end-line="79" />
+            <state relative-caret-position="252">
+              <caret line="116" column="35" lean-forward="true" selection-start-line="116" selection-start-column="35" selection-end-line="116" selection-end-column="35" />
               <folding>
-                <element signature="e#0#56#0" expanded="true" />
+                <element signature="e#0#18#0" expanded="true" />
               </folding>
             </state>
           </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mapPennParkNodes.txt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="56">
-              <caret line="2" column="3" selection-start-line="2" selection-start-column="3" selection-end-line="2" selection-end-column="26" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mapPennParkEdges.txt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="140">
-              <caret line="5" column="5" selection-start-line="5" selection-start-column="5" selection-end-line="5" selection-end-column="5" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/CameraTests/sWash.jpg">
-          <provider selected="true" editor-type-id="images" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/CameraTests/whiteWash.jpg">
-          <provider selected="true" editor-type-id="images" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/CameraTests/edge.jpg">
-          <provider selected="true" editor-type-id="images" />
         </entry>
       </file>
     </leaf>
@@ -246,23 +180,25 @@
         <option value="$PROJECT_DIR$/mapPennParkNodes.txt" />
         <option value="$PROJECT_DIR$/SamplePy.py" />
         <option value="$PROJECT_DIR$/Path.py" />
-        <option value="$PROJECT_DIR$/CameraTests/TestCV.py" />
-        <option value="$PROJECT_DIR$/CameraTests/TestPy.py" />
         <option value="$USER_HOME$/Desktop/Test/test.py" />
         <option value="$PROJECT_DIR$/helperCodes.py" />
         <option value="$PROJECT_DIR$/mapPennParkEdges.txt" />
         <option value="$PROJECT_DIR$/MapObj.py" />
         <option value="$PROJECT_DIR$/CameraTests/RoadFinderTest.py" />
         <option value="$PROJECT_DIR$/CameraTests/PathFinder.py" />
-        <option value="$PROJECT_DIR$/PathFinder.py" />
         <option value="$PROJECT_DIR$/main.py" />
-        <option value="$PROJECT_DIR$/ArduinoCom.py" />
         <option value="$PROJECT_DIR$/Bus.py" />
+        <option value="$PROJECT_DIR$/ArduinoCom.py" />
+        <option value="$PROJECT_DIR$/PathFinder.py" />
+        <option value="$PROJECT_DIR$/PathFinder2.py" />
+        <option value="$PROJECT_DIR$/CameraTests/TestCV.py" />
+        <option value="$PROJECT_DIR$/CameraTests/TestPy.py" />
+        <option value="$PROJECT_DIR$/CameraTests/Test2.py" />
+        <option value="$PROJECT_DIR$/Follower.py" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="4">
-    <option name="x" value="960" />
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="y" value="25" />
     <option name="width" value="960" />
     <option name="height" value="978" />
@@ -282,11 +218,6 @@
             </path>
             <path>
               <item name="Pi Control" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Pi Control" type="462c0819:PsiDirectoryNode" />
-              <item name="CameraTests" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Pi Control" type="b2602c69:ProjectViewProjectNode" />
               <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
             </path>
           </expand>
@@ -297,7 +228,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../../Ribeiro Exercises/TrainMovies" />
     <property name="settings.editor.selected.configurable" value="project.scopes" />
   </component>
   <component name="RecentsManager">
@@ -321,7 +252,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.main">
+  <component name="RunManager" selected="Python.Test2">
     <configuration name="PathFinder" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="Pi Control" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -343,7 +274,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="RoadFinderTest" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="Test2" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="Pi Control" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -355,7 +286,28 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/CameraTests/RoadFinderTest.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/CameraTests/Test2.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="TestCV" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="Pi Control" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/CameraTests" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/CameraTests/TestCV.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -406,41 +358,20 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="test" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="Pi Control" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$USER_HOME$/Desktop/Test" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$USER_HOME$/Desktop/Test/test.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <list>
       <item itemvalue="Python.main" />
       <item itemvalue="Python.TestPy" />
       <item itemvalue="Python.PathFinder" />
-      <item itemvalue="Python.RoadFinderTest" />
-      <item itemvalue="Python.test" />
+      <item itemvalue="Python.TestCV" />
+      <item itemvalue="Python.Test2" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.Test2" />
+        <item itemvalue="Python.TestPy" />
+        <item itemvalue="Python.TestCV" />
         <item itemvalue="Python.main" />
         <item itemvalue="Python.PathFinder" />
-        <item itemvalue="Python.test" />
-        <item itemvalue="Python.RoadFinderTest" />
-        <item itemvalue="Python.TestPy" />
       </list>
     </recent_temporary>
   </component>
@@ -529,16 +460,16 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="960" y="25" width="960" height="978" extended-state="4" />
+    <frame x="0" y="25" width="1920" height="978" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2625" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1796875" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3295063" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.26061997" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49895832" weight="0.33869115" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.25947186" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49895832" weight="0.5120551" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -553,6 +484,28 @@
       <window_info anchor="right" id="R Graphics" order="3" />
       <window_info anchor="right" id="R Packages" order="4" />
     </layout>
+    <layout-to-restore>
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.0010416667" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.3295063" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.25947186" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49895832" weight="0.5120551" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.49947917" weight="0.31113663" />
+      <window_info anchor="bottom" id="Terminal" order="8" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5005208" side_tool="true" weight="0.0" />
+      <window_info anchor="bottom" id="Python Console" order="10" />
+      <window_info anchor="bottom" id="Messages" order="11" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="R Graphics" order="3" />
+      <window_info anchor="right" id="R Packages" order="4" />
+    </layout-to-restore>
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -612,13 +565,18 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/PathFinder.py</url>
-          <line>143</line>
+          <line>146</line>
           <option name="timeStamp" value="23" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/MapObj.py</url>
           <line>162</line>
           <option name="timeStamp" value="28" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/CameraTests/Test2.py</url>
+          <line>83</line>
+          <option name="timeStamp" value="30" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
@@ -672,6 +630,16 @@
     </expressions>
     <expressions id="evaluateExpression">
       <expression>
+        <expression-string>(avgX-boxW, avgY-boxH)</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>contours[0]</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
         <expression-string>self.mapGraph.node</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
@@ -706,122 +674,61 @@
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
-      <expression>
-        <expression-string>len(ys)</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>len(ys()</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/CameraTests/imgBlur.jpg" />
-    <entry file="file://$PROJECT_DIR$/CameraTests/mask.jpg" />
-    <entry file="file://$PROJECT_DIR$/CameraTests/maskCrop.jpg" />
-    <entry file="file://$PROJECT_DIR$/CameraTests/vWash.jpg" />
-    <entry file="file://$PROJECT_DIR$/CameraTests/V.jpg" />
-    <entry file="file://$PROJECT_DIR$/CameraTests/Road.jpg" />
-    <entry file="file://$PROJECT_DIR$/CameraTests/edgesMask.jpg" />
-    <entry file="file://$PROJECT_DIR$/CameraTests/edges.jpg" />
-    <entry file="file://$PROJECT_DIR$/CameraTests/gray.jpg">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CameraTests/Result.jpg" />
-    <entry file="file://$PROJECT_DIR$/CameraTests/cannyCollect.jpg">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CameraTests/gradY.jpg">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CameraTests/partialR.jpg">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CameraTests/partial.jpg">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CameraTests/slice.jpg" />
-    <entry file="file://$PROJECT_DIR$/CameraTests/slice1.jpg" />
-    <entry file="file://$PROJECT_DIR$/CameraTests/slice2.jpg" />
-    <entry file="file://$PROJECT_DIR$/CameraTests/slice3.jpg" />
-    <entry file="file://$PROJECT_DIR$/CameraTests/slice4.jpg" />
-    <entry file="file://$PROJECT_DIR$/CameraTests/slice5.jpg" />
-    <entry file="file://$PROJECT_DIR$/CameraTests/slice6.jpg" />
-    <entry file="file://$PROJECT_DIR$/CameraTests/slice7.jpg" />
-    <entry file="file://$PROJECT_DIR$/CameraTests/slice8.jpg" />
-    <entry file="file://$PROJECT_DIR$/CameraTests/slice10.jpg" />
-    <entry file="file://$PROJECT_DIR$/CameraTests/slice11.jpg" />
-    <entry file="file://$PROJECT_DIR$/CameraTests/slice13.jpg" />
-    <entry file="file://$PROJECT_DIR$/CameraTests/slice14.jpg" />
-    <entry file="file://$PROJECT_DIR$/CameraTests/slice16.jpg" />
-    <entry file="file://$PROJECT_DIR$/CameraTests/slice17.jpg" />
-    <entry file="file://$PROJECT_DIR$/CameraTests/slice18.jpg" />
-    <entry file="file://$PROJECT_DIR$/CameraTests/slice21.jpg" />
-    <entry file="file://$PROJECT_DIR$/CameraTests/slice20.jpg" />
-    <entry file="file://$USER_HOME$/.local/lib/python2.7/site-packages/numpy/core/shape_base.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="8036">
-          <caret line="287" selection-start-line="287" selection-end-line="287" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/CameraTests/whiteWash.jpg" />
+    <entry file="file://$PROJECT_DIR$/CameraTests/edge.jpg" />
+    <entry file="file://$PROJECT_DIR$/CameraTests/partialR.jpg" />
     <entry file="file://$PROJECT_DIR$/CameraTests/blackRoad.jpg">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/CameraTests/hWash.jpg">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CameraTests/result.jpg">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CameraTests/gradX.jpg">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Path.py">
+    <entry file="file://$PROJECT_DIR$/ArduinoCom.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="46" selection-start-column="36" selection-end-column="46" />
+        <state relative-caret-position="1295">
+          <caret line="70" column="28" selection-start-line="70" selection-start-column="28" selection-end-line="70" selection-end-column="28" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/CameraTests/RoadFinderTest.py">
+    <entry file="file://$PROJECT_DIR$/SamplePy.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="623">
-          <caret line="571" column="13" lean-forward="true" selection-start-line="550" selection-end-line="571" selection-end-column="13" />
+        <state relative-caret-position="84">
+          <caret line="3" selection-end-line="29" selection-end-column="12" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/CameraTests/CameraControl.py">
-      <provider selected="true" editor-type-id="text-editor" />
+    <entry file="file://$PROJECT_DIR$/CameraTests/contoured.jpg">
+      <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/main.py">
+    <entry file="file://$PROJECT_DIR$/CameraTests/partialL.jpg" />
+    <entry file="file://$PROJECT_DIR$/CameraTests/gradx.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CameraTests/hough.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CameraTests/whitewash.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CameraTests/Test2.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CameraTests/TestAligned.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Bus.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="644">
-          <caret line="27" column="37" selection-start-line="27" selection-start-column="37" selection-end-line="27" selection-end-column="37" />
+        <state relative-caret-position="368">
+          <caret line="68" selection-start-line="68" selection-end-line="68" />
           <folding>
-            <element signature="e#0#25#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/PathFinder.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="9" column="32" selection-start-line="9" selection-end-line="10" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-            <marker date="1540604999430" expanded="true" signature="11002:11007" ph="..." />
-            <marker date="1540604999430" expanded="true" signature="13475:13480" ph="..." />
+            <element signature="e#0#16#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/MapObj.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3752">
+        <state relative-caret-position="-420">
           <caret line="138" column="24" selection-start-line="138" selection-start-column="24" selection-end-line="138" selection-end-column="24" />
           <folding>
             <element signature="e#0#30#0" expanded="true" />
@@ -831,61 +738,161 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/helperCodes.py">
+    <entry file="file://$PROJECT_DIR$/CameraTests/Test3.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CameraTests/canny.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CameraTests/temp.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CameraTests/hsvsub.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CameraTests/subtract.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CameraTests/tresh.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CameraTests/g.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CameraTests/grayThresh.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CameraTests/r.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CameraTests/TestCV.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2128">
-          <caret line="79" selection-start-line="79" selection-end-line="79" />
+        <state relative-caret-position="252">
+          <caret line="9" column="17" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
           <folding>
-            <element signature="e#0#56#0" expanded="true" />
+            <element signature="e#0#15#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mapPennParkNodes.txt">
+    <entry file="file://$PROJECT_DIR$/CameraTests/TestPy.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="56">
-          <caret line="2" column="3" selection-start-line="2" selection-start-column="3" selection-end-line="2" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mapPennParkEdges.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="140">
-          <caret line="5" column="5" selection-start-line="5" selection-start-column="5" selection-end-line="5" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CameraTests/sWash.jpg">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CameraTests/whiteWash.jpg">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CameraTests/edge.jpg">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ArduinoCom.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="28">
-          <caret line="49" column="21" selection-start-line="49" selection-start-column="21" selection-end-line="49" selection-end-column="21" />
+        <state relative-caret-position="420">
+          <caret line="39" selection-end-line="102" />
           <folding>
-            <element signature="e#0#13#0" expanded="true" />
-            <marker date="1541563434895" expanded="true" signature="1540:1545" ph="..." />
-            <marker date="1541563434895" expanded="true" signature="2066:2676" ph="..." />
+            <element signature="e#0#18#0" expanded="true" />
+            <marker date="1542315225909" expanded="true" signature="2580:2586" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Bus.py">
+    <entry file="file://$PROJECT_DIR$/CameraTests/hsv.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CameraTests/h.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CameraTests/s.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CameraTests/sThresh.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CameraTests/vThresh.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CameraTests/hThresh.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CameraTests/v.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CameraTests/LAB.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CameraTests/a.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CameraTests/l.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CameraTests/b.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CameraTests/RoadFinderTest.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="77">
-          <caret line="185" lean-forward="true" selection-start-line="185" selection-end-line="185" />
+        <state relative-caret-position="147">
+          <caret line="554" column="23" selection-start-line="554" selection-start-column="23" selection-end-line="554" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CameraTests/Test1.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CameraTests/TestRib3.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CameraTests/TestRib2.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CameraTests/TestRib1.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CameraTests/bThresh.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CameraTests/HSV.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CameraTests/aThresh.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CameraTests/lThresh.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CameraTests/total.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PathFinder2.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2221">
+          <caret selection-end-line="5" selection-end-column="23" />
           <folding>
-            <element signature="e#0#16#0" expanded="true" />
-            <marker date="1541565093320" expanded="true" signature="1121:1190" ph="..." />
-            <marker date="1541565093320" expanded="true" signature="1758:2840" ph="..." />
-            <marker date="1541565093320" expanded="true" signature="3418:4953" ph="..." />
-            <marker date="1541565093320" expanded="true" signature="7056:7057" ph="..." />
+            <element signature="e#0#18#0" expanded="true" />
+            <marker date="1541782317517" expanded="true" signature="202:207" ph="..." />
+            <marker date="1541782317517" expanded="true" signature="1746:1751" ph="..." />
+            <marker date="1541782317517" expanded="true" signature="2514:2535" ph="..." />
+            <marker date="1541782317517" expanded="true" signature="5272:5281" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PathFinder.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="915">
+          <caret line="408" column="31" selection-start-line="408" selection-start-column="31" selection-end-line="408" selection-end-column="31" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CameraTests/Test2.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="397">
+          <caret line="83" column="38" lean-forward="true" selection-start-line="83" selection-end-line="84" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Follower.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="116" column="35" lean-forward="true" selection-start-line="116" selection-start-column="35" selection-end-line="116" selection-end-column="35" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
           </folding>
         </state>
       </provider>
