@@ -8,6 +8,7 @@ from MapObj import MapObj
 import cv2
 from threading import Lock
 from ArduinoCom import ArduinoCom
+from Follower import findRibbon
 
 print __name__
 ########################################################################################################################
@@ -83,7 +84,7 @@ class MapThread(threading.Thread):
 ########################################################################################################################
 
 ########################################################################################################################
-#START CAMERA THREAD CLASS
+#START ROADEDGE THREAD CLASS
 ########################################################################################################################
 
 class CameraThread(threading.Thread):
@@ -134,7 +135,7 @@ class CameraThread(threading.Thread):
                 releaseAllLocks() #if there is an error release all the locks
 
 ########################################################################################################################
-#END CAMERA THREAD CLASS
+#END ROADEDGE THREAD CLASS
 ########################################################################################################################
 
 ########################################################################################################################
@@ -150,13 +151,13 @@ class ArduinoComThread(threading.Thread):
         com = ArduinoCom()
         while True:
             time.sleep(1)
-            receiveFromArd = {'gpsLat': (curLat, curLatLock), 'gpsLon': (curLon, curLonLock), 'gpsV': (gpsV, gpsVLock), 'gpsPsi': (gpsPsi, gpsPsiLock)}
-            sendToArd = {'psiD': (psiD, psiDLock), 'speedD': (speedD, speedDLock)}
+            #receiveFromArd = {'gpsLat': (curLat, curLatLock), 'gpsLon': (curLon, curLonLock), 'gpsV': (gpsV, gpsVLock), 'gpsPsi': (gpsPsi, gpsPsiLock)}
+            sendToArd = {'psiD': (psiD, psiDLock)} # 'speedD': (speedD, speedDLock)}
 
             if sendCtr >= len(sendToArd):
                 sendCtr = 0
-            if receiveCtr >= len(receiveFromArd):
-                receiveCtr = 0
+            #if receiveCtr >= len(receiveFromArd):
+            #    receiveCtr = 0
             try:
                 #send data
                 sendDataName = sendToArd.keys()[sendCtr]
@@ -172,16 +173,16 @@ class ArduinoComThread(threading.Thread):
                
                 #acquire data
                 
-                acqDataName = receiveFromArd.keys()[receiveCtr]
-                #print acqDataName
-                varToAcq, varToAcqLock = receiveFromArd[acqDataName]
-                com.getData(acqDataName)
-                varToAcqLock.acquire()
-                varToAcq = com.getData(acqDataName)
-                varToAcqLock.release()
+                # acqDataName = receiveFromArd.keys()[receiveCtr]
+                # #print acqDataName
+                # varToAcq, varToAcqLock = receiveFromArd[acqDataName]
+                # com.getData(acqDataName)
+                # varToAcqLock.acquire()
+                # varToAcq = com.getData(acqDataName)
+                # varToAcqLock.release()
 
                 #incr counter
-                receiveCtr += 1
+                #receiveCtr += 1
                 
                 
 
@@ -195,13 +196,67 @@ class ArduinoComThread(threading.Thread):
 #END ARDUINO COM CLASS
 ########################################################################################################################
 
+########################################################################################################################
+#BEGIN RIBBON TRACK CLASS
+########################################################################################################################
+class RibbonTrackThread(threading.Thread):
+    def run(self):
+        print "Launching Ribbon Tracking Thread"
+        global psiD
+        global speed
+
+        camera = picamera.PiCamera()
+        photoHeight = 540
+        image_size = (960 / 2, 544 / 2)  # (16*photoHeight/9, photoHeight)
+        camera.resolution = image_size  # (960, 540)#(16*photoHeight/9, photoHeight)
+        camera.framerate = 7
+        camera.vflip = False
+        camera.hflip = False
+        # camera.exposure_mode='off'
+        rawCapture = PiRGBArray(camera, size=image_size)
+        # allow the camera to warmup
+        time.sleep(0.1)
+        ribbonFinder = findRibbon()
+
+        for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
+            try:
+                # grab the raw NumPy array representing the image, then initialize the timestamp
+                # and occupied/unoccupied text
+                image = frame.array
+                ribbonFinder.setImage(image)
+
+                cv2.imshow("RibbonFinder", ribbonFinder.findRib())
+                key = cv2.waitKey(1) & 0xFF
+
+                # clear the stream in preparation for the next frame
+                rawCapture.truncate()
+                rawCapture.seek(0)
+
+                psiDLock.acquire()
+                psiD = findRibbon.calcPsiOffset()
+                psiDLock.release()
+
+                # if the `q` key was pressed, break from the loop
+                if key == ord("q"):
+                    break
+            except:
+                releaseAllLocks()
+
+
+########################################################################################################################
+#END RIBBON TRACK CLASS
+########################################################################################################################
+
 if __name__ == "__main__":
     print "running main"
     comThread = ArduinoComThread()
     comThread.setDaemon(True)
     comThread.start()
-    #prevents background program from runnin on exit
+    #prevents background program from running on exit
 
+    ribThread = RibbonTrackThread()
+    ribThread.setDaemon(True)
+    ribThread.start()
 
     #mapThread = MapThread()
     #mapThread.setDaemon(True)

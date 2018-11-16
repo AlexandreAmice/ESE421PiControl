@@ -23,12 +23,12 @@ def sideBySide(img1, img2, destName):
 class findRibbon():
     def __init__(self, image):
         self.img = image
+        self.imgShape = image.shape
+        self.redCenter = self.imgShape[1]/2
 
 
     def findRib(self):
         image = cv2.GaussianBlur(self.img, (11, 11), 11)
-        ylen, xlen, d = image.shape
-
         ############################
         # HSV SHIFT
         #########################
@@ -86,10 +86,14 @@ class findRibbon():
 
         cv2.rectangle(self.img, (avgX - boxW, avgY - boxH), (avgX + boxW, avgY + boxH), (0, 255, 0), 3)
         toShow = sideBySide(self.img, combined, 'total.jpg')
+        self.redCenter = avgX
         return toShow
 
     def setImage(self,img):
         self.img = img
+
+    def calcPsiOffset(self):
+        return self.imgShape[1]-self.redCenter
 
 
 if __name__ == 'main':
