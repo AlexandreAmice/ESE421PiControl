@@ -1,4 +1,4 @@
-#import picamera
+import picamera
 import cv2
 import numpy as np
 #
@@ -6,14 +6,15 @@ import numpy as np
 # default photo seems to be 1920 x 1080
 # half of that keeps things more manageable for on-screen debugging
 #
-#camera = picamera.PiCamera()
-#photoHeight = 540
-#camera.resolution = (16*photoHeight/9, photoHeight)
+camera = picamera.PiCamera()
+photoHeight = 540
+camera.resolution = (16*photoHeight/9, photoHeight)
 #
 # captue an image and read it back in
 # (Do this because picamera does not play nice with openCV?)
 #
-#camera.capture('blackRoad.jpg')
+camera.capture('TestRib2.jpg')
+'''
 imgColor = cv2.imread('blackRoad.jpg') 
 #
 # convert to grayscale -- this seems to be standard for edge detection
@@ -67,3 +68,4 @@ cv2.imwrite('hough.jpg',imgColor)
 # if you don't have this command at the end
 #
 #cv2.waitKey(0)
+'''

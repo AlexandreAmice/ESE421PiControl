@@ -1,17 +1,20 @@
 import numpy as np
 import cv2
-import time
+import timeit
 import warnings
+import time
 
-#import picamera
-#from picamera.array import PiRGBArray
+import picamera
+from picamera.array import PiRGBArray
 
 
 warnings.filterwarnings('error')
-'''
-image_size = (320, 192)
+
+
 camera = picamera.PiCamera()
-camera.resolution = image_size
+photoHeight = 540
+image_size = (960/2, 544/2)#(16*photoHeight/9, photoHeight)
+camera.resolution =  image_size#(960, 540)#(16*photoHeight/9, photoHeight)
 camera.framerate = 7
 camera.vflip = False
 camera.hflip = False
@@ -20,7 +23,7 @@ rawCapture = PiRGBArray(camera, size=image_size)
 
 # allow the camera to warmup
 time.sleep(0.1)
-'''
+
 
 # class for Road detection
 class PathFinder():
@@ -107,8 +110,8 @@ class PathFinder():
         h,s,v = cv2.split(img) #split the channels so we can compute on individual channels
         low_h = 50
         high_h = 100
-        low_s = 25
-        high_s = 70
+        low_s = 0
+        high_s = 50
         h_mask = cv2.inRange(h, low_h, high_h)
         s_mask = 255-cv2.inRange(s, low_s, high_s)
         h_mask = cv2.medianBlur(h_mask, 19) #large median blur to ensure that patches are very rare
@@ -121,15 +124,25 @@ class PathFinder():
         res[np.nonzero(res)] = 255 #back to value of 255
         res = cv2.Sobel(res, cv2.CV_8U, 1, 0, ksize=3)
         res = cv2.Sobel(res, cv2.CV_8U, 0, 1, ksize=3)
-        cv2.imwrite('gray.jpg', res)
-        cv2.imwrite('gradX.jpg', res)
-        cv2.imwrite('gradY.jpg', res)
-        cv2.imwrite('hWash.jpg', h_mask)
-        cv2.imwrite('sWash.jpg', s_mask)
-        cv2.imwrite('whiteWash.jpg', res)
+        #cv2.imshow('gray.jpg', res)
+        #cv2.imshow('gradX.jpg', res)
+        #cv2.imshow('gradY.jpg', res)
+        #cv2.imshow('hWash.jpg', h_mask)
+        #cv2.imshow('sWash.jpg', s_mask)
+        cv2.imshow('whiteWash.jpg', res)
         self.whiteImg = res
 
         return res
+
+    def whitewash2(self):
+        temp = cv2.GaussianBlur(self.cur_image, (13, 13), 3)
+        r, g, b = cv2.split(temp)
+        subtract = r-g-b
+        thresh = cv2.inRange(subtract, 0, 80)
+        thresh = cv2.merge((r, thresh, b))
+        thresh = cv2.cvtColor(thresh, cv2.COLOR_RGB2GRAY)
+        self.whiteImg = thresh
+        return thresh
 
 
     def collect_edge(self, img, lowThresh, highThresh, window_height = 10, window_width = 10, margin = 40):
@@ -153,7 +166,7 @@ class PathFinder():
         for i in range(0,len(ys)):
             self.edge[ys[i]-margin:ys[i]+margin,xs[i]-margin:xs[i]+margin] = \
                 whitewash[ys[i]-margin:ys[i]+margin,xs[i]-margin:xs[i]+margin]
-        cv2.imwrite('edge.jpg', self.edge)
+        cv2.imshow('edge.jpg', self.edge)
         return xs, ys
 
 
@@ -168,7 +181,8 @@ class PathFinder():
         :param margin: margin off from past center we can be
         :return: x,y pairs of the
         '''
-        window_centroids = []  # Store the (left,right) window centroid positions per level
+        self.found_edge = False
+        window_centroids = []  # Store the window centroid positions per level
         if self.look_left:
             window = np.array([float(i**2)/window_width for i in range(0, window_width)])
         else:
@@ -182,16 +196,19 @@ class PathFinder():
         ratio = 1 / 4
         cv2.imwrite('partialL.jpg', image[int(ratio * image.shape[0]):, :int(image.shape[1] / 2)])
         cv2.imwrite('partialR.jpg', image[int(image.shape[0] * ratio):, int(image.shape[1] / 2):])
-        if self.look_left:
-            totSum = np.sum(image[int(ratio * image.shape[0]):, :int(image.shape[1] / 2)], axis=0)
-            center = np.argmax(np.convolve(window, totSum)) - window_width / 2
-            if sum(totSum) < 20:
-                self.found_edge = False
-        else:
-            totSum = np.sum(image[int(image.shape[0] * ratio):, int(image.shape[1] / 2):], axis=0)
-            center = np.argmax(np.convolve(window, totSum)) - window_width / 2 + int(image.shape[1] / 2)
-            if sum(totSum) < 20:
-                self.found_edge = False
+        level = 0
+        while not self.found_edge and level < (int)(image.shape[0] / window_height):
+            if self.look_left:
+                totSum = np.sum(image[int(ratio * (image.shape[0] - (level + 1)) * window_height):, :int(image.shape[1] / 2)], axis=0)
+                center = np.argmax(np.convolve(window, totSum)) - window_width / 2
+                if sum(totSum) > 20:
+                    self.found_edge = False
+            else:
+                totSum = np.sum(image[int(image.shape[0] * ratio):, int(image.shape[1] / 2):], axis=0)
+                center = np.argmax(np.convolve(window, totSum)) - window_width / 2 + int(image.shape[1] / 2)
+                if sum(totSum) > 20:
+                    self.found_edge = False
+            level += 1
 
 
 
@@ -199,7 +216,7 @@ class PathFinder():
         window_centroids.append(center)
 
         # Go through each layer looking for max pixel locations
-        for level in range(1, (int)(image.shape[0] / window_height)):
+        while level < (int)(image.shape[0] / window_height):
             # convolve the window into the vertical slice of the image
             image_layer = np.sum(image[int(image.shape[0] - (level + 1) * window_height):int(
                 image.shape[0] - level * window_height), :], axis=0)
@@ -233,7 +250,10 @@ class PathFinder():
         if temp is None:
             return
         self.allx,self.ally = temp[0], temp[1]
-        self.bestx, self.besty = np.array(self.allx), np.array(self.ally)
+        if self.bestx is not None and self.besty is not None:
+            self.bestx, self.besty = (0.6*self.bestx + 0.4*np.array(self.allx)).astype(int), (0.6*self.besty + 0.4*np.array(self.ally)).astype(int)
+        else:
+            self.bestx, self.besty = np.array(self.allx), np.array(self.ally)
 
         if (len(self.allx) > 0):
             try:
@@ -266,27 +286,30 @@ class PathFinder():
 
             # if the poly fit is ok proceed
             if not self.poly_warning:
+                try:
                 # calculate the new radii of curvature
-                curve_rad= ((1 + (
-                            2 * fit_cr[0] * y_eval * ym_per_pix + fit_cr[1]) ** 2) ** 1.5) / np.absolute(
-                    2 * fit_cr[0])
+                    curve_rad= ((1 + (
+                                2 * fit_cr[0] * y_eval * ym_per_pix + fit_cr[1]) ** 2) ** 1.5) / np.absolute(
+                        2 * fit_cr[0])
 
-                # now our radius of curvature is in meters
+                    # now our radius of curvature is in meters
 
-                # calculate the offset from the edge of the road
-                y_eval = y_eval * ym_per_pix
-                midpoint_car = self.im_shape[1] / 2.0
-                midpoint_lane = (fit_cr[0] * (y_eval ** 2) + fit_cr[1] * y_eval + fit_cr[2])
+                    # calculate the offset from the edge of the road
+                    y_eval = y_eval * ym_per_pix
+                    midpoint_car = self.im_shape[1] / 2.0
+                    midpoint_lane = (fit_cr[0] * (y_eval ** 2) + fit_cr[1] * y_eval + fit_cr[2])
 
-                offset = midpoint_car * xm_per_pix - midpoint_lane / 2
+                    offset = midpoint_car * xm_per_pix - midpoint_lane / 2
 
-                # initialize the curvature and offset if this is the first detection
-                if self.curve_rad == None:
-                    self.offset = offset
+                    # initialize the curvature and offset if this is the first detection
+                    if self.curve_rad == None:
+                        self.offset = offset
 
-                # average out the offset
-                else:
-                    self.offset = self.offset * 0.9 + offset * 0.1
+                    # average out the offset
+                    else:
+                        self.offset = self.offset * 0.9 + offset * 0.1
+                except:
+                    pass
 
     def project_on_road(self):
         image_input = self.cur_image
@@ -332,16 +355,14 @@ class PathFinder():
 
             whiteDstack = np.dstack((self.whiteImg, self.whiteImg, self.whiteImg))
             fill = np.vstack((filler, whiteDstack))
-            result = np.hstack((result, fill))
+            #result = np.hstack((result, fill))
             return result
 
             # if lanes were not detected output source image
         else:
-            print 'no edge detected'
+            #print 'no edge detected'
             whiteDstack = np.dstack((self.whiteImg,self.whiteImg,self.whiteImg))
             fill = np.vstack((filler,whiteDstack))
-            print image_input.shape
-            print whiteDstack.shape
             return_image =  np.hstack((image_input, fill))
             return return_image
 
@@ -368,36 +389,41 @@ class PathFinder():
         #############################################################################
 
 #while True:
+        '''
 image = cv2.imread('blackRoad.jpg')
 roadEdge = PathFinder(image)
 roadEdge.look_ahead = 10
-roadEdge.remove_pixels = 300
+roadEdge.remove_pixels = 100
 roadEdge.enlarge = 0.5  # 2.25
 image = cv2.GaussianBlur(image, (3,3),1)
 roadEdge.look_left = False
 result = roadEdge.project_on_road()
 cv2.imwrite('result.jpg',result)
 '''
-roadEdge = Road_Edge(None)
+if __name__ == "__main__":
+    roadEdge = PathFinder(None, 90)
 
-time.sleep(0.1)
+    time.sleep(0.1)
 
-for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
-    # grab the raw NumPy array representing the image, then initialize the timestamp
-    # and occupied/unoccupied text
-    image = frame.array
+    for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
+        start  = timeit.timeit()
+        # grab the raw NumPy array representing the image, then initialize the timestamp
+        # and occupied/unoccupied text
+        image = frame.array
+        
 
-    # show the frame
-    # lines.project_on_road_debug(image)
-    roadEdge.cur_image = image
-    cv2.imshow("Rpi lane detection", roadEdge.project_on_road())
-    key = cv2.waitKey(1) & 0xFF
+        # show the frame
+        # lines.project_on_road_debug(image)
+        roadEdge.cur_image = image
+        cv2.imshow("Rpi lane detection", roadEdge.project_on_road())
+        key = cv2.waitKey(1) & 0xFF
 
-    # clear the stream in preparation for the next frame
-    rawCapture.truncate()
-    rawCapture.seek(0)
+        # clear the stream in preparation for the next frame
+        rawCapture.truncate()
+        rawCapture.seek(0)
+        end = timeit.timeit()
+ 
 
-    # if the `q` key was pressed, break from the loop
-    if key == ord("q"):
-        break
-'''
+        # if the `q` key was pressed, break from the loop
+        if key == ord("q"):
+            break
