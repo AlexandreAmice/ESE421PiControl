@@ -56,13 +56,13 @@ class ArduinoCom:
         
         if dataName in self.dataCommands.keys():
             dataStr = str(self.data[dataName])
-            #print dataStr
+            print dataStr
             dataArr = []
             for c in dataStr: #parse the data string into an array of chars
                 dataArr.append(ord(c))
             try:
                 self.bus.write_i2c_block_data(self.address, self.dataCommands[dataName], dataArr)
-                #print "sent " + str(dataArr)
+                print "sent " + str(dataArr)
             except Exception as e:
                 print 'failed to write to Arduino'
                 traceback.print_exc()

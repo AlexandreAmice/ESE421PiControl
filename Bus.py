@@ -1,7 +1,7 @@
 import threading
 import picamera
 from picamera.array import PiRGBArray
-import PathFinder
+#import PathFinder
 import warnings
 import time
 from MapObj import MapObj
@@ -10,7 +10,7 @@ from threading import Lock
 from ArduinoCom import ArduinoCom
 from Follower import findRibbon
 
-print __name__
+
 ########################################################################################################################
 #START GLOBAL DATA
 ########################################################################################################################
@@ -39,6 +39,7 @@ gpsVLock = Lock()
 gpsPsiLock = Lock()
 locks = [curLatLock, curLonLock, psiDLock, desiredOffsetLock, curOffsetLock, camLookLeftLock, lastNodeLock, speedDLock,
          gpsVLock, gpsPsiLock]
+
 
 def releaseAllLocks():
     for l in locks:
@@ -87,52 +88,52 @@ class MapThread(threading.Thread):
 #START ROADEDGE THREAD CLASS
 ########################################################################################################################
 
-class CameraThread(threading.Thread):
-    def run(self):
-        print "Launching Cam Thread"
-        global camLookLeft
-        global psiD
-
-        warnings.filterwarnings('error')
-
-        image_size = (320, 192)
-        camera = picamera.PiCamera()
-        camera.resolution = image_size
-        camera.framerate = 7
-        camera.vflip = False
-        camera.hflip = False
-        # camera.exposure_mode='off'
-        rawCapture = PiRGBArray(camera, size=image_size)
-
-        # allow the camera to warmup
-        time.sleep(0.1)
-
-        pathFinder = PathFinder.PathFinder(None, 100)
-
-        for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
-            try:
-                print "I'm here"
-                # grab the raw NumPy array representing the image, then initialize the timestamp
-                # and occupied/unoccupied text
-                pathFinder.setLookLeft(camLookLeft)
-                image = frame.array
-
-                # show the frame
-                # lines.project_on_road_debug(image)
-                pathFinder.cur_image = image
-                psiD = pathFinder.calc_phi_d()
-                cv2.imshow("Rpi lane detection", pathFinder.project_on_road())
-                key = cv2.waitKey(1) & 0xFF
-
-                # clear the stream in preparation for the next frame
-                rawCapture.truncate()
-                rawCapture.seek(0)
-
-                # if the `q` key was pressed, break from the loop
-                if key == ord("q"):
-                    break
-            except:
-                releaseAllLocks() #if there is an error release all the locks
+##class CameraThread(threading.Thread):
+##    def run(self):
+##        print "Launching Cam Thread"
+##        global camLookLeft
+##        global psiD
+##
+##        warnings.filterwarnings('error')
+##
+##        image_size = (320, 192)
+##        camera = picamera.PiCamera()
+##        camera.resolution = image_size
+##        camera.framerate = 7
+##        camera.vflip = False
+##        camera.hflip = False
+##        # camera.exposure_mode='off'
+##        rawCapture = PiRGBArray(camera, size=image_size)
+##
+##        # allow the camera to warmup
+##        time.sleep(0.1)
+##
+##        pathFinder = PathFinder.PathFinder(None, 100)
+##
+##        for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
+##            try:
+##                print "I'm here"
+##                # grab the raw NumPy array representing the image, then initialize the timestamp
+##                # and occupied/unoccupied text
+##                pathFinder.setLookLeft(camLookLeft)
+##                image = frame.array
+##
+##                # show the frame
+##                # lines.project_on_road_debug(image)
+##                pathFinder.cur_image = image
+##                psiD = pathFinder.calc_phi_d()
+##                cv2.imshow("Rpi lane detection", pathFinder.project_on_road())
+##                key = cv2.waitKey(1) & 0xFF
+##
+##                # clear the stream in preparation for the next frame
+##                rawCapture.truncate()
+##                rawCapture.seek(0)
+##
+##                # if the `q` key was pressed, break from the loop
+##                if key == ord("q"):
+##                    break
+##            except:
+##                releaseAllLocks() #if there is an error release all the locks
 
 ########################################################################################################################
 #END ROADEDGE THREAD CLASS
@@ -162,11 +163,14 @@ class ArduinoComThread(threading.Thread):
                 #send data
                 sendDataName = sendToArd.keys()[sendCtr]
                 #print sendDataName
+                
                 varToSend, varToSendLock = sendToArd[sendDataName]
+               
                 varToSendLock.acquire()
                 com.setData(sendDataName, varToSend)
                 varToSendLock.release()
                 com.sendData(sendDataName)
+    
                 
                 #incr counter
                 sendCtr += 1
@@ -203,9 +207,10 @@ class RibbonTrackThread(threading.Thread):
     def run(self):
         print "Launching Ribbon Tracking Thread"
         global psiD
+        global camera
         global speed
 
-        camera = picamera.PiCamera()
+        
         photoHeight = 540
         image_size = (960 / 2, 544 / 2)  # (16*photoHeight/9, photoHeight)
         camera.resolution = image_size  # (960, 540)#(16*photoHeight/9, photoHeight)
@@ -214,9 +219,8 @@ class RibbonTrackThread(threading.Thread):
         camera.hflip = False
         # camera.exposure_mode='off'
         rawCapture = PiRGBArray(camera, size=image_size)
-        # allow the camera to warmup
-        time.sleep(0.1)
         ribbonFinder = findRibbon()
+        
 
         for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
             try:
@@ -225,21 +229,31 @@ class RibbonTrackThread(threading.Thread):
                 image = frame.array
                 ribbonFinder.setImage(image)
 
-                cv2.imshow("RibbonFinder", ribbonFinder.findRib())
-                key = cv2.waitKey(1) & 0xFF
 
+                print 'called findRib'
+                temp = ribbonFinder.findRib()
+                #for performance reasons comment out when actually running
+                cv2.imshow("RibbonFinder", temp)
+                
+                key = cv2.waitKey(1) & 0xFF
                 # clear the stream in preparation for the next frame
                 rawCapture.truncate()
                 rawCapture.seek(0)
-
+                
                 psiDLock.acquire()
-                psiD = findRibbon.calcPsiOffset()
+                psiD = ribbonFinder.calcPsiOffset()
                 psiDLock.release()
+                print psiD
+                print 
 
+                com.sendData(sendDataName)
                 # if the `q` key was pressed, break from the loop
                 if key == ord("q"):
                     break
-            except:
+                
+
+            except Exception as e:
+                print e
                 releaseAllLocks()
 
 
@@ -248,35 +262,77 @@ class RibbonTrackThread(threading.Thread):
 ########################################################################################################################
 
 if __name__ == "__main__":
-    print "running main"
-    comThread = ArduinoComThread()
-    comThread.setDaemon(True)
-    comThread.start()
-    #prevents background program from running on exit
+    com = ArduinoCom()
+    camera = picamera.PiCamera()
+    photoHeight = 540
+    image_size = (960 / 2, 544 / 2)  # (16*photoHeight/9, photoHeight)
+    camera.resolution = image_size  # (960, 540)#(16*photoHeight/9, photoHeight)
+    camera.framerate = 60
+    camera.vflip = False
+    camera.hflip = False
+    # camera.exposure_mode='off'
+    rawCapture = PiRGBArray(camera, size=image_size)
+    # allow the camera to warmup
+    time.sleep(0.1)
+    ribbonFinder = findRibbon()
 
-    ribThread = RibbonTrackThread()
-    ribThread.setDaemon(True)
-    ribThread.start()
+    for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
+        # grab the raw NumPy array representing the image, then initialize the timestamp
+        # and occupied/unoccupied text
+        image = frame.array
+        ribbonFinder.setImage(image)
+        ribbonFinder.findRib()
 
-    #mapThread = MapThread()
-    #mapThread.setDaemon(True)
-    #mapThread.start()
 
-    #camThread = CameraThread()
-    #camThread.setDaemon(True)
-    #camThread.start()
-    
-    #keep main thread alive
-    count = 0
-    while True:
-        temp = raw_input("new speedD")
-##        psiDLock.acquire()
-##        psiD = temp
-##        psiDLock.release()
-        
-        speedDLock.acquire()
-        speedD = temp
-        speedDLock.release()
+        #cv2.imshow("Find Ribbon", ribbonFinder.findRib())
+        key = cv2.waitKey(1) & 0xFF
+
+        # clear the stream in preparation for the next frame
+        rawCapture.truncate()
+        rawCapture.seek(0)
+
+        psiD =  ribbonFinder.calcPsiOffset()
+        print psiD
+        com.setData('psiD', psiD)
+        # if the `q` key was pressed, break from the loop
+        com.sendData('psiD')
+        if key == ord("q"):
+            break
+
+
+
+##if __name__ == "__main__":
+##    camera = picamera.PiCamera()
+##    print "running main"
+##    #comThread = ArduinoComThread()
+##    #comThread.setDaemon(True)
+##    #comThread.start()
+##    #prevents background program from running on exit
+##
+##    ribThread = RibbonTrackThread()
+##    ribThread.setDaemon(True)
+##    ribThread.start()
+##
+##    #mapThread = MapThread()
+##    #mapThread.setDaemon(True)
+##    #mapThread.start()
+##
+##    #camThread = CameraThread()
+##    #camThread.setDaemon(True)
+##    #camThread.start()
+##    
+##    #keep main thread alive
+##    #count = 0
+##    while True:
+##        pass
+##        ##temp = raw_input("new speedD")
+####        psiDLock.acquire()
+####        psiD = temp
+####        psiDLock.release()
+##        
+##        ##speedDLock.acquire()
+##        ##speedD = temp
+##        ##speedDLock.release()
             
         
         
