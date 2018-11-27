@@ -267,7 +267,7 @@ if __name__ == "__main__":
     #camThread.start()
     
     #keep main thread alive
-    count = 0
+    count = 0;
     while True:
         temp = raw_input("new speedD")
 ##        psiDLock.acquire()

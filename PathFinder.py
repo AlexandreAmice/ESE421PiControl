@@ -11,7 +11,18 @@ from picamera.array import PiRGBArray
 warnings.filterwarnings('error')
 
 
+camera = picamera.PiCamera()
+photoHeight = 540
+image_size = (960/2, 544/2)#(16*photoHeight/9, photoHeight)
+camera.resolution =  image_size#(960, 540)#(16*photoHeight/9, photoHeight)
+camera.framerate = 7
+camera.vflip = False
+camera.hflip = False
+# camera.exposure_mode='off'
+rawCapture = PiRGBArray(camera, size=image_size)
 
+# allow the camera to warmup
+time.sleep(0.1)
 
 
 # class for Road detection
@@ -389,19 +400,7 @@ roadEdge.look_left = False
 result = roadEdge.project_on_road()
 cv2.imwrite('result.jpg',result)
 '''
-if __name__ == "__main__":camera = picamera.PiCamera()
-    photoHeight = 540
-    image_size = (960/2, 544/2)#(16*photoHeight/9, photoHeight)
-    camera.resolution =  image_size#(960, 540)#(16*photoHeight/9, photoHeight)
-    camera.framerate = 7
-    camera.vflip = False
-    camera.hflip = False
-    # camera.exposure_mode='off'
-    rawCapture = PiRGBArray(camera, size=image_size)
-
-    # allow the camera to warmup
-    time.sleep(0.1)
-
+if __name__ == "__main__":
     roadEdge = PathFinder(None, 90)
 
     time.sleep(0.1)

@@ -21,7 +21,7 @@ def sideBySide(img1, img2, destName):
     #cv2.imwrite(destName, toWrite)
 
 class findRibbon():
-    def __init__(self, image= None):
+    def __init__(self, image):
         self.img = image
         self.imgShape = image.shape
         self.redCenter = self.imgShape[1]/2
@@ -79,27 +79,24 @@ class findRibbon():
         sideBySide(image, combined2, "LAB.jpg")
 
         combined3 = combined & combined2
-        try:
-            avgX = int(np.median(np.nonzero(combined3)[1]))
-            avgY = int(np.median(np.nonzero(combined3)[0]))
-            boxW = 20
-            boxH = 20
+        avgX = int(np.median(np.nonzero(combined3)[1]))
+        avgY = int(np.median(np.nonzero(combined3)[0]))
+        boxW = 20
+        boxH = 20
 
-            cv2.rectangle(self.img, (avgX - boxW, avgY - boxH), (avgX + boxW, avgY + boxH), (0, 255, 0), 3)
-            toShow = sideBySide(self.img, combined, 'total.jpg')
-            self.redCenter = avgX
-            return toShow
-        except:
-            return self.img
+        cv2.rectangle(self.img, (avgX - boxW, avgY - boxH), (avgX + boxW, avgY + boxH), (0, 255, 0), 3)
+        toShow = sideBySide(self.img, combined, 'total.jpg')
+        self.redCenter = avgX
+        return toShow
 
     def setImage(self,img):
         self.img = img
 
     def calcPsiOffset(self):
-        return int((self.imgShape[1]-self.redCenter)/15.0)
+        return self.imgShape[1]-self.redCenter
 
 
-if __name__ == '__main__':
+if __name__ == 'main':
     camera = picamera.PiCamera()
     photoHeight = 540
     image_size = (960 / 2, 544 / 2)  # (16*photoHeight/9, photoHeight)
