@@ -5,19 +5,10 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CameraTests/HSV.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/CameraTests/HSV.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CameraTests/TestPy.py" beforeDir="false" afterPath="$PROJECT_DIR$/CameraTests/TestPy.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CameraTests/b.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/CameraTests/b.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CameraTests/canny.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/CameraTests/canny.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CameraTests/g.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/CameraTests/g.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CameraTests/grayThresh.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/CameraTests/grayThresh.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CameraTests/hThresh.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/CameraTests/hThresh.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CameraTests/r.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/CameraTests/r.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CameraTests/sThresh.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/CameraTests/sThresh.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CameraTests/subtract.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/CameraTests/subtract.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CameraTests/tresh.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/CameraTests/tresh.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CameraTests/vThresh.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/CameraTests/vThresh.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CameraTests/whitewash.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/CameraTests/whitewash.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Follower.py" beforeDir="false" afterPath="$PROJECT_DIR$/Follower.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PathFinder.py" beforeDir="false" afterPath="$PROJECT_DIR$/PathFinder.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PathFinder2.py" beforeDir="false" afterPath="$PROJECT_DIR$/PathFinder2.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -26,84 +17,58 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/PathFinder.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-498">
-              <caret line="397" column="24" selection-start-line="397" selection-start-column="24" selection-end-line="397" selection-end-column="24" />
-              <folding>
-                <element signature="e#0#18#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Bus.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="505">
-              <caret line="258" column="17" selection-start-line="258" selection-start-column="17" selection-end-line="258" selection-end-column="17" />
-              <folding>
-                <element signature="e#0#16#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Follower.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-218">
-              <caret line="98" column="57" selection-start-line="98" selection-start-column="57" selection-end-line="98" selection-end-column="57" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/PathFinder2.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret selection-end-line="5" selection-end-column="23" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/CameraTests/TestPy.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="224">
-              <caret line="29" lean-forward="true" selection-start-line="29" selection-end-line="29" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/CameraTests/combinedCont.jpg">
-          <provider selected="true" editor-type-id="images" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/CameraTests/combined.jpg">
-          <provider selected="true" editor-type-id="images" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/CameraTests/canny.jpg">
-          <provider selected="true" editor-type-id="images" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/CameraTests/HSV.jpg">
-          <provider selected="true" editor-type-id="images" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/CameraTests/hsv.jpg">
-          <provider selected="true" editor-type-id="images" />
-        </entry>
-      </file>
-    </leaf>
+    <splitter split-orientation="horizontal" split-proportion="0.5">
+      <split-first>
+        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+          <file pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/PathFinder2.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="142">
+                  <caret line="226" column="14" lean-forward="true" selection-start-line="226" selection-start-column="14" selection-end-line="226" selection-end-column="14" />
+                  <folding>
+                    <element signature="e#0#18#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/combined.jpg">
+              <provider selected="true" editor-type-id="images" />
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/sThresh.jpg">
+              <provider selected="true" editor-type-id="images" />
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/vThresh.jpg">
+              <provider selected="true" editor-type-id="images" />
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/hThresh.jpg">
+              <provider selected="true" editor-type-id="images" />
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/HSV.jpg">
+              <provider selected="true" editor-type-id="images" />
+            </entry>
+          </file>
+        </leaf>
+      </split-first>
+      <split-second>
+        <leaf>
+          <file pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/lines.jpg">
+              <provider selected="true" editor-type-id="images" />
+            </entry>
+          </file>
+        </leaf>
+      </split-second>
+    </splitter>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -138,12 +103,12 @@
       <find>curPlan</find>
       <find>planPath</find>
       <find>setGoal</find>
-      <find>print</find>
       <find>desiredHeading</find>
       <find>wr</find>
       <find>camera</find>
       <find>canny</find>
       <find>gray</find>
+      <find>print</find>
     </findStrings>
     <replaceStrings>
       <replace>self.bus</replace>
@@ -189,18 +154,17 @@
         <option value="$PROJECT_DIR$/CameraTests/PathFinder.py" />
         <option value="$PROJECT_DIR$/main.py" />
         <option value="$PROJECT_DIR$/ArduinoCom.py" />
-        <option value="$PROJECT_DIR$/PathFinder2.py" />
         <option value="$PROJECT_DIR$/CameraTests/TestCV.py" />
         <option value="$PROJECT_DIR$/CameraTests/Test2.py" />
         <option value="$PROJECT_DIR$/Bus.py" />
         <option value="$PROJECT_DIR$/PathFinder.py" />
         <option value="$PROJECT_DIR$/Follower.py" />
         <option value="$PROJECT_DIR$/CameraTests/TestPy.py" />
+        <option value="$PROJECT_DIR$/PathFinder2.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="960" />
     <option name="y" value="25" />
     <option name="width" value="960" />
     <option name="height" value="978" />
@@ -221,7 +185,7 @@
             <path>
               <item name="Pi Control" type="b2602c69:ProjectViewProjectNode" />
               <item name="Pi Control" type="462c0819:PsiDirectoryNode" />
-              <item name="CameraTests" type="462c0819:PsiDirectoryNode" />
+              <item name="PennParkPics" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Pi Control" type="b2602c69:ProjectViewProjectNode" />
@@ -236,14 +200,14 @@
   </component>
   <component name="PropertiesComponent">
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../../Ribeiro Exercises/TrainMovies" />
-    <property name="settings.editor.selected.configurable" value="project.scopes" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/CameraTests" />
+      <recent name="$PROJECT_DIR$" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
@@ -259,7 +223,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.TestPy">
+  <component name="RunManager" selected="Python.PathFinder2">
     <configuration name="PathFinder" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="Pi Control" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -273,6 +237,27 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/PathFinder.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="PathFinder2" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="Pi Control" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/PathFinder2.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -344,41 +329,20 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="Pi Control" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <list>
-      <item itemvalue="Python.main" />
       <item itemvalue="Python.TestPy" />
       <item itemvalue="Python.PathFinder" />
       <item itemvalue="Python.TestCV" />
       <item itemvalue="Python.Test2" />
+      <item itemvalue="Python.PathFinder2" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.PathFinder2" />
         <item itemvalue="Python.TestPy" />
         <item itemvalue="Python.Test2" />
         <item itemvalue="Python.TestCV" />
         <item itemvalue="Python.PathFinder" />
-        <item itemvalue="Python.main" />
       </list>
     </recent_temporary>
   </component>
@@ -470,12 +434,12 @@
     <frame x="0" y="25" width="1920" height="978" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.08645833" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.15677084" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3295063" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.25917432" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.4174312" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49895832" weight="0.29701835" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -695,47 +659,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/CameraTests/blackRoad.jpg" />
-    <entry file="file://$PROJECT_DIR$/SamplePy.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="84">
-          <caret line="3" selection-end-line="29" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CameraTests/contoured.jpg" />
-    <entry file="file://$PROJECT_DIR$/CameraTests/partialL.jpg" />
-    <entry file="file://$PROJECT_DIR$/CameraTests/gradx.jpg" />
-    <entry file="file://$PROJECT_DIR$/CameraTests/hough.jpg" />
-    <entry file="file://$PROJECT_DIR$/CameraTests/whitewash.jpg">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CameraTests/Test2.jpg">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CameraTests/TestAligned.jpg">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/MapObj.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-420">
-          <caret line="138" column="24" selection-start-line="138" selection-start-column="24" selection-end-line="138" selection-end-column="24" />
-          <folding>
-            <element signature="e#0#30#0" expanded="true" />
-            <marker date="1540583793527" expanded="true" signature="3165:3170" ph="..." />
-            <marker date="1540583793527" expanded="true" signature="3320:3372" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CameraTests/Test3.jpg">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CameraTests/temp.jpg" />
-    <entry file="file://$PROJECT_DIR$/CameraTests/hsvsub.jpg" />
-    <entry file="file://$PROJECT_DIR$/CameraTests/subtract.jpg">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/CameraTests/tresh.jpg">
       <provider selected="true" editor-type-id="images" />
     </entry>
@@ -747,13 +670,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/CameraTests/r.jpg">
       <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CameraTests/TestCV.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="9" column="17" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/CameraTests/s.jpg">
       <provider selected="true" editor-type-id="images" />
@@ -854,44 +770,96 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/PathFinder.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-498">
-          <caret line="397" column="24" selection-start-line="397" selection-start-column="24" selection-end-line="397" selection-end-column="24" />
+        <state relative-caret-position="146">
+          <caret line="420" selection-start-line="420" selection-end-line="420" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/CameraTests/HSV.jpg">
+    <entry file="file://$PROJECT_DIR$/CameraTests/TestCV.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="28">
+          <caret line="9" column="17" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CameraTests/combinedCont.jpg">
       <provider selected="true" editor-type-id="images" />
     </entry>
     <entry file="file://$PROJECT_DIR$/CameraTests/canny.jpg">
       <provider selected="true" editor-type-id="images" />
     </entry>
+    <entry file="file://$PROJECT_DIR$/edge.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CameraTests/HSV.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CameraTests/TestPy.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="644">
+          <caret line="95" selection-start-line="95" selection-end-line="95" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/CameraTests/combined.jpg">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/CameraTests/combinedCont.jpg">
+    <entry file="file://$PROJECT_DIR$/proc.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/edges.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Follower.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1828">
+          <caret line="101" column="21" selection-start-line="101" selection-start-column="21" selection-end-line="101" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/image.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/edgesL.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/collectL.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lines.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/collectR.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/edgesR.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/HSV.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hThresh.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vThresh.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sThresh.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/combined.jpg">
       <provider selected="true" editor-type-id="images" />
     </entry>
     <entry file="file://$PROJECT_DIR$/PathFinder2.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret selection-end-line="5" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Follower.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-218">
-          <caret line="98" column="57" selection-start-line="98" selection-start-column="57" selection-end-line="98" selection-end-column="57" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CameraTests/TestPy.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="224">
-          <caret line="29" lean-forward="true" selection-start-line="29" selection-end-line="29" />
+        <state relative-caret-position="142">
+          <caret line="226" column="14" lean-forward="true" selection-start-line="226" selection-start-column="14" selection-end-line="226" selection-end-column="14" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

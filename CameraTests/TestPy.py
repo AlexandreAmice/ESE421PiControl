@@ -28,7 +28,7 @@ def maxContour(contours):
     return maxCont,maxIdx
 
 
-image = cv2.imread('Test3.jpg')
+image = cv2.imread('Test1.jpg')
 ylen,xlen,d = image.shape
 trimTop =ylen/2
 trimRight = xlen
