@@ -9,6 +9,7 @@ import cv2
 from threading import Lock
 from ArduinoCom import ArduinoCom
 from Follower import findRibbon
+from PathFinder2 import FindEdge
 
 print __name__
 ########################################################################################################################
@@ -107,21 +108,23 @@ class CameraThread(threading.Thread):
         # allow the camera to warmup
         time.sleep(0.1)
 
-        pathFinder = PathFinder.PathFinder(None, 100)
+        edgeFinder = FindEdge(None,camera.capture())
 
         for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
             try:
                 print "I'm here"
                 # grab the raw NumPy array representing the image, then initialize the timestamp
                 # and occupied/unoccupied text
-                pathFinder.setLookLeft(camLookLeft)
+                edgeFinder.set_look_left(camLookLeft)
                 image = frame.array
 
                 # show the frame
                 # lines.project_on_road_debug(image)
-                pathFinder.cur_image = image
-                psiD = pathFinder.calc_phi_d()
-                cv2.imshow("Rpi lane detection", pathFinder.project_on_road())
+                edgeFinder.cur_image = image
+                edgeFinder.collect_des_edge()
+                edge = edgeFinder.draw_des_edge()
+                psiD = edgeFinder.calc_phi_r()
+                cv2.imshow("Rpi lane detection", edge)
                 key = cv2.waitKey(1) & 0xFF
 
                 # clear the stream in preparation for the next frame
@@ -254,17 +257,17 @@ if __name__ == "__main__":
     comThread.start()
     #prevents background program from running on exit
 
-    ribThread = RibbonTrackThread()
-    ribThread.setDaemon(True)
-    ribThread.start()
+    # ribThread = RibbonTrackThread()
+    # ribThread.setDaemon(True)
+    # ribThread.start()
 
     #mapThread = MapThread()
     #mapThread.setDaemon(True)
     #mapThread.start()
 
-    #camThread = CameraThread()
-    #camThread.setDaemon(True)
-    #camThread.start()
+    camThread = CameraThread()
+    camThread.setDaemon(True)
+    camThread.start()
     
     #keep main thread alive
     count = 0;

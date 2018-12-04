@@ -75,6 +75,8 @@ class FindEdge():
         self.rightLine = None
         self.leftLine = None
 
+        self.d_desired = 3
+
 
     def set_new_image(self, image):
         self.cur_image = image
@@ -89,6 +91,9 @@ class FindEdge():
             self.leftLine = fun
         else:
             self.rightLine = fun
+
+    def set_look_left(self, val):
+        self.look_left = val
 
 
 
@@ -110,11 +115,12 @@ class FindEdge():
 
         epsH = 30
         epsS = 20
-        epsV = 30
+        epsV = 20
         threshH = cv2.inRange(h, hmean - epsH, hmean + epsH)
         threshS = cv2.inRange(s, smean - epsS, smean + epsS)
         threshV = cv2.inRange(v, vmean - epsV, vmean + epsV)
-        combined = threshS | (threshH & threshV)#(threshH) & (threshS)
+
+        combined = threshS #| (threshH & threshV)#(threshH) & (threshS)
         combined = cv2.medianBlur(combined, 5)
         temp = combined
         combined = cv2.Canny(combined, 100, 200)
@@ -126,6 +132,7 @@ class FindEdge():
         cv2.imwrite('hThresh.jpg', threshH)
         cv2.imwrite('sThresh.jpg', threshS)
         cv2.imwrite('vThresh.jpg', threshV)
+
         cont, contours, hierarchy = cv2.findContours(self.proc_img[:, :], cv2.RETR_TREE,
                                                      cv2.CHAIN_APPROX_SIMPLE)
         c, i = maxContour(contours)
@@ -181,6 +188,13 @@ class FindEdge():
                         cv2.drawContours(image, contours, -1, (255, 0, 0), 3))
             self.lostCount += 0
 
+    def collect_des_edge(self):
+        if self.look_left:
+            self.collect_edge_L()
+        else:
+            self.collect_edge_R()
+
+
     def draw_r_edge(self):
         if self.rightLine is not None:
             lefty = self.rightLine(self.x_dim/2)
@@ -200,7 +214,17 @@ class FindEdge():
             return temp
         return self.cur_image
 
+    def draw_des_edge(self):
+        if self.look_left:
+            return self.draw_l_edge()
+        else:
+            return self.draw_r_edge()
+
     def calc_road_offset(self):
+        ym_per_pix = 50 / 250.0  # meters per pixel in y dimension
+        xm_per_pix = 0.37 / 75.0  # meters per pixel in x dimension
+
+
         if self.look_left:
             self.collect_edge_L()
             curLine = self.leftLine
@@ -209,22 +233,37 @@ class FindEdge():
             curLine = self.rightLine
 
         if curLine is not None:
-            #need to consider line in the form ax+by + c = 0. Curline is stored in form y=mx+b
-            m = float(curLine(self.x_dim)-curLine(0))/self.x_dim
-            a = m
-            b = -1
-            c = curLine(0)
+            #inverse image of line level with y of car
+            m = float(curLine(self.x_dim) - curLine(0)) / self.x_dim
+            offX = (self.y_dim - curLine(0)) / m
+            dist = -(self.x_dim/2 - offX) * xm_per_pix
 
-            dist = abs(a*self.carX+b*self.carY+c)/math.sqrt(a**2+b**2)
-            #print dist
-            return dist
+            # #need to consider line in the form ax+by + c = 0. Curline is stored in form y=mx+b
+            # m = float(curLine(self.x_dim)-curLine(0))/self.x_dim
+            # a = m
+            # b = -1
+            # c = curLine(0)
+            #
+            # dist = abs(a*self.carX+b*self.carY+c)/math.sqrt(a**2+b**2)
+            return self.d_desired - dist
         return -1
+
+    def calc_phi_r(self):
+        if self.look_left:
+            self.collect_edge_L()
+            curLine = self.leftLine
+        else:
+            self.collect_edge_R()
+            curLine = self.rightLine
+
+        m = float(curLine(self.x_dim) - curLine(0)) / self.x_dim
+        print m-0.3
+        return self.calc_road_offset()/5 - (m-0.3)
 
 
 if __name__ == "__main__":
     #image = cv2.imread('CameraTests/Test1.jpg')
-    rand = random.randint(0,100)
-    print rand
+    rand = 90 #random.randint(0,100)
     image = cv2.imread('PennParkPics/Picture ' + str(rand)+'.jpg')
     temp = np.copy(image)
     y,x, _ = image.shape
@@ -235,6 +274,7 @@ if __name__ == "__main__":
     edgeFinder.collect_edge_L()
     edgeFinder.collect_edge_R()
     edgeFinder.calc_road_offset()
+    edgeFinder.calc_phi_r()
     lines = cv2.addWeighted(edgeFinder.draw_r_edge(),0.5,edgeFinder.draw_l_edge(),0.5,0)
     cv2.imwrite('lines.jpg', lines)
     # cv2.imwrite('edgesR.jpg', edgeFinder.draw_r_edge())
