@@ -269,6 +269,7 @@ class FindEdge():
             self.collect_edge_R()
             curLine = self.rightLine
         if curLine is None:
+            print 0
             return 0
         m = float(curLine(self.x_dim) - curLine(0)) / self.x_dim
         print m-0.3

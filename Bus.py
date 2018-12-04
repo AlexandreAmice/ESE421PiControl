@@ -258,9 +258,9 @@ class RibbonTrackThread(threading.Thread):
 
 if __name__ == "__main__":
     print "running main"
-    #comThread = ArduinoComThread()
-    #comThread.setDaemon(True)
-    #comThread.start()
+    comThread = ArduinoComThread()
+    comThread.setDaemon(True)
+    comThread.start()
     #prevents background program from running on exit
 
     #ribThread = RibbonTrackThread()
