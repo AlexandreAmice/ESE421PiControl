@@ -84,6 +84,7 @@ class FindEdge():
 
         self.d_desired = 3
         self.temp = None
+        self.prev_param = (0,0,0,0)
 
 
     def set_new_image(self, image):
@@ -95,6 +96,14 @@ class FindEdge():
         self.set_preproc_cur_image()
 
     def set_line(self, vx, vy, x, y, left):
+        vx1, vy1, x1, y1 = self.prev_param
+        prevFact = 0.8
+        curFact = 1-prevFact
+        vx = prevFact * vx1 + curFact*vx
+        vy = prevFact * vy1 + curFact*vy
+        x = prevFact * x1 + curFact*x
+        y = prevFact * y1 + curFact*y
+        self.prev_param = [vx, vy,x,y]
         fun = lambda xhat: int(((xhat - x) * vy / vx) + y)
         if left:
             self.leftLine = fun
@@ -124,16 +133,16 @@ class FindEdge():
         vmean = np.mean(v[yBox, xBox])
 
         
-        epsH = 50
-        epsS = 30
-        epsV = 30
+        epsH = 10
+        epsS = 5
+        epsV = 10
         threshH = cv2.inRange(h, hmean - epsH, hmean + epsH)
         threshS = cv2.inRange(s, smean - epsS, smean + epsS)
         threshV = cv2.inRange(v, vmean - epsV, vmean + epsV)
 
-        combined = threshS #| (threshH & threshV)#(threshH) & (threshS)
+        combined = threshS # (threshH & threshV)#(threshH) & (threshS)
         combined = cv2.medianBlur(combined, 5)
-        temp = combined
+        self.temp = np.hstack((threshH, threshS, threshV))
         combined = cv2.Canny(combined, 100, 200)
         self.proc_img = combined
 
@@ -147,7 +156,7 @@ class FindEdge():
             contours, hierarchy = cv2.findContours(self.proc_img[:, :], cv2.RETR_TREE,
                                                          cv2.CHAIN_APPROX_SIMPLE)
             c, i = maxContour(contours)
-            cv2.drawContours(self.temp,contours,i, (255,0,0), 3)
+            #cv2.drawContours(self.temp,contours,i, (255,0,0), 3)
             
             #cv2.imwrite('combined.jpg', cv2.drawContours(temp,contours,i, (255,0,0), 3))
         except Excetion as e:
@@ -230,8 +239,8 @@ class FindEdge():
             temp = np.copy(self.cur_image)
             #cv2.rectangle(temp, (self.carX+35, self.carY), (self.carX,self.carY-243), (0, 255, 0), 4)
             cv2.line(temp, (self.x_dim, righty), (self.x_dim/2, lefty), (0, 0, 255), 5)
-            return temp,self.proc_img
-        return self.proc_img, self.temp
+            return temp, self.temp
+        return self.proc_img, np.ones_like(self.cur_image)
 
     def draw_l_edge(self):
         if self.leftLine is not None:
@@ -286,8 +295,7 @@ class FindEdge():
         if curLine is None:
             return 0
         m = float(curLine(self.x_dim) - curLine(0)) / self.x_dim
-        print m-1.2
-        return self.calc_road_offset()/5 - (m-0.3)
+        return self.calc_road_offset()/5 - (m-.2)
 
 
 if __name__ == "__main__":
