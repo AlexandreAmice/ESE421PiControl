@@ -9,6 +9,7 @@ from threading import Lock
 from ArduinoCom import ArduinoCom
 from Follower import findRibbon
 from PathFinder2 import FindEdge
+import numpy as np
 
 print __name__
 ########################################################################################################################
@@ -20,7 +21,7 @@ gpsV = 0
 psiD = -20
 desiredOffset = 3
 curOffset = 3
-camLookLeft = True
+camLookLeft = False
 lastNode = 'A'
 speedD = 50
 gpsPsi = 0
@@ -97,7 +98,7 @@ class CameraThread(threading.Thread):
 
         camera = picamera.PiCamera()
         photoHeight = 540
-        image_size = (960, 544)  # (16*photoHeight/9, photoHeight)
+        image_size = (960/2, 544/2)  # (16*photoHeight/9, photoHeight)
         camera.resolution = image_size  # (960, 540)#(16*photoHeight/9, photoHeight)
         camera.framerate = 7
         camera.vflip = False
@@ -106,7 +107,7 @@ class CameraThread(threading.Thread):
         rawCapture = PiRGBArray(camera, size=image_size)
         # allow the camera to warmup
         time.sleep(0.1)
-        edgeFinder = FindEdge(None,200)
+        edgeFinder = FindEdge(None,image_size[1]/2)
         print 'ready for loop'
 
         for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
@@ -116,19 +117,22 @@ class CameraThread(threading.Thread):
                 image = frame.array
                 rawCapture.truncate()
                 rawCapture.seek(0)
-
+                
                 edgeFinder.set_look_left(camLookLeft)
 
                 # show the frame
                 # lines.project_on_road_debug(image)
                 edgeFinder.set_new_image(image)
                 edgeFinder.collect_des_edge()
-                edge = edgeFinder.draw_des_edge()
+                edge,pic = edgeFinder.draw_des_edge()
                 psiD = edgeFinder.calc_phi_r()
                 
-                
-
-                cv2.imshow("Rpi lane detection", edge)
+                imgray = cv2.cvtColor(image,cv2.COLOR_RGB2GRAY)
+                retr, thresh = cv2.threshold(imgray,127,255,0)
+                contours, _ = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+                temp = cv2.drawContours(image, contours, -1, (255,0,0))
+                cv2.imshow("edge", edge)
+                cv2.imshow("org", pic)
 
                 key = cv2.waitKey(1) & 0xFF
 
@@ -233,7 +237,6 @@ class RibbonTrackThread(threading.Thread):
                 # and occupied/unoccupied text
                 image = frame.array
                 ribbonFinder.setImage(image)
-
                 cv2.imshow("RibbonFinder", ribbonFinder.findRib())
                 key = cv2.waitKey(1) & 0xFF
 

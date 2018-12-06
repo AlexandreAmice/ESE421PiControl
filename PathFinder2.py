@@ -9,7 +9,7 @@ import random
 #import picamera
 #from picamera.array import PiRGBArray
 warnings.filterwarnings('error')
-def sideBySide(img1, img2, destName):
+def sideBySide(img1, img2, destName=""):
     dims1 = img1.shape
     dims2 = img2.shape
     if len(dims1) < len(dims2):
@@ -20,6 +20,7 @@ def sideBySide(img1, img2, destName):
         toWrite = np.hstack((img1, temp))
     else:
         toWrite = np.hstack((img1, img2))
+    return toWrite
     cv2.imwrite(destName, toWrite)
 
 def maxContour(contours):
@@ -29,6 +30,8 @@ def maxContour(contours):
     maxIdx = -1
     maxLen = -1 #cv2.arcLength(maxCont, False)
     for i, c in enumerate(contours):
+        
+
         nextLen = cv2.arcLength(c, False)
         if nextLen > maxLen:
             maxCont = c
@@ -80,6 +83,7 @@ class FindEdge():
         self.leftLine = None
 
         self.d_desired = 3
+        self.temp = None
 
 
     def set_new_image(self, image):
@@ -87,6 +91,7 @@ class FindEdge():
         self.cropped_image = self.cur_image[self.removePixels:, :]
         self.y_dim, self.x_dim, _ = image.shape
         self.y_dimC, self.x_dimC, _ = self.cropped_image.shape
+        self.temp = image
         self.set_preproc_cur_image()
 
     def set_line(self, vx, vy, x, y, left):
@@ -119,9 +124,9 @@ class FindEdge():
         vmean = np.mean(v[yBox, xBox])
 
         
-        epsH = 30
-        epsS = 20
-        epsV = 20
+        epsH = 50
+        epsS = 30
+        epsV = 30
         threshH = cv2.inRange(h, hmean - epsH, hmean + epsH)
         threshS = cv2.inRange(s, smean - epsS, smean + epsS)
         threshV = cv2.inRange(v, vmean - epsV, vmean + epsV)
@@ -139,12 +144,17 @@ class FindEdge():
         #cv2.imwrite('sThresh.jpg', threshS)
         #cv2.imwrite('vThresh.jpg', threshV)
         try:
-            cont, contours, hierarchy = cv2.findContours(self.proc_img[:, :], cv2.RETR_TREE,
+            contours, hierarchy = cv2.findContours(self.proc_img[:, :], cv2.RETR_TREE,
                                                          cv2.CHAIN_APPROX_SIMPLE)
             c, i = maxContour(contours)
-            cv2.imwrite('combined.jpg', cv2.drawContours(temp,contours,i, (255,0,0), 3))
-        except:
-            cont, contour, hierarchy = None, None, None
+            cv2.drawContours(self.temp,contours,i, (255,0,0), 3)
+            
+            #cv2.imwrite('combined.jpg', cv2.drawContours(temp,contours,i, (255,0,0), 3))
+        except Excetion as e:
+            print "error in proc image"
+            print e
+            contour, hierarchy = None, None, None
+            self.temp = threshS
         
 
 
@@ -153,25 +163,30 @@ class FindEdge():
         cropBy = self.x_dimC/2
         image = self.proc_img[:, -cropBy:]
         try:
-            cont, contours, hierarchy = cv2.findContours(image, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
-        except:
+            
+            #cont, contours, hierarchy = cv2.findContours(image, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+            contours, _ =  cv2.findContours(image, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+        except Exception as e:
+            print e
             cont, contours, hierarchy = None, None, None
         c, i = maxContour(contours)
         temp = np.copy(c)
         #offset contour back to full image
-        thresh = 200 if not self.look_left else 500
+        thresh = 100 if not self.look_left else 500
         if c is not None and cv2.arcLength(c, False) > thresh:
             temp[:,:,0] = temp[:,:,0] + self.x_dimC/2*np.ones_like(c[:,:,0])
             temp[:, :, 1] = temp[:, :, 1] + self.removePixels* np.ones_like(c[:, :, 0])
-            [vx, vy, x, y] = cv2.fitLine(temp, cv2.DIST_L2, 0, 0.01, 0.01)
+            [vx, vy, x, y] = cv2.fitLine(temp, cv2.cv.CV_DIST_L2, 0, 0.01, 0.01)
             self.set_line(vx,vy,x,y,False)
             self.lostCount = 0 #reset counter for finding the road
-            cv2.imwrite('collectR.jpg', cv2.drawContours(image, contours, i, (255, 0, 0), 3))
+            cv2.drawContours(image, contours, i, (255, 0, 0), 3)
+            cv2.imwrite('collectR.jpg', image)
         else:
             #if we can't find the road
             if self.lostCount >= 10:
                 self.rightLine = None
-            cv2.imwrite('collectR.jpg', cv2.drawContours(image, contours, -1, (255, 0, 0), 3))
+            cv2.drawContours(image, contours, -1, (255, 0, 0), 3)
+            cv2.imwrite('collectR.jpg', image)
             self.lostCount += 1
 
 
@@ -215,8 +230,8 @@ class FindEdge():
             temp = np.copy(self.cur_image)
             #cv2.rectangle(temp, (self.carX+35, self.carY), (self.carX,self.carY-243), (0, 255, 0), 4)
             cv2.line(temp, (self.x_dim, righty), (self.x_dim/2, lefty), (0, 0, 255), 5)
-            return temp
-        return self.cur_image
+            return temp,self.proc_img
+        return self.proc_img, self.temp
 
     def draw_l_edge(self):
         if self.leftLine is not None:
@@ -225,7 +240,7 @@ class FindEdge():
             temp = np.copy(self.cur_image)
             cv2.line(temp, (self.x_dim/2, righty), (0, lefty), (0, 255, 0), 5)
             return temp
-        return self.cur_image
+        return self.proc_img
 
     def draw_des_edge(self):
         if self.look_left:
@@ -269,10 +284,9 @@ class FindEdge():
             self.collect_edge_R()
             curLine = self.rightLine
         if curLine is None:
-            print 0
             return 0
         m = float(curLine(self.x_dim) - curLine(0)) / self.x_dim
-        print m-0.3
+        print m-1.2
         return self.calc_road_offset()/5 - (m-0.3)
 
 
