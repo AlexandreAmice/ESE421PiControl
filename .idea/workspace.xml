@@ -3,8 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="137b37d1-bf89-45b9-9b76-6f59f74be7a0" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Bus.py" beforeDir="false" afterPath="$PROJECT_DIR$/Bus.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PathFinder2.py" beforeDir="false" afterPath="$PROJECT_DIR$/PathFinder2.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/combined.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/combined.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/image.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/image.jpg" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -22,8 +23,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/PathFinder2.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="281">
-              <caret line="257" lean-forward="true" selection-start-line="257" selection-end-line="257" />
+            <state relative-caret-position="505">
+              <caret line="292" column="49" lean-forward="true" selection-start-line="292" selection-start-column="49" selection-end-line="292" selection-end-column="49" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -34,8 +35,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Bus.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="364">
-              <caret line="187" column="17" selection-start-line="187" selection-start-column="17" selection-end-line="187" selection-end-column="17" />
+            <state relative-caret-position="156">
+              <caret line="114" column="96" lean-forward="true" selection-start-line="114" selection-start-column="96" selection-end-line="114" selection-end-column="96" />
               <folding>
                 <element signature="e#0#16#0" expanded="true" />
               </folding>
@@ -46,7 +47,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/CameraTests/CameraControl.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-473" />
+            <state relative-caret-position="-2825" />
           </provider>
         </entry>
       </file>
@@ -141,15 +142,15 @@
         <option value="$PROJECT_DIR$/PathFinder.py" />
         <option value="$PROJECT_DIR$/Follower.py" />
         <option value="$PROJECT_DIR$/CameraTests/TestPy.py" />
-        <option value="$PROJECT_DIR$/PathFinder2.py" />
         <option value="$PROJECT_DIR$/Bus.py" />
+        <option value="$PROJECT_DIR$/PathFinder2.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="y" value="25" />
-    <option name="width" value="950" />
-    <option name="height" value="732" />
+    <option name="width" value="960" />
+    <option name="height" value="978" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -416,19 +417,26 @@
       <option name="project" value="LOCAL" />
       <updated>1543389444445</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Test Follow an edge">
+      <created>1543943880858</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1543943880858</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="25" width="1920" height="978" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.09010417" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.08958333" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3295063" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.23050459" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.23050459" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49895832" weight="0.29701835" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -520,7 +528,8 @@
     <MESSAGE value="Refactored 10/23. Prepared to Push to Pi" />
     <MESSAGE value="Refactored backup 10/30" />
     <MESSAGE value="Fix road Edge detection for sure. need to make a image line to real line math function" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix road Edge detection for sure. need to make a image line to real line math function" />
+    <MESSAGE value="Test Follow an edge" />
+    <option name="LAST_COMMIT_MESSAGE" value="Test Follow an edge" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -827,18 +836,18 @@
     <entry file="file://$PROJECT_DIR$/PennParkPics/Picture 48.jpg">
       <provider selected="true" editor-type-id="images" />
     </entry>
+    <entry file="file://$PROJECT_DIR$/CameraTests/CameraControl.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2825" />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/lines.jpg">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/CameraTests/CameraControl.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-473" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/PathFinder2.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="281">
-          <caret line="257" lean-forward="true" selection-start-line="257" selection-end-line="257" />
+        <state relative-caret-position="505">
+          <caret line="292" column="49" lean-forward="true" selection-start-line="292" selection-start-column="49" selection-end-line="292" selection-end-column="49" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
@@ -847,8 +856,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Bus.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="364">
-          <caret line="187" column="17" selection-start-line="187" selection-start-column="17" selection-end-line="187" selection-end-column="17" />
+        <state relative-caret-position="156">
+          <caret line="114" column="96" lean-forward="true" selection-start-line="114" selection-start-column="96" selection-end-line="114" selection-end-column="96" />
           <folding>
             <element signature="e#0#16#0" expanded="true" />
           </folding>
