@@ -7,7 +7,14 @@ from scipy import stats
 import picamera
 from picamera.array import PiRGBArray
 
-def sideBySide(img1, img2, destName):
+def sideBySide(img1, img2, destName = None):
+    """
+    slap two images together to display them side by side
+    :param img1: image 1
+    :param img2: image 2
+    :param destName: destination to write the image to. optional argument
+    :return: side by side image
+    """
     dims1 = img1.shape
     dims2 = img2.shape
     if len(dims1) < len(dims2):
@@ -17,10 +24,15 @@ def sideBySide(img1, img2, destName):
         temp = np.dstack((img2,img2,img2))
         toWrite = np.hstack((img1, temp))
 
+    if destName is not None:
+        cv2.imwrite(destName, toWrite)
+
     return toWrite
-    #cv2.imwrite(destName, toWrite)
 
 class findRibbon():
+    """
+    Class to find the orange ribbon on a lead car.
+    """
     def __init__(self, image = None):
         self.img = image
         if self.img is not None:
@@ -33,7 +45,13 @@ class findRibbon():
 
 
     def findRib(self):
-        #print 'start findRib'
+        """
+        Shifts the RGB image into LAB and HSV color space and finds the orange ribbon by thresholding on the specifics
+        of the orange ribbon color and taking the positives of both images to obtain high confidence
+        :return: the image of the car sees with a line denoting the center of the image and a small box where it believes
+        the center of the ribbon is.
+        """
+        #remove sharp edges
         image = cv2.GaussianBlur(self.img, (11, 11), 11)
         ############################
         # HSV SHIFT
@@ -72,6 +90,7 @@ class findRibbon():
         combined3 = combined & combined2
         #print 'end LAB'
         try:
+            #threshold on median of the non-zero in order to prevent outlier skewing
             avgX = int(np.median(np.nonzero(combined3)[1]))
             avgY = int(np.median(np.nonzero(combined3)[0]))
             boxW = 20
@@ -79,12 +98,12 @@ class findRibbon():
             
             cv2.rectangle(self.img, (avgX - boxW, avgY - boxH), (avgX + boxW, avgY + boxH), (0, 255, 0), 3)
             toShow = sideBySide(self.img, combined, 'total.jpg')
+
+            #center only based on lateral offset
             self.redCenter = avgX
-            #print 'over set'
             cv2.line(toShow, (self.imgShape[1]/2,self.imgShape[0]), (self.imgShape[1]/2, 0), (0,255,0))
             return toShow
         except:
-            #print 'over failed'
             return self.img
 
     def setImage(self,img):
@@ -93,11 +112,18 @@ class findRibbon():
         self.redCenter = self.imgShape[1]/2
 
     def calcPsiOffset(self):
+        """
+        Calculate the angle offset of the ribbon. Return a wheel angle that should be set to track. This is very Hacked
+        together and could be improved with a more robust feedback model. The 5 is a gain feedback parameter
+        :return: a wheel angle to fix based on the offset of the redCenter
+        """
         return 5*math.atan2((self.imgShape[1]/2-self.redCenter),self.imgShape[0])
 
 
 if __name__ == "__main__":
-    
+    """
+    Debugging code in order to test this block independently.
+    """
     camera = picamera.PiCamera()
     photoHeight = 540
     image_size = (960 / 2, 544 / 2)  # (16*photoHeight/9, photoHeight)
@@ -119,7 +145,7 @@ if __name__ == "__main__":
         ribbonFinder.findRib()
 
 
-        #cv2.imshow("Find Ribbon", ribbonFinder.findRib())
+        cv2.imshow("Find Ribbon", ribbonFinder.findRib())
         key = cv2.waitKey(1) & 0xFF
 
         # clear the stream in preparation for the next frame

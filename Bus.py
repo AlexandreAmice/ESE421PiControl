@@ -8,7 +8,7 @@ import cv2
 from threading import Lock
 from ArduinoCom import ArduinoCom
 from Follower import findRibbon
-from PathFinder2 import FindEdge
+from PathFinder import FindEdge
 import numpy as np
 
 print __name__
@@ -21,16 +21,19 @@ primary responsibility of this class to run the threads and keep them synchroniz
 ########################################################################################################################
 #START GLOBAL DATA
 ########################################################################################################################
-curLat = 39.9509507
-curLon = -75.185327
-gpsV = 0
-psiD = -20
-desiredOffset = 3
-curOffset = 3
-camLookLeft = False
-lastNode = 'A'
-speedD = 50
-gpsPsi = 0
+curLat = 39.9509507 #current latitude
+curLon = -75.185327 #current longitude
+gpsV = 0 #velocity as given by gps in cm/sec
+psiD = -20 #desired wheel angle in degrees
+desiredOffset = 3 #desired offset from side of the road in meters
+curOffset = 3 #current offset from side of the road in meters
+camLookLeft = False #true if attempting to find left edge of the road. False if looking for right side of the road
+lastNode = 'A' #last node visited
+speedD = 50 #desired speed in cm/sec
+gpsPsi = 0 #currenting heading angle given by gps
+globalVars = {'curLat': curLat, 'curLon': curLon, 'gpsV': gpsV, 'psiD': psiD, \
+              'desiredOffset': desiredOffset, 'curOffset': curOffset, 'camLookLeft': camLookLeft, \
+              'lastNode': lastNode, 'speedD': speedD, 'gpsPsi': gpsPsi}
 
 #LOCKS. USE CAUTION WHEN CHANGING AS THIS CAN CAUSE ERRATIC BEHAVIOR.
 #This is poor code design. I need to make this more elegant.
@@ -191,12 +194,11 @@ class ArduinoComThread(threading.Thread):
 
             if sendCtr >= len(sendToArd):
                 sendCtr = 0
-            #if receiveCtr >= len(receiveFromArd):
-            #    receiveCtr = 0
+            if receiveCtr >= len(receiveFromArd):
+                receiveCtr = 0
             try:
                 #send data
                 sendDataName = sendToArd.keys()[sendCtr]
-                #print sendDataName
                 varToSend, varToSendLock = sendToArd[sendDataName]
                 varToSendLock.acquire()
                 com.setData(sendDataName, varToSend)
@@ -208,22 +210,22 @@ class ArduinoComThread(threading.Thread):
                
                 #acquire data
                 
-                # acqDataName = receiveFromArd.keys()[receiveCtr]
-                # #print acqDataName
-                # varToAcq, varToAcqLock = receiveFromArd[acqDataName]
-                # com.getData(acqDataName)
-                # varToAcqLock.acquire()
-                # varToAcq = com.getData(acqDataName)
-                # varToAcqLock.release()
+                acqDataName = receiveFromArd.keys()[receiveCtr]
+                varToAcq, varToAcqLock = receiveFromArd[acqDataName]
+                com.getData(acqDataName)
+                varToAcqLock.acquire()
+                varToAcq = com.getData(acqDataName)
+                globalVars[acqDataName] = varToAcq
+                varToAcqLock.release()
 
                 #incr counter
-                #receiveCtr += 1
+                receiveCtr += 1
                 
                 
 
             except Exception as e:
-                #print "failed communication"
-                #print e
+                print "failed communication"
+                print e
                 releaseAllLocks()
 
 
@@ -235,15 +237,18 @@ class ArduinoComThread(threading.Thread):
 #BEGIN RIBBON TRACK CLASS
 ########################################################################################################################
 class RibbonTrackThread(threading.Thread):
+    """
+    Computer vision class in order to follow a lead car with the orange ribbon on it. It is recommended to turn off the
+    receiving information from the Arduino if using the car in this mode.
+    """
     def run(self):
         print "Launching Ribbon Tracking Thread"
         global psiD
         global speed
 
         camera = picamera.PiCamera()
-        photoHeight = 540
-        image_size = (960 / 2, 544 / 2)  # (16*photoHeight/9, photoHeight)
-        camera.resolution = image_size  # (960, 540)#(16*photoHeight/9, photoHeight)
+        image_size = (960 / 2, 544 / 2)
+        camera.resolution = image_size
         camera.framerate = 7
         camera.vflip = False
         camera.hflip = False
@@ -283,33 +288,28 @@ class RibbonTrackThread(threading.Thread):
 
 if __name__ == "__main__":
     print "running main"
+    #You must run this in order to control the car
     comThread = ArduinoComThread()
     comThread.setDaemon(True)
     comThread.start()
-    #prevents background program from running on exit
 
+    #PROJECT 1 FOLLOW THE CAR
     #ribThread = RibbonTrackThread()
     #ribThread.setDaemon(True)
     #ribThread.start()
 
+    #PROJECT 2: NAVIGATE IN THE PARK
     #mapThread = MapThread()
     #mapThread.setDaemon(True)
     #mapThread.start()
-
-    camThread = CameraThread()
-    camThread.setDaemon(True)
-    camThread.start()
+    # camThread = CameraThread()
+    # camThread.setDaemon(True)
+    # camThread.start()
     
     #keep main thread alive
-    count = 0;
     while True:
         pass
-        temp = raw_input("new speedD")
-##        psiDLock.acquire()
-##        psiD = temp
-##        psiDLock.release()
-        
-        #
+
         
         
 

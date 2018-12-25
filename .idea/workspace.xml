@@ -3,61 +3,18 @@
   <component name="ChangeListManager">
     <list default="true" id="137b37d1-bf89-45b9-9b76-6f59f74be7a0" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ArduinoCom.py" beforeDir="false" afterPath="$PROJECT_DIR$/ArduinoCom.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Bus.py" beforeDir="false" afterPath="$PROJECT_DIR$/Bus.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CameraTests/HSV.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/CameraTests/LAB.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/CameraTests/a.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/CameraTests/aThresh.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/CameraTests/b.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/CameraTests/bThresh.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/CameraTests/canny.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/CameraTests/combined.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/CameraTests/combinedCont.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/CameraTests/g.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/CameraTests/grayThresh.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/CameraTests/h.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/CameraTests/hThresh.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/CameraTests/hsv.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/CameraTests/l.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/CameraTests/lThresh.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/CameraTests/lab.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/CameraTests/r.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/CameraTests/s.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/CameraTests/sThresh.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/CameraTests/subtract.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/CameraTests/total.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/CameraTests/tresh.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/CameraTests/tresh1.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/CameraTests/v.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/CameraTests/vThresh.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/CameraTests/whitewash.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/HSV.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CameraTests/CameraControl.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CameraTests/RoadFinderTest.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CameraTests/Test2.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CameraTests/TestCV.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Follower.py" beforeDir="false" afterPath="$PROJECT_DIR$/Follower.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MapObj.py" beforeDir="false" afterPath="$PROJECT_DIR$/MapObj.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bThresh.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/collectL.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/collectR.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/combined.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/edge.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/edges.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/edgesL.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/edgesR.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gThresh.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradX.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradY.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gray.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/hThresh.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/hWash.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/image.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lines.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/partialL.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/partialR.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/proc.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rThresh.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sThresh.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sWash.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vThresh.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/whiteWash.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Path.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PathFinder2.py" beforeDir="false" afterPath="$PROJECT_DIR$/PathFinder.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SamplePy.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/helperCodes.py" beforeDir="false" afterPath="$PROJECT_DIR$/helperCodes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -67,14 +24,35 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/helperCodes.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="112">
+              <caret line="7" selection-start-line="7" selection-end-line="7" />
+              <folding>
+                <element signature="e#0#56#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/MapObj.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="224">
+              <caret line="8" column="3" lean-forward="true" selection-start-line="8" selection-start-column="3" selection-end-line="8" selection-end-column="3" />
+              <folding>
+                <element signature="e#0#10#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Bus.py">
+        <entry file="file://$PROJECT_DIR$/CameraTests/TestPy.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="336">
-              <caret line="189" column="50" selection-start-line="189" selection-start-column="50" selection-end-line="189" selection-end-column="50" />
-              <folding>
-                <element signature="e#0#16#0" expanded="true" />
-              </folding>
+              <caret line="15" column="34" lean-forward="true" selection-start-line="15" selection-start-column="34" selection-end-line="15" selection-end-column="34" />
             </state>
           </provider>
         </entry>
@@ -90,7 +68,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>self.edge</find>
       <find>cur_image</find>
       <find>choose</find>
       <find>collect_edge</find>
@@ -120,6 +97,7 @@
       <find>gray</find>
       <find>calculate</find>
       <find>print</find>
+      <find>FOLLOW</find>
     </findStrings>
     <replaceStrings>
       <replace>self.bus</replace>
@@ -158,20 +136,20 @@
         <option value="$PROJECT_DIR$/SamplePy.py" />
         <option value="$PROJECT_DIR$/Path.py" />
         <option value="$USER_HOME$/Desktop/Test/test.py" />
-        <option value="$PROJECT_DIR$/helperCodes.py" />
         <option value="$PROJECT_DIR$/mapPennParkEdges.txt" />
-        <option value="$PROJECT_DIR$/CameraTests/RoadFinderTest.py" />
         <option value="$PROJECT_DIR$/CameraTests/PathFinder.py" />
         <option value="$PROJECT_DIR$/main.py" />
         <option value="$PROJECT_DIR$/CameraTests/TestCV.py" />
         <option value="$PROJECT_DIR$/CameraTests/Test2.py" />
         <option value="$PROJECT_DIR$/PathFinder.py" />
-        <option value="$PROJECT_DIR$/Follower.py" />
         <option value="$PROJECT_DIR$/CameraTests/TestPy.py" />
         <option value="$PROJECT_DIR$/PathFinder2.py" />
-        <option value="$PROJECT_DIR$/MapObj.py" />
         <option value="$PROJECT_DIR$/ArduinoCom.py" />
         <option value="$PROJECT_DIR$/Bus.py" />
+        <option value="$PROJECT_DIR$/Follower.py" />
+        <option value="$PROJECT_DIR$/helperCodes.py" />
+        <option value="$PROJECT_DIR$/MapObj.py" />
+        <option value="$PROJECT_DIR$/CameraTests/RoadFinderTest.py" />
       </list>
     </option>
   </component>
@@ -192,11 +170,6 @@
             <path>
               <item name="Pi Control" type="b2602c69:ProjectViewProjectNode" />
               <item name="Pi Control" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Pi Control" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Pi Control" type="462c0819:PsiDirectoryNode" />
-              <item name="CameraTests" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Pi Control" type="b2602c69:ProjectViewProjectNode" />
@@ -269,7 +242,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/PathFinder2.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/PathFinder.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -453,7 +426,14 @@
       <option name="project" value="LOCAL" />
       <updated>1543943880858</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Refactored with comments and Cleaned for Publication">
+      <created>1545770144799</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1545770144800</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -464,7 +444,7 @@
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.3295063" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32912844" />
       <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.23050459" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49895832" weight="0.29701835" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
@@ -558,32 +538,11 @@
     <MESSAGE value="Refactored backup 10/30" />
     <MESSAGE value="Fix road Edge detection for sure. need to make a image line to real line math function" />
     <MESSAGE value="Test Follow an edge" />
-    <option name="LAST_COMMIT_MESSAGE" value="Test Follow an edge" />
+    <MESSAGE value="Refactored with comments and Cleaned for Publication" />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactored with comments and Cleaned for Publication" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/SamplePy.py</url>
-          <line>29</line>
-          <option name="timeStamp" value="7" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Path.py</url>
-          <line>48</line>
-          <option name="timeStamp" value="9" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/PathFinder.py</url>
-          <line>135</line>
-          <option name="timeStamp" value="23" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/CameraTests/Test2.py</url>
-          <line>83</line>
-          <option name="timeStamp" value="30" />
-        </line-breakpoint>
-      </breakpoints>
       <default-breakpoints>
         <breakpoint type="python-exception">
           <properties notifyOnTerminate="true" exception="BaseException">
@@ -682,25 +641,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/CameraTests/l.jpg">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CameraTests/RoadFinderTest.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="147">
-          <caret line="554" column="23" selection-start-line="554" selection-start-column="23" selection-end-line="554" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CameraTests/TestRib3.jpg">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CameraTests/TestRib2.jpg">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CameraTests/bThresh.jpg">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/CameraTests/aThresh.jpg">
       <provider selected="true" editor-type-id="images" />
     </entry>
@@ -709,16 +649,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/CameraTests/total.jpg">
       <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CameraTests/Test2.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="397">
-          <caret line="83" column="38" lean-forward="true" selection-start-line="83" selection-end-line="84" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/CameraTests/b.jpg">
       <provider selected="true" editor-type-id="images" />
@@ -738,13 +668,6 @@
     <entry file="file://$PROJECT_DIR$/CameraTests/hsv.jpg">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/CameraTests/TestCV.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="28">
-          <caret line="9" column="17" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/CameraTests/combinedCont.jpg">
       <provider selected="true" editor-type-id="images" />
     </entry>
@@ -754,25 +677,11 @@
     <entry file="file://$PROJECT_DIR$/CameraTests/HSV.jpg">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/CameraTests/TestPy.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="644">
-          <caret line="95" selection-start-line="95" selection-end-line="95" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/CameraTests/combined.jpg">
       <provider selected="true" editor-type-id="images" />
     </entry>
     <entry file="file://$PROJECT_DIR$/proc.jpg">
       <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Follower.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1828">
-          <caret line="101" column="21" selection-start-line="101" selection-start-column="21" selection-end-line="101" selection-end-column="21" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/image.jpg">
       <provider selected="true" editor-type-id="images" />
@@ -788,16 +697,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/edgesR.jpg">
       <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/PathFinder.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-269">
-          <caret line="266" column="70" selection-start-line="265" selection-start-column="12" selection-end-line="266" selection-end-column="70" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/rThresh.jpg">
       <provider selected="true" editor-type-id="images" />
@@ -835,25 +734,12 @@
     <entry file="file://$PROJECT_DIR$/lines.jpg">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/PathFinder2.py">
+    <entry file="file://$PROJECT_DIR$/PathFinder.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="8008">
           <caret line="292" column="49" selection-start-line="292" selection-start-column="49" selection-end-line="292" selection-end-column="49" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CameraTests/CameraControl.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/MapObj.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="400">
-          <caret line="180" column="24" lean-forward="true" selection-start-line="180" selection-start-column="24" selection-end-line="180" selection-end-column="24" />
-          <folding>
-            <element signature="e#0#30#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -885,11 +771,106 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Bus.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="336">
-          <caret line="189" column="50" selection-start-line="189" selection-start-column="50" selection-end-line="189" selection-end-column="50" />
+        <state relative-caret-position="252">
+          <caret line="9" column="11" selection-start-line="9" selection-start-column="5" selection-end-line="9" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Follower.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-300">
+          <caret line="125" column="7" selection-start-line="125" selection-start-column="7" selection-end-line="125" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-504">
           <folding>
-            <element signature="e#0#16#0" expanded="true" />
+            <element signature="e#0#25#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/helperCodes.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="112">
+          <caret line="7" selection-start-line="7" selection-end-line="7" />
+          <folding>
+            <element signature="e#0#56#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Path.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1176">
+          <folding>
+            <element signature="e#0#51#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PathFinder.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="28">
+          <caret line="266" column="70" selection-start-line="265" selection-start-column="12" selection-end-line="266" selection-end-column="70" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SamplePy.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-160" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CameraTests/CameraControl.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-420" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CameraTests/RoadFinderTest.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2184">
+          <folding>
+            <element signature="e#15#52#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CameraTests/Test2.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="481">
+          <caret line="83" column="38" lean-forward="true" selection-start-line="83" selection-end-line="84" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CameraTests/TestCV.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="196">
+          <caret line="9" column="17" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MapObj.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="224">
+          <caret line="8" column="3" lean-forward="true" selection-start-line="8" selection-start-column="3" selection-end-line="8" selection-end-column="3" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CameraTests/TestPy.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="336">
+          <caret line="15" column="34" lean-forward="true" selection-start-line="15" selection-start-column="34" selection-end-line="15" selection-end-column="34" />
         </state>
       </provider>
     </entry>

@@ -1,430 +1,317 @@
 import numpy as np
+import math
 import cv2
-import timeit
-import warnings
 import time
+import warnings
+from scipy import stats
+import random
 
-import picamera
-from picamera.array import PiRGBArray
-
-
+#import picamera
+#from picamera.array import PiRGBArray
 warnings.filterwarnings('error')
+def sideBySide(img1, img2, destName=""):
+    dims1 = img1.shape
+    dims2 = img2.shape
+    if len(dims1) < len(dims2):
+        temp = np.dstack((img1,img1,img1))
+        toWrite = np.hstack((temp,img2))
+    elif len(dims1) > len(dims2):
+        temp = np.dstack((img2,img2,img2))
+        toWrite = np.hstack((img1, temp))
+    else:
+        toWrite = np.hstack((img1, img2))
+    return toWrite
+    cv2.imwrite(destName, toWrite)
 
+def maxContour(contours):
+    if contours is None:
+        return None, 0
+    maxCont = None
+    maxIdx = -1
+    maxLen = -1 #cv2.arcLength(maxCont, False)
+    for i, c in enumerate(contours):
+        
 
+        nextLen = cv2.arcLength(c, False)
+        if nextLen > maxLen:
+            maxCont = c
+            maxIdx = i
+            maxLen = nextLen
+    return maxCont,maxIdx
 
-
-
-# class for Road detection
-class PathFinder():
-    def __init__(self, img, removePixels = None):
-        # average x values of the fitted road edge
-        self.bestx = None
-        self.besty = None
-        # polynomial coefficients averaged over the last iterations
-        self.best_fit = None
-        #polynomial coefficients for the most recent fit
-        self.current_fit = None
-        # radius of curvature of the road edge in meters
-        self.curve_rad = None
-        #distance in meters of vehicle center from the line
-        self.offset = None
-
-        # x values for detected line pixels
-        self.allx = None
-        # y values for detected line pixels
-        self.ally = None
-
+class FindEdge():
+    def __init__(self, img, removePixels = 0):
         # camera calibration parameters (if we get these)
         self.cam_mtx = None
         self.cam_dst = None
 
-        # camera distortion parameters (if we do this)
-        self.M = None
-        self.Minv = None
+        # processed image for edge detection
+        self.proc_img = None
+        self.edges = None
 
-        # image shape
-        self.im_shape = (None,None)
-        # distance to look ahead in meters
-        self.look_ahead = 10 #currently arbitrary
-        # cut off image from top to restrict view
-        self.remove_pixels = removePixels
+        #current image
+        self.removePixels = removePixels
+        if img is not None:
+            self.x_dim = img.shape[1]
+            self.y_dim = img.shape[0]
+            self.carX, self.carY = self.x_dim / 2, self.y_dim
+            
+            self.cropped_image = img[removePixels:, :]
+            self.y_dimC = self.cropped_image.shape[0]
+            self.x_dimC = self.cropped_image.shape[1]
+            self.set_new_image(img)
 
-        #windowing parameters for edge detection.
-        #WARNING THESE ARE REALLY SENSITIVE TAKE CARE WHEN CHANGING
+
+
+
+        # windowing parameters for edge detection.
+        # WARNING THESE ARE REALLY SENSITIVE TAKE CARE WHEN CHANGING
         self.window_height = 10
         self.window_width = 10
         self.margin = 20
 
-        # enlarge output image
-        self.enlarge = 2.5
-        # warning from numpy polyfit
-        self.poly_warning = False
-
-        #edge coordinates
-        self.edgeCoord = None
-
-        #what side to look for road
+        #what side of the road we want to look for
         self.look_left = False
-
-        #found an edge on the correct side
-        self.found_edge = False
-
-        #current image we are finding edges on
-        self.cur_image = img
-
-        #desired offset
-        self.desired_offset = 4
-
-        #white washed image
-        self.whiteImg = None
-
-    # set camera calibration parameters
-    def set_cam_calib_param(self, mtx, dst):
-        self.cam_mtx = mtx
-        self.cam_dst = dst
-
-        # undistort image
-
-    def undistort(self, img):
-        return cv2.undistort(img, self.cam_mtx, self.cam_dst, None, self.cam_mtx)
-
-    def whitewash(self, img):
-        '''
-        change image to black and white, where black values are kept black and all others
-        become white. Median blur image to contrast as stark as possible
-        :param img: image to whitewash
-        :return: whitewashed image in gray scale
-        '''
-        img = cv2.cvtColor(img, cv2.COLOR_RGB2HSV) #cast to hsv since edges more defined
-        h,s,v = cv2.split(img) #split the channels so we can compute on individual channels
-        low_h = 50
-        high_h = 100
-        low_s = 0
-        high_s = 50
-        h_mask = cv2.inRange(h, low_h, high_h)
-        s_mask = 255-cv2.inRange(s, low_s, high_s)
-        h_mask = cv2.medianBlur(h_mask, 19) #large median blur to ensure that patches are very rare
-        s_mask = cv2.medianBlur(s_mask, 19)  #large median blur to ensure that patches are very rare
-        tempS = np.zeros_like(s_mask)
-        tempS[np.nonzero(s_mask)] = 1 #for binary computation
-        tempH = np.zeros_like(s_mask)
-        tempH[np.nonzero(h_mask)] = 1 #for binary computation
-        res = tempS & tempH #take only the parts that thresholded white in both H and S
-        res[np.nonzero(res)] = 255 #back to value of 255
-        res = cv2.Sobel(res, cv2.CV_8U, 1, 0, ksize=3)
-        res = cv2.Sobel(res, cv2.CV_8U, 0, 1, ksize=3)
-        #cv2.imshow('gray.jpg', res)
-        #cv2.imshow('gradX.jpg', res)
-        #cv2.imshow('gradY.jpg', res)
-        #cv2.imshow('hWash.jpg', h_mask)
-        #cv2.imshow('sWash.jpg', s_mask)
-        cv2.imshow('whiteWash.jpg', res)
-        self.whiteImg = res
-
-        return res
-
-    def whitewash2(self):
-        temp = cv2.GaussianBlur(self.cur_image, (13, 13), 3)
-        r, g, b = cv2.split(temp)
-        subtract = r-g-b
-        thresh = cv2.inRange(subtract, 0, 80)
-        thresh = cv2.merge((r, thresh, b))
-        thresh = cv2.cvtColor(thresh, cv2.COLOR_RGB2GRAY)
-        self.whiteImg = thresh
-        return thresh
+        #number of frames since losing the road
+        self.lostCount = 0
 
 
-    def collect_edge(self, img, lowThresh, highThresh, window_height = 10, window_width = 10, margin = 40):
-        '''
-        collect edge
-        :param img: Source image
-        :param threshold: threshold above which potentially an edge
-        :return: collected edge
-        '''
-        whitewash = self.whitewash(img)
-        xs,ys = self.find_window_centroids(whitewash, window_width, window_height, margin)
-        xs.reverse()
-        #be sure that we found an edge
-
-        if not self.found_edge:
-            self.edge = None
-            return None
-
-        temp = np.zeros_like(whitewash)
-        self.edge = temp
-        for i in range(0,len(ys)):
-            self.edge[ys[i]-margin:ys[i]+margin,xs[i]-margin:xs[i]+margin] = \
-                whitewash[ys[i]-margin:ys[i]+margin,xs[i]-margin:xs[i]+margin]
-        cv2.imshow('edge.jpg', self.edge)
-        return xs, ys
 
 
-        # find widow centroids of left and right lane
+        #Left and Right Line
+        self.rightLine = None
+        self.leftLine = None
 
-    def find_window_centroids(self, image, window_width, window_height, margin):
-        '''
-        iterate up along image to find where the road likely is
-        :param image: image to find roads
-        :param window_width: width of boxes to box road
-        :param window_height:  width of boxes to box road
-        :param margin: margin off from past center we can be
-        :return: x,y pairs of the
-        '''
-        self.found_edge = False
-        window_centroids = []  # Store the window centroid positions per level
-        if self.look_left:
-            window = np.array([float(i**2)/window_width for i in range(0, window_width)])
+        self.d_desired = 3
+        self.temp = None
+        self.prev_param = (0,0,0,0)
+
+
+    def set_new_image(self, image):
+        self.cur_image = image
+        self.cropped_image = self.cur_image[self.removePixels:, :]
+        self.y_dim, self.x_dim, _ = image.shape
+        self.y_dimC, self.x_dimC, _ = self.cropped_image.shape
+        self.temp = image
+        self.set_preproc_cur_image()
+
+    def set_line(self, vx, vy, x, y, left):
+        vx1, vy1, x1, y1 = self.prev_param
+        prevFact = 0.8
+        curFact = 1-prevFact
+        vx = prevFact * vx1 + curFact*vx
+        vy = prevFact * vy1 + curFact*vy
+        x = prevFact * x1 + curFact*x
+        y = prevFact * y1 + curFact*y
+        self.prev_param = [vx, vy,x,y]
+        fun = lambda xhat: int(((xhat - x) * vy / vx) + y)
+        if left:
+            self.leftLine = fun
         else:
-            window = np.array([float(i**2) / window_width for i in range(window_width, 0, -1)])
-        #window = np.ones(window_width)  # Create our window template that we will use for convolutions
+            self.rightLine = fun
 
-        # First find the two starting positions for the left and right lane by using np.sum to get the vertical image slice
-        # and then np.convolve the vertical image slice with the window template
-
-        # Sum bottom ratio of image
-        ratio = 1 / 4
-        cv2.imwrite('partialL.jpg', image[int(ratio * image.shape[0]):, :int(image.shape[1] / 2)])
-        cv2.imwrite('partialR.jpg', image[int(image.shape[0] * ratio):, int(image.shape[1] / 2):])
-        level = 0
-        while not self.found_edge and level < (int)(image.shape[0] / window_height):
-            if self.look_left:
-                totSum = np.sum(image[int(ratio * (image.shape[0] - (level + 1)) * window_height):, :int(image.shape[1] / 2)], axis=0)
-                center = np.argmax(np.convolve(window, totSum)) - window_width / 2
-                if sum(totSum) > 20:
-                    self.found_edge = False
-            else:
-                totSum = np.sum(image[int(image.shape[0] * ratio):, int(image.shape[1] / 2):], axis=0)
-                center = np.argmax(np.convolve(window, totSum)) - window_width / 2 + int(image.shape[1] / 2)
-                if sum(totSum) > 20:
-                    self.found_edge = False
-            level += 1
-
-
-
-        # Add what we found for the first layer
-        window_centroids.append(center)
-
-        # Go through each layer looking for max pixel locations
-        while level < (int)(image.shape[0] / window_height):
-            # convolve the window into the vertical slice of the image
-            image_layer = np.sum(image[int(image.shape[0] - (level + 1) * window_height):int(
-                image.shape[0] - level * window_height), :], axis=0)
-            conv_signal = np.convolve(window, image_layer)
-            # Find the best centroid by using past center as a reference
-            # Use window_width/2 as offset because convolution signal reference is at right side of window, not center of window
-            offset = window_width / 2
-            min_index = int(max(center + offset - margin, 0))
-            max_index = int(min(center + offset + margin, image.shape[1]))
-            center = np.argmax(conv_signal[min_index:max_index]) + min_index - offset
-            center = center
-
-            # Add what we found for that layer
-            window_centroids.append(center)
-        #make sure we actually found a road
-        self.found_edge = sum(totSum) > 255 * 50
-        ys = range(1, (int)(image.shape[0] / window_height)+1)
-        ys = [i * window_height - 1 for i in ys]
-        #need to reverse the x because of convolution doing things backward
-        return window_centroids, ys
-
-
-
-    def get_fit2(self, image):
-        '''
-        get the road edge fit
-        :param image: image to find road in
-        :return:
-        '''
-        temp = self.collect_edge(image, 180, 255,self.window_width, self.window_height, self.margin)
-        if temp is None:
-            return
-        self.allx,self.ally = temp[0], temp[1]
-        if self.bestx is not None and self.besty is not None:
-            self.bestx, self.besty = (0.6*self.bestx + 0.4*np.array(self.allx)).astype(int), (0.6*self.besty + 0.4*np.array(self.ally)).astype(int)
-        else:
-            self.bestx, self.besty = np.array(self.allx), np.array(self.ally)
-
-        if (len(self.allx) > 0):
-            try:
-                self.current_fit = np.polyfit(self.ally, self.allx, 1)
-                self.best_fit = self.current_fit
-            except np.RankWarning:
-                self.poly_warning = True
-
-    
-    #TODO: FIX THIS
-    def calculate_curvature_offset(self):
-        '''
-        Calculate the offset from the estimated middle of the curved line using a 2nd degree polynomial.
-        Make sure this function assigns values to self.left_curverad, right.right_curverad, self.offset
-        '''
-        if self.found_edge:
-            # define y value near the car
-            y_eval = self.im_shape[0]
-
-            # define conversions in x and y from pixels space to meters
-            ym_per_pix = 50 / 250.0  # meters per pixel in y dimension
-            xm_per_pix = 3.7 / 75.0  # meters per pixel in x dimension
-
-            # create new polynomials to x,y in world space
-            try:
-                fit_cr = np.polyfit( self.besty * ym_per_pix,  self.bestx * xm_per_pix, 2)
-            except np.RankWarning:
-                self.poly_warning = True
-                pass
-
-            # if the poly fit is ok proceed
-            if not self.poly_warning:
-                try:
-                # calculate the new radii of curvature
-                    curve_rad= ((1 + (
-                                2 * fit_cr[0] * y_eval * ym_per_pix + fit_cr[1]) ** 2) ** 1.5) / np.absolute(
-                        2 * fit_cr[0])
-
-                    # now our radius of curvature is in meters
-
-                    # calculate the offset from the edge of the road
-                    y_eval = y_eval * ym_per_pix
-                    midpoint_car = self.im_shape[1] / 2.0
-                    midpoint_lane = (fit_cr[0] * (y_eval ** 2) + fit_cr[1] * y_eval + fit_cr[2])
-
-                    offset = midpoint_car * xm_per_pix - midpoint_lane / 2
-
-                    # initialize the curvature and offset if this is the first detection
-                    if self.curve_rad == None:
-                        self.offset = offset
-
-                    # average out the offset
-                    else:
-                        self.offset = self.offset * 0.9 + offset * 0.1
-                except:
-                    pass
-
-    def project_on_road(self):
-        image_input = self.cur_image
-        image = image_input[self.remove_pixels:,:]
-        #image = self.whitewash(image) REFACTOR PUT THIS IN COLLECT EDGE
-        self.im_shape = image.shape
-        self.get_fit2(image)
-        #cv2.imwrite('edge.jpg', self.edge)
-        # create fill image
-        temp_filler = np.zeros((self.remove_pixels, self.im_shape[1])).astype(np.uint8)
-        filler = np.dstack((temp_filler, temp_filler, temp_filler))
-        if self.found_edge:
-
-            # combine the result with the original image
-            rEdge = np.zeros_like(self.edge)
-            gEdge = np.zeros_like(self.edge)
-            bEdge = np.zeros_like(self.edge)
-            rEdge[np.nonzero(self.edge)] = 255
-            rEdge[np.nonzero(self.edge)] = 180
-            edgeStack = np.dstack((bEdge,gEdge,rEdge))
-            edgeFill = np.vstack((filler, edgeStack))
-
-            result = cv2.addWeighted(edgeFill, 1, image_input, 1, 0) #edgeFill = filled
-            y1 = min(self.besty)
-            y2 = max(self.besty)
-
-            #draw the line onto the screen
-            point1 = (int(self.best_fit[0] * y1 + self.best_fit[1]), y1+ self.remove_pixels)
-            point2 = (int(self.best_fit[0] * y2 + self.best_fit[1]), y2 + self.remove_pixels)
-            cv2.line(result, point1, point2, [255, 0, 0], thickness=5)
-
-            # get curvature and offset
-            self.calculate_curvature_offset()
-
-            # plot text on resulting image
-
-            if self.look_left:
-                img_text = "vehicle is: " + str(round(np.abs(self.offset), 2)) + ' (m) right of edge'
-            else:
-                img_text = "vehicle is: " + str(round(np.abs(self.offset), 2)) + ' (m) left of edge'
-
-            cv2.putText(result, img_text, (15, 15), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 255), 1)
-
-            whiteDstack = np.dstack((self.whiteImg, self.whiteImg, self.whiteImg))
-            fill = np.vstack((filler, whiteDstack))
-            #result = np.hstack((result, fill))
-            return result
-
-            # if lanes were not detected output source image
-        else:
-            #print 'no edge detected'
-            whiteDstack = np.dstack((self.whiteImg,self.whiteImg,self.whiteImg))
-            fill = np.vstack((filler,whiteDstack))
-            return_image =  np.hstack((image_input, fill))
-            return return_image
-
-
-
-    def calc_phi_d(self):
-        image = self.cur_image[self.remove_pixels:, :]
-        self.get_fit2(self.cur_image)
-        if not self.found_edge:
-            return 20*(-self.look_left*1 + (not self.look_left)*1)
-        else:
-            self.get_fit2(self.cur_image)
-            self.calculate_curvature_offset()
-            print self.offset
-            print self.desired_offset
-            print (self.offset - self.desired_offset)
-            return 5 * (self.offset-self.desired_offset) * (-self.look_left*1 + (not self.look_left)*1)
-
-    def setLookLeft(self, val):
+    def set_look_left(self, val):
         self.look_left = val
 
 
 
-        #############################################################################
-
-#while True:
+    def set_preproc_cur_image(self):
         '''
-image = cv2.imread('blackRoad.jpg')
-roadEdge = PathFinder(image)
-roadEdge.look_ahead = 10
-roadEdge.remove_pixels = 100
-roadEdge.enlarge = 0.5  # 2.25
-image = cv2.GaussianBlur(image, (3,3),1)
-roadEdge.look_left = False
-result = roadEdge.project_on_road()
-cv2.imwrite('result.jpg',result)
-'''
-if __name__ == "__main__":camera = picamera.PiCamera()
-    photoHeight = 540
-    image_size = (960/2, 544/2)#(16*photoHeight/9, photoHeight)
-    camera.resolution =  image_size#(960, 540)#(16*photoHeight/9, photoHeight)
-    camera.framerate = 7
-    camera.vflip = False
-    camera.hflip = False
-    # camera.exposure_mode='off'
-    rawCapture = PiRGBArray(camera, size=image_size)
+        process the cropped image in the hope of finding an edge
+        :param self:
+        :return:
+        '''
+        imageHSV = cv2.cvtColor(cv2.medianBlur(self.cropped_image, 3), cv2.COLOR_RGB2HSV)
+        y_dim ,x_dim, _ = imageHSV.shape
+        
+        h, s, v = cv2.split(imageHSV)
+        xBox = range(x_dim / 2 - 5, x_dim / 2 + 5)
+        yBox = range(y_dim - 10, y_dim)
 
-    # allow the camera to warmup
-    time.sleep(0.1)
+        hmean = np.mean(h[yBox, xBox])
+        smean = np.mean(s[yBox, xBox])
+        vmean = np.mean(v[yBox, xBox])
 
-    roadEdge = PathFinder(None, 90)
+        
+        epsH = 10
+        epsS = 5
+        epsV = 10
+        threshH = cv2.inRange(h, hmean - epsH, hmean + epsH)
+        threshS = cv2.inRange(s, smean - epsS, smean + epsS)
+        threshV = cv2.inRange(v, vmean - epsV, vmean + epsV)
 
-    time.sleep(0.1)
+        combined = threshS # (threshH & threshV)#(threshH) & (threshS)
+        combined = cv2.medianBlur(combined, 5)
+        self.temp = np.hstack((threshH, threshS, threshV))
+        combined = cv2.Canny(combined, 100, 200)
+        self.proc_img = combined
 
-    for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
-        start  = timeit.timeit()
-        # grab the raw NumPy array representing the image, then initialize the timestamp
-        # and occupied/unoccupied text
-        image = frame.array
+
+        #for debugging
+        #cv2.imwrite('HSV.jpg', imageHSV)
+        #cv2.imwrite('hThresh.jpg', threshH)
+        #cv2.imwrite('sThresh.jpg', threshS)
+        #cv2.imwrite('vThresh.jpg', threshV)
+        try:
+            contours, hierarchy = cv2.findContours(self.proc_img[:, :], cv2.RETR_TREE,
+                                                         cv2.CHAIN_APPROX_SIMPLE)
+            c, i = maxContour(contours)
+            cv2.drawContours(self.temp,contours,i, (255,0,0), 3)
+            
+            #cv2.imwrite('combined.jpg', cv2.drawContours(temp,contours,i, (255,0,0), 3))
+        except Exception as e:
+            print "error in proc image"
+            print e
+            contour, hierarchy = None, None
+            self.temp = threshS
         
 
-        # show the frame
-        # lines.project_on_road_debug(image)
-        roadEdge.cur_image = image
-        cv2.imshow("Rpi lane detection", roadEdge.project_on_road())
-        key = cv2.waitKey(1) & 0xFF
 
-        # clear the stream in preparation for the next frame
-        rawCapture.truncate()
-        rawCapture.seek(0)
-        end = timeit.timeit()
- 
 
-        # if the `q` key was pressed, break from the loop
-        if key == ord("q"):
-            break
+    def collect_edge_R(self):
+        cropBy = self.x_dimC/2
+        image = self.proc_img[:, -cropBy:]
+        try:
+            contours, _ =  cv2.findContours(image, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+        except Exception as e:
+            print e
+            contours = None
+        c, i = maxContour(contours)
+        temp = np.copy(c)
+        #offset contour back to full image
+        thresh = 100 if not self.look_left else 400
+        if c is not None and cv2.arcLength(c, False) > thresh:
+            temp[:,:,0] = temp[:,:,0] + cropBy*np.ones_like(c[:,:,0])
+            temp[:, :, 1] = temp[:, :, 1] + self.removePixels* np.ones_like(c[:, :, 0])
+            [vx, vy, x, y] = cv2.fitLine(temp, cv2.cv.CV_DIST_L2, 0, 0.01, 0.01)
+            self.set_line(vx,vy,x,y,False)
+            self.lostCount = 0 #reset counter for finding the road
+            #cv2.drawContours(image, contours, i, (255, 0, 0), 3)
+            #cv2.imwrite('collectR.jpg', image)
+        else:
+            #if we can't find the road
+            if self.lostCount >= 10:
+                self.rightLine = None
+            #cv2.drawContours(image, contours, -1, (255, 0, 0), 3)
+            #cv2.imwrite('collectR.jpg', image)
+            self.lostCount += 1
+
+
+
+    def collect_edge_L(self):
+        cropBy = self.x_dimC / 3
+        image = self.proc_img[:, :cropBy]
+        try:
+            contours, _ = cv2.findContours(image, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+        except:
+            contours = None
+        c, i = maxContour(contours)
+        thresh = 100 if self.look_left else 400
+        if c is not None and cv2.arcLength(c, False) > thresh:
+            temp = np.copy(c)
+            temp[:, :, 1] = temp[:, :, 1] + self.removePixels * np.ones_like(c[:, :, 0])
+            [vx, vy, x, y] = cv2.fitLine(temp, cv2.DIST_L2, 0, 0.01, 0.01)
+            self.set_line(vx,vy,x,y,True)
+            self.lostCount = 0  # reset counter for finding the road
+            #cv2.imwrite('collectL.jpg', cv2.drawContours(image, contours, i, (255, 0, 0), 3))
+        else:
+            # if we can't find the road
+            if self.lostCount >= 10:
+                self.leftLine = None
+            #cv2.imwrite('collectL.jpg', cv2.drawContours(image, contours, -1, (255, 0, 0), 3))
+            self.lostCount += 0
+
+    def collect_des_edge(self):
+        if self.look_left:
+            self.collect_edge_L()
+        else:
+            self.collect_edge_R()
+
+
+    def draw_r_edge(self):
+        if self.rightLine is not None:
+            lefty = self.rightLine(self.x_dim/2)
+            righty = self.rightLine(self.x_dim)
+            temp = np.copy(self.cur_image)
+            cv2.line(temp, (self.x_dim, righty), (self.x_dim/2, lefty), (0, 0, 255), 5)
+            return temp, self.temp
+        return self.proc_img, self.temp
+
+    def draw_l_edge(self):
+        if self.leftLine is not None:
+            lefty = self.leftLine(0)
+            righty = self.leftLine(self.x_dim/2)
+            temp = np.copy(self.cur_image)
+            cv2.line(temp, (self.x_dim/2, righty), (0, lefty), (0, 255, 0), 5)
+            return temp,self.temp
+        return self.proc_img, self.temp
+
+    def draw_des_edge(self):
+        if self.look_left:
+            return self.draw_l_edge()
+        else:
+            return self.draw_r_edge()
+
+    def calc_road_offset(self):
+        ym_per_pix = 50 / 250.0  # meters per pixel in y dimension
+        xm_per_pix = 0.37 / 75.0  # meters per pixel in x dimension
+
+
+        if self.look_left:
+            self.collect_edge_L()
+            curLine = self.leftLine
+        else:
+            self.collect_edge_R()
+            curLine = self.rightLine
+
+        if curLine is not None:
+            #inverse image of line level with y of car
+            m = float(curLine(self.x_dim) - curLine(0)) / self.x_dim
+            offX = (self.y_dim - curLine(0)) / m
+            dist = -(self.x_dim/2 - offX) * xm_per_pix
+
+            # #need to consider line in the form ax+by + c = 0. Curline is stored in form y=mx+b
+            # m = float(curLine(self.x_dim)-curLine(0))/self.x_dim
+            # a = m
+            # b = -1
+            # c = curLine(0)
+            #
+            # dist = abs(a*self.carX+b*self.carY+c)/math.sqrt(a**2+b**2)
+            return self.d_desired - dist
+        return -1
+
+    def calc_phi_r(self):
+        if self.look_left:
+            self.collect_edge_L()
+            curLine = self.leftLine
+        else:
+            self.collect_edge_R()
+            curLine = self.rightLine
+        if curLine is None:
+            return 0
+        m = float(curLine(self.x_dim) - curLine(0)) / self.x_dim
+        return self.calc_road_offset()/5 - (m-.2)
+
+
+if __name__ == "__main__":
+    image = cv2.imread('CameraTests/Test1.jpg')
+    rand = 90 #random.randint(0,100)
+    #image = cv2.imread('PennParkPics/Picture ' + str(rand)+'.jpg')
+    temp = np.copy(image)
+    y,x, _ = image.shape
+    print y,x
+    cv2.line(temp, (x/2,y),(x/2,0), (255,0,0),3)
+    cv2.imwrite('image.jpg', temp)
+    edgeFinder = FindEdge(image,y/2)
+    edgeFinder.look_left = False
+    edgeFinder.collect_edge_L()
+    edgeFinder.collect_edge_R()
+    edgeFinder.calc_road_offset()
+    edgeFinder.calc_phi_r()
+    lines = cv2.addWeighted(edgeFinder.draw_r_edge(),0.5,edgeFinder.draw_l_edge(),0.5,0)
+    cv2.imwrite('lines.jpg', lines)
+    # cv2.imwrite('edgesR.jpg', edgeFinder.draw_r_edge())
+    # cv2.imwrite('edgesL.jpg', edgeFinder.draw_l_edge())
+
+
+

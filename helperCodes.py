@@ -3,6 +3,9 @@ from numpy.linalg import norm
 import numpy as np
 from vectors import *
 
+"""
+A CLASS OF HELPER CODES
+"""
 def tsplit(s, sep):
     stack = [s]
     for char in sep:
