@@ -5,6 +5,11 @@ from helperCodes import wrapAngle
 import traceback
 
 class ArduinoCom:
+    """
+    This class serves as the interface between the Raspberry Pi and Arduino. It permits communication between the two devices
+    over an I2C communication where the Ardunio is the slave device. Take care that the dataCommands list is the same between
+    the Arduino and Pi
+    """
     def __init__(self):
         #
         # smbus implements i2c on the RPi
@@ -15,17 +20,13 @@ class ArduinoCom:
         # this is the Slave address of the Arduino
         #
         self.address = 0x04
-        # adapted from code at https://gist.github.com/gileri/5a9285d6a1cfde142260
-        #
-        # check out this information about the "command" parameter (second argument in block read / write)
-        # https://raspberrypi.stackexchange.com/questions/8469/meaning-of-cmd-param-in-write-i2c-block-data
-        #
 
         #dictionary mapping data to their values
         self.data = {'psiD': 0, 'speedD': 50, 'gpsLat': 2, 'gpsLon': 3, 'gpsV': 4, 'gpsPsi': 5}
 
         #dictionary mapping data to send to arduino with respective commands
-        #IMPORTANT DO NOT CHANGE
+        #IMPORTANT IF YOU CHANGE THESE YOU MUST CHANGE THEM IN THE ARDUINO AS WELL
+        #TODO: SYNC PI AND ARDUINO COMMANDS
         self.dataCommands = {'psiD': 0, 'speedD': 1, 'gpsLat': 2, 'gpsLon': 3, 'gpsV': 4, 'gpsPsi': 5}
 
 
@@ -45,15 +46,30 @@ class ArduinoCom:
             self.data['speed'] = speed
 
     def setData(self, dataName, dataVal):
+        """
+        Set Data in the Pi by name
+        :param dataName:
+        :param dataVal:
+        :return:
+        """
         if dataName in self.data.keys():
             self.data[dataName] = dataVal
 
     def getDataByName(self, dataName):
+        """
+        Get data as currently stored in the Pi
+        :param dataName: Name of data you wish to access
+        :return: data
+        """
         return self.data[dataName]
     # endregion
 
     def sendData(self, dataName):
-        
+        """
+        Send data with a name to the Arduino
+        :param dataName: name of data to send
+        :return: None
+        """
         if dataName in self.dataCommands.keys():
             dataStr = str(self.data[dataName])
             print dataStr
@@ -69,12 +85,14 @@ class ArduinoCom:
                 print
 
     def getData(self, dataName):
+        """
+        Get data from Arduino Mega
+        :param dataName: name of data variable that you wish to retrieve
+        :return: value of requested data as stored in Arduino
+        """
         try:
-            #print self.dataCommands[dataName]
             data_received = self.bus.read_i2c_block_data(self.address, self.dataCommands[dataName],4)
             val = self.bytes_2_float(data_received, 0)
-            #print val
-            #print(dataName + " was: " + str(self.data[dataName]))
             self.data[dataName] = val
             print(dataName + " is: " + str(self.data[dataName]))
             print "com completed"
@@ -84,79 +102,11 @@ class ArduinoCom:
             print
 
     def bytes_2_float(self, data, index):
+        """
+        convert a byte array to a float
+        :param data: byte array
+        :param index: index offset that the data starts at
+        :return: a float from a byte array
+        """
         bytes = data[4*index:(index+1)*4]
         return struct.unpack('f', "".join(map(chr,bytes)))[0]
-
- ############################################################################################
- #####DEPRECATED
-############################################################################################
-    #
-    #
-    #
-    # #
-    # # 1 = command byte to request first data block from Arduino
-    # # 8 = number of bytes (one 4-byte float + one 2-byte word)
-    # #
-    # def getFloatData(self,oldFloats):
-    #     try:
-    #         data_received = self.bus.read_i2c_block_data(self.address, 1, 8)
-    #         newFloats = [self.bytes_2_float(data_received, 0)]
-    #         newFloats.append(self.bytes_2_float(data_received, 1))
-    #     except:
-    #         print("error reading float data")
-    #         newFloats = oldFloats
-    #
-    #     return newFloats
-    #
-    # #
-    # # 2 = command byte to request second data block from Arduino
-    # # 4 = number of bytes (one 2-byte word + two bytes)
-    # #
-    # def getByteData(self, oldBytes):
-    #     try:
-    #         data_received = self.bus.read_i2c_block_data(self.address, 2, 4)
-    #         newBytes = [data_received[0] * 255 + data_received[1]]
-    #         newBytes.append(data_received[2])
-    #         newBytes.append(data_received[3])
-    #     except:
-    #         print("error reading byte data")
-    #         newBytes = oldBytes
-    #
-    #     return newBytes
-    #
-    # #
-    # # 255 = command byte to initiate writing to Arduino
-    # # (arbitrary--must be different than read)
-    # #
-    # def putByteList(self,byteList):
-    #     try:
-    #         self.bus.write_i2c_block_data(self.address, 255, byteList)
-    #     except:
-    #         print("error writing commands")
-    #     return None
-    #
-    # #
-    # # crazy conversion of groups of 4 bytes in an array into a float
-    # # simple code assumes floats are at beginning of the array
-    # # "index" = float index, starting at 0
-    # #
-    # def bytes_2_float(self,data, index):
-    #     bytes = data[4 * index:(index + 1) * 4]
-    #     return struct.unpack('f', "".join(map(chr, bytes)))[0]
-    #
-    # ##########
-    # # main part of script starts here
-    # ##########
-    #
-    # #
-    # # now loop thru reading from and writing to Arduino
-    # #
-    # while True:
-    #     time.sleep(0.1)
-    #     dummyToPiFloats = getFloatData(dummyToPiFloats)
-    #     dummyToPiBytes = getByteData(dummyToPiBytes)
-    #     print(dummyToPiFloats, dummyToPiBytes)
-    #     #
-    #     #   send variable to Pi
-    #     #
-    #     putByteList(byteListDummyFromPi)

@@ -12,6 +12,12 @@ from PathFinder2 import FindEdge
 import numpy as np
 
 print __name__
+"""
+This class serves as the runner for each component of the project. It maintains a list of global variables shared between
+components. Each module of the code can interact with these variables to independently run their own calculations. The
+primary responsibility of this class to run the threads and keep them synchronized.
+"""
+
 ########################################################################################################################
 #START GLOBAL DATA
 ########################################################################################################################
@@ -27,7 +33,7 @@ speedD = 50
 gpsPsi = 0
 
 #LOCKS. USE CAUTION WHEN CHANGING AS THIS CAN CAUSE ERRATIC BEHAVIOR.
-#This is gross. need to consider refactor
+#This is poor code design. I need to make this more elegant.
 curLatLock = Lock()
 curLonLock = Lock()
 psiDLock = Lock()
@@ -55,6 +61,9 @@ def releaseAllLocks():
 #START MAP OBJECT THREAD CLASS
 ########################################################################################################################
 class MapThread(threading.Thread):
+    """
+    A runner class that maintains the Map information and Path planning for the car.
+    """
     def run(self):
         print "Launching Map Thread"
         global camLookLeft, curLon, curLat, psiD, lastNode, locks
@@ -89,6 +98,10 @@ class MapThread(threading.Thread):
 ########################################################################################################################
 
 class CameraThread(threading.Thread):
+    """
+    Computer vision class which attempts to find the edge of the road and determine the distance to the edge. This allows
+    the car to adjust its wheels to maintain a constant distance from the edge of the road.
+    """
     def run(self):
         print "Launching Cam Thread"
         global camLookLeft
@@ -96,10 +109,10 @@ class CameraThread(threading.Thread):
 
         warnings.filterwarnings('error')
 
+        #Set up camera. Adjust the image size to reduce computational speed at the cost of less photo information.
         camera = picamera.PiCamera()
-        photoHeight = 540
         image_size = (960/2, 544/2)  # (16*photoHeight/9, photoHeight)
-        camera.resolution = image_size  # (960, 540)#(16*photoHeight/9, photoHeight)
+        camera.resolution = image_size
         camera.framerate = 7
         camera.vflip = False
         camera.hflip = False
@@ -107,10 +120,13 @@ class CameraThread(threading.Thread):
         rawCapture = PiRGBArray(camera, size=image_size)
         # allow the camera to warmup
         time.sleep(0.1)
-        edgeFinder = FindEdge(None,image_size[1]/2)
-        print 'ready for loop'
 
+        #the edge finding object
+        edgeFinder = FindEdge(None,image_size[1]/2)
+
+        print 'ready for loop'
         for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
+            #The above sets the camera in video mode and keeps a constant buffer
             try:
                 # grab the raw NumPy array representing the image, then initialize the timestamp
                 # and occupied/unoccupied text
@@ -121,10 +137,9 @@ class CameraThread(threading.Thread):
                 edgeFinder.set_look_left(camLookLeft)
 
                 # show the frame
-                # lines.project_on_road_debug(image)
                 edgeFinder.set_new_image(image)
                 edgeFinder.collect_des_edge()
-                edge,pic = edgeFinder.draw_des_edge()
+                edge, pic = edgeFinder.draw_des_edge()
                 psiD = edgeFinder.calc_phi_r()
                 
                 imgray = cv2.cvtColor(image,cv2.COLOR_RGB2GRAY)
@@ -155,17 +170,24 @@ class CameraThread(threading.Thread):
 #START ARDUINO COM CLASS
 ########################################################################################################################
 class ArduinoComThread(threading.Thread):
+    """
+    The communication thread. This thread allows for communication between the Arduino and the Pi
+    """
     def run(self):
         print "Launching Com Thread"
         global curLat, curLon, psiD, desiredOffset, curOffset, camLookLeft, lastNode, gpsV
         global curLatLock, curLonLock, psiDLock, desiredOffsetLock, curOffsetLock, camLookLeftLock, lastNodeLock, gpsVLock, locks
-        sendCtr = 0
-        receiveCtr = 0
+
+        sendCtr = 0 #variable that increments in order to determine which command to send to the Arduino
+        receiveCtr = 0 #variable that increments in order to determine which data to get to the Arduino
+
+        #communicating object
         com = ArduinoCom()
+
         while True:
             time.sleep(1)
-            #receiveFromArd = {'gpsLat': (curLat, curLatLock), 'gpsLon': (curLon, curLonLock), 'gpsV': (gpsV, gpsVLock), 'gpsPsi': (gpsPsi, gpsPsiLock)}
-            sendToArd = {'psiD': (psiD, psiDLock)} # 'speedD': (speedD, speedDLock)}
+            receiveFromArd = {'gpsLat': (curLat, curLatLock), 'gpsLon': (curLon, curLonLock), 'gpsV': (gpsV, gpsVLock), 'gpsPsi': (gpsPsi, gpsPsiLock)}
+            sendToArd = {'psiD': (psiD, psiDLock), 'speedD': (speedD, speedDLock)}
 
             if sendCtr >= len(sendToArd):
                 sendCtr = 0

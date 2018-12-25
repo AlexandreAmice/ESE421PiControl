@@ -8,17 +8,17 @@ class MapObj:
 
     def __init__(self, mapNodes, mapSpeeds):
         """
-        :param mapNodes: the path of the mapNodes file
-        :param mapSpeeds: the path of the mapSpeeds file
+        :param mapNodes: the path of the mapNodes file. Example format given in mapPennParkNodes.txt
+        :param mapSpeeds: the path of the mapSpeeds file. Example format given in mapPennParkEdges.txt
         """
         self.mapGraph = self.genMapGraph(mapNodes, mapSpeeds) #NetworkX object representing graph of the map
-        self.curPlan = ['K', 'C', 'D']
-        self.turnLeft = True
-        self.goalNode = None
-        self.lastNode = 'A'
-        self.curRoad = ('A','B')
-        self.lat = 39.9509507
-        self.lon =  -75.1853272
+        self.curPlan = ['K', 'C', 'D'] #sample default value. Should get updated by Arduino
+        self.turnLeft = True #sample default value. Should get updated by Arduino
+        self.goalNode = None #sample default value. Should get updated by Arduino
+        self.lastNode = 'A' #sample default value. Should get updated by Arduino
+        self.curRoad = ('A','B') #sample default value. Should get updated by Arduino
+        self.lat = 39.9509507 #sample default value. Should get updated by Arduino
+        self.lon =  -75.1853272 #sample default value. Should get updated by Arduino
 
     # region ConstructorHelpers
     def genMapGraph(self, mapNodes, mapSpeeds):
@@ -67,11 +67,20 @@ class MapObj:
         return mapGraph
 
     def getNodeLatLon(self, nodeName, curGraph = None):
+        """
+        Return the latitude and longitude of a node by name
+        :param nodeName: name of node
+        :param curGraph: NetworkX Graph. Can pass a different graph if you so desire
+        :return: a tuple (lat, lon)
+        """
         if curGraph is None:
             curGraph = self.mapGraph
         return curGraph.node[nodeName]['lat'], curGraph.node[nodeName]['lon']
 
     def getTurnLeft(self):
+        """
+        :return: current value of the turn left variable
+        """
         return self.turnLeft
 
     def getGPSCoord(self):
@@ -82,11 +91,6 @@ class MapObj:
         self.long = lon
     # endregion
 
-
-
-    #TODO: get shortest path. Probably will implement in the path object
-
-    # endregion
 
     def findNearestPath(self, lat, lon, posEdges = None):
         '''
@@ -157,10 +161,20 @@ class MapObj:
 
 
     def curDistToNode(self,node):
+        """
+        :param node: Node wishing to find distance to
+        :return: straightline distance from current GPS reading to node
+        """
         latNode, lonNode = self.mapGraph.node[node]['lat'], self.mapGraph.node[node]['lon']
         return sphereDist(self.lat, self.lon, latNode, lonNode)
 
     def planPath(self, current = None, goal = None):
+        """
+        Plan a path based on the cheapest path
+        :param current: current node that we are planning a path from
+        :param goal: goal node
+        :return: planned path
+        """
         if current is None:
             current = self.lastNode
 
@@ -170,6 +184,7 @@ class MapObj:
         self.curPlan = nx.shortest_path(self.mapGraph, current, goal, weight = 'cost')
         self.lastNode = current
         self.goalNode = goal
+        return self.curPlan
 
 
 
